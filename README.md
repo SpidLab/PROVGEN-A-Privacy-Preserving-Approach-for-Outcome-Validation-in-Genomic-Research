@@ -1,4 +1,4 @@
-# Standalone Artifact
+# PROVGEN: A Privacy-Preserving Approach for Outcome Validation in Genomic Research
 
 Run all commands from inside `artifact/`.
 
