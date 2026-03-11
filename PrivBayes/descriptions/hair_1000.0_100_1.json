@@ -1,0 +1,6577 @@
+{
+    "meta": {
+        "num_tuples": 60,
+        "num_attributes": 101,
+        "num_attributes_in_BN": 100,
+        "all_attributes": [
+            "PATIENT_ID",
+            "3154",
+            "8914",
+            "265",
+            "4252",
+            "2628",
+            "4455",
+            "1857",
+            "1166",
+            "8013",
+            "6640",
+            "2785",
+            "7789",
+            "5947",
+            "7316",
+            "8649",
+            "1926",
+            "640",
+            "1297",
+            "6717",
+            "9168",
+            "7544",
+            "2352",
+            "2660",
+            "6540",
+            "1305",
+            "5820",
+            "4630",
+            "4378",
+            "2174",
+            "4714",
+            "500",
+            "8507",
+            "4339",
+            "4156",
+            "94",
+            "9357",
+            "5377",
+            "8469",
+            "5707",
+            "7844",
+            "3425",
+            "5643",
+            "1877",
+            "494",
+            "7077",
+            "465",
+            "288",
+            "7807",
+            "7347",
+            "608",
+            "1806",
+            "1068",
+            "7671",
+            "3003",
+            "3924",
+            "5716",
+            "8468",
+            "4538",
+            "1417",
+            "7575",
+            "227",
+            "6240",
+            "1209",
+            "5685",
+            "1482",
+            "8402",
+            "6083",
+            "5441",
+            "2058",
+            "3787",
+            "2724",
+            "3182",
+            "1024",
+            "7022",
+            "2808",
+            "5081",
+            "5223",
+            "2538",
+            "3916",
+            "3370",
+            "8408",
+            "3054",
+            "441",
+            "4094",
+            "8057",
+            "4541",
+            "1472",
+            "766",
+            "6380",
+            "4478",
+            "9224",
+            "1387",
+            "5615",
+            "7531",
+            "193",
+            "6365",
+            "3954",
+            "358",
+            "2718",
+            "1718"
+        ],
+        "candidate_keys": [
+            "PATIENT_ID"
+        ],
+        "non_categorical_string_attributes": [],
+        "attributes_in_BN": [
+            "3154",
+            "8914",
+            "265",
+            "4252",
+            "2628",
+            "4455",
+            "1857",
+            "1166",
+            "8013",
+            "6640",
+            "2785",
+            "7789",
+            "5947",
+            "7316",
+            "8649",
+            "1926",
+            "640",
+            "1297",
+            "6717",
+            "9168",
+            "7544",
+            "2352",
+            "2660",
+            "6540",
+            "1305",
+            "5820",
+            "4630",
+            "4378",
+            "2174",
+            "4714",
+            "500",
+            "8507",
+            "4339",
+            "4156",
+            "94",
+            "9357",
+            "5377",
+            "8469",
+            "5707",
+            "7844",
+            "3425",
+            "5643",
+            "1877",
+            "494",
+            "7077",
+            "465",
+            "288",
+            "7807",
+            "7347",
+            "608",
+            "1806",
+            "1068",
+            "7671",
+            "3003",
+            "3924",
+            "5716",
+            "8468",
+            "4538",
+            "1417",
+            "7575",
+            "227",
+            "6240",
+            "1209",
+            "5685",
+            "1482",
+            "8402",
+            "6083",
+            "5441",
+            "2058",
+            "3787",
+            "2724",
+            "3182",
+            "1024",
+            "7022",
+            "2808",
+            "5081",
+            "5223",
+            "2538",
+            "3916",
+            "3370",
+            "8408",
+            "3054",
+            "441",
+            "4094",
+            "8057",
+            "4541",
+            "1472",
+            "766",
+            "6380",
+            "4478",
+            "9224",
+            "1387",
+            "5615",
+            "7531",
+            "193",
+            "6365",
+            "3954",
+            "358",
+            "2718",
+            "1718"
+        ]
+    },
+    "attribute_description": {
+        "PATIENT_ID": {
+            "name": "PATIENT_ID",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": true,
+            "min": 55,
+            "max": 4672,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                55,
+                60,
+                64,
+                175,
+                187,
+                252,
+                262,
+                266,
+                268,
+                285,
+                294,
+                296,
+                330,
+                366,
+                380,
+                397,
+                437,
+                481,
+                503,
+                533,
+                567,
+                644,
+                646,
+                650,
+                678,
+                693,
+                707,
+                726,
+                754,
+                762,
+                775,
+                785,
+                792,
+                806,
+                807,
+                854,
+                920,
+                1033,
+                1040,
+                1269,
+                1459,
+                1470,
+                1500,
+                1537,
+                1627,
+                1764,
+                1902,
+                1963,
+                1980,
+                2238,
+                2291,
+                2498,
+                2507,
+                2510,
+                2557,
+                2660,
+                2745,
+                2758,
+                2964,
+                4672
+            ],
+            "distribution_probabilities": [
+                0.016787962076910305,
+                0.01830154617870894,
+                0.017206938824442457,
+                0.01675942675458731,
+                0.015904872510028614,
+                0.01758507851115134,
+                0.016011327151751867,
+                0.02148492723364197,
+                0.025075590677172892,
+                0.015576754918004315,
+                0.01933120160475847,
+                0.016645832857124985,
+                0.016931268918368707,
+                0.02271778728578852,
+                0.01002982012247706,
+                0.010701656141817171,
+                0.005895626372174122,
+                0.020050367306216697,
+                0.019123563561056014,
+                0.020882166287952014,
+                0.026820308320164556,
+                0.01945077137606438,
+                0.016186227742682847,
+                0.019158936779333804,
+                0.011707126699652574,
+                0.017530045372521907,
+                0.0123398082856839,
+                0.023692173770224773,
+                0.016596986813906457,
+                0.01583428433793924,
+                0.01435571947321702,
+                0.019065891894837803,
+                0.016148014736462803,
+                0.01693423603627816,
+                0.005654539401874029,
+                0.017332477850805533,
+                0.017285153694392076,
+                0.017326447427924208,
+                0.023637871134831453,
+                0.017937041377674608,
+                0.015364711388462026,
+                0.01600714979960993,
+                0.01810472876125864,
+                0.009486667034638477,
+                0.01778495636122483,
+                0.017823399832570242,
+                0.013601902361108581,
+                0.01199083419790409,
+                0.014934364551178539,
+                0.015402950418506228,
+                0.01694770224033737,
+                0.01601894435448536,
+                0.028824823561568447,
+                0.011221537721108133,
+                0.013578269653217373,
+                0.01272807036408657,
+                0.017652797952039168,
+                0.01421257140672897,
+                0.016220492979423438,
+                0.01409534723993786
+            ]
+        },
+        "3154": {
+            "name": "3154",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6847214304381393,
+                0.2636360448446344,
+                0.051642524717226426
+            ]
+        },
+        "8914": {
+            "name": "8914",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.836081111301348,
+                0.14813460609441761,
+                0.01578428260423441
+            ]
+        },
+        "265": {
+            "name": "265",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.8050653936883625,
+                0.1949346063116375
+            ]
+        },
+        "4252": {
+            "name": "4252",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6648083302105654,
+                0.25898226508807765,
+                0.07620940470135697
+            ]
+        },
+        "2628": {
+            "name": "2628",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.9733707173020287,
+                0.026629282697971338
+            ]
+        },
+        "4455": {
+            "name": "4455",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.3527360243557861,
+                0.4714453647536586,
+                0.17581861089055523
+            ]
+        },
+        "1857": {
+            "name": "1857",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 0,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0
+            ],
+            "distribution_probabilities": [
+                1.0
+            ]
+        },
+        "1166": {
+            "name": "1166",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.7369014254212224,
+                0.2510889018450322,
+                0.012009672733745407
+            ]
+        },
+        "8013": {
+            "name": "8013",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.7889094085421114,
+                0.1843619660740136,
+                0.026728625383874903
+            ]
+        },
+        "6640": {
+            "name": "6640",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.9163655170517074,
+                0.08363448294829263
+            ]
+        },
+        "2785": {
+            "name": "2785",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.4848710171488015,
+                0.47036525395853407,
+                0.04476372889266441
+            ]
+        },
+        "7789": {
+            "name": "7789",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.7783797207392908,
+                0.22162027926070918
+            ]
+        },
+        "5947": {
+            "name": "5947",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.9319645698169734,
+                0.06803543018302659
+            ]
+        },
+        "7316": {
+            "name": "7316",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.7153538548798238,
+                0.2697367996229293,
+                0.014909345497246948
+            ]
+        },
+        "8649": {
+            "name": "8649",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.8656688661298421,
+                0.13433113387015796
+            ]
+        },
+        "1926": {
+            "name": "1926",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 0,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0
+            ],
+            "distribution_probabilities": [
+                1.0
+            ]
+        },
+        "640": {
+            "name": "640",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.8301915897210427,
+                0.16980841027895732
+            ]
+        },
+        "1297": {
+            "name": "1297",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.3675693143629251,
+                0.5471091751155308,
+                0.08532151052154402
+            ]
+        },
+        "6717": {
+            "name": "6717",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6210314789657665,
+                0.3122070370981504,
+                0.06676148393608303
+            ]
+        },
+        "9168": {
+            "name": "9168",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.8330132033613684,
+                0.16698679663863167
+            ]
+        },
+        "7544": {
+            "name": "7544",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.5446946951611773,
+                0.42250202304373696,
+                0.03280328179508571
+            ]
+        },
+        "2352": {
+            "name": "2352",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.48537475036875105,
+                0.44994219924599244,
+                0.06468305038525637
+            ]
+        },
+        "2660": {
+            "name": "2660",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 0,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0
+            ],
+            "distribution_probabilities": [
+                1.0
+            ]
+        },
+        "6540": {
+            "name": "6540",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.7462309866577148,
+                0.25376901334228513
+            ]
+        },
+        "1305": {
+            "name": "1305",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6295069427988679,
+                0.35233304607577476,
+                0.018160011125357412
+            ]
+        },
+        "5820": {
+            "name": "5820",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 0,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0
+            ],
+            "distribution_probabilities": [
+                1.0
+            ]
+        },
+        "4630": {
+            "name": "4630",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.8431652247802084,
+                0.1568347752197916
+            ]
+        },
+        "4378": {
+            "name": "4378",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.46715464372631066,
+                0.38225549517538354,
+                0.15058986109830563
+            ]
+        },
+        "2174": {
+            "name": "2174",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6969846194605823,
+                0.21743070122777794,
+                0.08558467931163975
+            ]
+        },
+        "4714": {
+            "name": "4714",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.682494257801438,
+                0.23456612833733578,
+                0.08293961386122624
+            ]
+        },
+        "500": {
+            "name": "500",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.4481443819242465,
+                0.4843101046263557,
+                0.06754551344939767
+            ]
+        },
+        "8507": {
+            "name": "8507",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.7821056550079578,
+                0.18342504481372562,
+                0.03446930017831652
+            ]
+        },
+        "4339": {
+            "name": "4339",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.9505272494029917,
+                0.049472750597008286
+            ]
+        },
+        "4156": {
+            "name": "4156",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.8516526228204347,
+                0.14834737717956523
+            ]
+        },
+        "94": {
+            "name": "94",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6279728659792262,
+                0.28620468922780806,
+                0.0858224447929657
+            ]
+        },
+        "9357": {
+            "name": "9357",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.5503834262452533,
+                0.3271659927510044,
+                0.12245058100374227
+            ]
+        },
+        "5377": {
+            "name": "5377",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.8531072157036069,
+                0.13447613781926976,
+                0.012416646477123356
+            ]
+        },
+        "8469": {
+            "name": "8469",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 0,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0
+            ],
+            "distribution_probabilities": [
+                1.0
+            ]
+        },
+        "5707": {
+            "name": "5707",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 0,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0
+            ],
+            "distribution_probabilities": [
+                1.0
+            ]
+        },
+        "7844": {
+            "name": "7844",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.3341449947721939,
+                0.46192503803062646,
+                0.20392996719717973
+            ]
+        },
+        "3425": {
+            "name": "3425",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.5349125872282752,
+                0.4159189024057938,
+                0.04916851036593099
+            ]
+        },
+        "5643": {
+            "name": "5643",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.7973286924470013,
+                0.20267130755299861
+            ]
+        },
+        "1877": {
+            "name": "1877",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.9314878707140632,
+                0.0685121292859367
+            ]
+        },
+        "494": {
+            "name": "494",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.875082940160397,
+                0.12491705983960306
+            ]
+        },
+        "7077": {
+            "name": "7077",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6772200826218793,
+                0.25658202544228104,
+                0.06619789193583965
+            ]
+        },
+        "465": {
+            "name": "465",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.2690883781463129,
+                0.5304943490612457,
+                0.20041727279244134
+            ]
+        },
+        "288": {
+            "name": "288",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.7929341826835441,
+                0.18422843301579356,
+                0.02283738430066244
+            ]
+        },
+        "7807": {
+            "name": "7807",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6202131168557055,
+                0.31429080608786825,
+                0.06549607705642636
+            ]
+        },
+        "7347": {
+            "name": "7347",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 0,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0
+            ],
+            "distribution_probabilities": [
+                1.0
+            ]
+        },
+        "608": {
+            "name": "608",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.5579618844423498,
+                0.3615102912756586,
+                0.08052782428199169
+            ]
+        },
+        "1806": {
+            "name": "1806",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.8350869519278306,
+                0.15070829354114848,
+                0.01420475453102099
+            ]
+        },
+        "1068": {
+            "name": "1068",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6516327201322204,
+                0.3150496938844719,
+                0.03331758598330767
+            ]
+        },
+        "7671": {
+            "name": "7671",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6166222515596642,
+                0.301710416223117,
+                0.08166733221721886
+            ]
+        },
+        "3003": {
+            "name": "3003",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.8356270583798058,
+                0.16437294162019428
+            ]
+        },
+        "3924": {
+            "name": "3924",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.36113451857967815,
+                0.537321158429508,
+                0.10154432299081372
+            ]
+        },
+        "5716": {
+            "name": "5716",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6029161351529504,
+                0.31560064506173624,
+                0.08148321978531345
+            ]
+        },
+        "8468": {
+            "name": "8468",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 0,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0
+            ],
+            "distribution_probabilities": [
+                1.0
+            ]
+        },
+        "4538": {
+            "name": "4538",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.8665277074114693,
+                0.11513627914003945,
+                0.018336013448491197
+            ]
+        },
+        "1417": {
+            "name": "1417",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.26960806661803516,
+                0.4531010691506098,
+                0.27729086423135496
+            ]
+        },
+        "7575": {
+            "name": "7575",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6804086351773072,
+                0.26963906078299144,
+                0.04995230403970131
+            ]
+        },
+        "227": {
+            "name": "227",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.8346749495715202,
+                0.08696585392183806,
+                0.0783591965066418
+            ]
+        },
+        "6240": {
+            "name": "6240",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.9486086952055464,
+                0.05139130479445373
+            ]
+        },
+        "1209": {
+            "name": "1209",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6546288951521004,
+                0.2923994624498603,
+                0.05297164239803916
+            ]
+        },
+        "5685": {
+            "name": "5685",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 0,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0
+            ],
+            "distribution_probabilities": [
+                1.0
+            ]
+        },
+        "1482": {
+            "name": "1482",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.8493164851425542,
+                0.15068351485744583
+            ]
+        },
+        "8402": {
+            "name": "8402",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 0,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0
+            ],
+            "distribution_probabilities": [
+                1.0
+            ]
+        },
+        "6083": {
+            "name": "6083",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.7317353713899133,
+                0.2536602136520267,
+                0.014604414958060065
+            ]
+        },
+        "5441": {
+            "name": "5441",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.9699609663076075,
+                0.03003903369239245
+            ]
+        },
+        "2058": {
+            "name": "2058",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.3389535497720148,
+                0.5479348560783792,
+                0.1131115941496059
+            ]
+        },
+        "3787": {
+            "name": "3787",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.948428946261731,
+                0.0515710537382691
+            ]
+        },
+        "2724": {
+            "name": "2724",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.36623004162098177,
+                0.43264591517654677,
+                0.20112404320247146
+            ]
+        },
+        "3182": {
+            "name": "3182",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.834597368751068,
+                0.14906160370249236,
+                0.01634102754643956
+            ]
+        },
+        "1024": {
+            "name": "1024",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.768142676504024,
+                0.20038500104581752,
+                0.03147232245015845
+            ]
+        },
+        "7022": {
+            "name": "7022",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.2839275006574398,
+                0.45427023801905286,
+                0.26180226132350737
+            ]
+        },
+        "2808": {
+            "name": "2808",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.5180404020132521,
+                0.363109267364946,
+                0.11885033062180196
+            ]
+        },
+        "5081": {
+            "name": "5081",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.685060203319399,
+                0.21793057153277065,
+                0.09700922514783034
+            ]
+        },
+        "5223": {
+            "name": "5223",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.8001480231893444,
+                0.15072521995073546,
+                0.04912675685992009
+            ]
+        },
+        "2538": {
+            "name": "2538",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.40230193977248946,
+                0.546020597314723,
+                0.05167746291278761
+            ]
+        },
+        "3916": {
+            "name": "3916",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.8058762131347793,
+                0.1941237868652207
+            ]
+        },
+        "3370": {
+            "name": "3370",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.9660831605852231,
+                0.033916839414776884
+            ]
+        },
+        "8408": {
+            "name": "8408",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.5879238676977795,
+                0.41207613230222057
+            ]
+        },
+        "3054": {
+            "name": "3054",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.8131573449074436,
+                0.18145780547271628,
+                0.005384849619840101
+            ]
+        },
+        "441": {
+            "name": "441",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.3197665636279286,
+                0.4301020375016344,
+                0.2501313988704369
+            ]
+        },
+        "4094": {
+            "name": "4094",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6197962025035321,
+                0.252687934035736,
+                0.1275158634607319
+            ]
+        },
+        "8057": {
+            "name": "8057",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6732050877234855,
+                0.30578001133460886,
+                0.021014900941905574
+            ]
+        },
+        "4541": {
+            "name": "4541",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.24753663092035813,
+                0.589125810779134,
+                0.16333755830050792
+            ]
+        },
+        "1472": {
+            "name": "1472",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.5806190895233078,
+                0.33451846427033705,
+                0.08486244620635512
+            ]
+        },
+        "766": {
+            "name": "766",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.9788499328045788,
+                0.02115006719542123
+            ]
+        },
+        "6380": {
+            "name": "6380",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.51329175529365,
+                0.33627908785659133,
+                0.1504291568497587
+            ]
+        },
+        "4478": {
+            "name": "4478",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.7848654407154295,
+                0.16837693600112974,
+                0.04675762328344089
+            ]
+        },
+        "9224": {
+            "name": "9224",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.8517634744391989,
+                0.14823652556080108
+            ]
+        },
+        "1387": {
+            "name": "1387",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.5826908464206302,
+                0.4173091535793699
+            ]
+        },
+        "5615": {
+            "name": "5615",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 0,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0
+            ],
+            "distribution_probabilities": [
+                1.0
+            ]
+        },
+        "7531": {
+            "name": "7531",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.34710557547330273,
+                0.45531211915482567,
+                0.19758230537187166
+            ]
+        },
+        "193": {
+            "name": "193",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 1,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1
+            ],
+            "distribution_probabilities": [
+                0.9191285908291084,
+                0.08087140917089157
+            ]
+        },
+        "6365": {
+            "name": "6365",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 0,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0
+            ],
+            "distribution_probabilities": [
+                1.0
+            ]
+        },
+        "3954": {
+            "name": "3954",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.46059696844080067,
+                0.3518021771746032,
+                0.1876008543845961
+            ]
+        },
+        "358": {
+            "name": "358",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.6511079380695994,
+                0.3336835383068819,
+                0.015208523623518655
+            ]
+        },
+        "2718": {
+            "name": "2718",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.784569344971902,
+                0.18436451253435035,
+                0.031066142493747697
+            ]
+        },
+        "1718": {
+            "name": "1718",
+            "data_type": "Integer",
+            "is_categorical": true,
+            "is_candidate_key": false,
+            "min": 0,
+            "max": 2,
+            "missing_rate": 0.0,
+            "distribution_bins": [
+                0,
+                1,
+                2
+            ],
+            "distribution_probabilities": [
+                0.8203457316706664,
+                0.16080130663666964,
+                0.01885296169266402
+            ]
+        }
+    },
+    "bayesian_network": [
+        [
+            "1209",
+            [
+                "608"
+            ]
+        ],
+        [
+            "5081",
+            [
+                "1209",
+                "608"
+            ]
+        ],
+        [
+            "4538",
+            [
+                "1209",
+                "608"
+            ]
+        ],
+        [
+            "3924",
+            [
+                "5081",
+                "1209"
+            ]
+        ],
+        [
+            "7807",
+            [
+                "5081",
+                "608"
+            ]
+        ],
+        [
+            "7022",
+            [
+                "7807",
+                "5081"
+            ]
+        ],
+        [
+            "465",
+            [
+                "7022",
+                "5081"
+            ]
+        ],
+        [
+            "9224",
+            [
+                "7022",
+                "5081"
+            ]
+        ],
+        [
+            "3954",
+            [
+                "465",
+                "7807"
+            ]
+        ],
+        [
+            "7844",
+            [
+                "465",
+                "608"
+            ]
+        ],
+        [
+            "8408",
+            [
+                "3954",
+                "7022"
+            ]
+        ],
+        [
+            "3003",
+            [
+                "8408",
+                "608"
+            ]
+        ],
+        [
+            "5716",
+            [
+                "8408",
+                "465"
+            ]
+        ],
+        [
+            "6380",
+            [
+                "5716",
+                "8408"
+            ]
+        ],
+        [
+            "4455",
+            [
+                "7844",
+                "7807"
+            ]
+        ],
+        [
+            "8013",
+            [
+                "4455",
+                "5716"
+            ]
+        ],
+        [
+            "265",
+            [
+                "6380",
+                "608"
+            ]
+        ],
+        [
+            "3054",
+            [
+                "7844",
+                "3954"
+            ]
+        ],
+        [
+            "2538",
+            [
+                "6380",
+                "9224"
+            ]
+        ],
+        [
+            "4094",
+            [
+                "3054",
+                "3954"
+            ]
+        ],
+        [
+            "2718",
+            [
+                "6380",
+                "5081"
+            ]
+        ],
+        [
+            "5223",
+            [
+                "5716",
+                "1209"
+            ]
+        ],
+        [
+            "9357",
+            [
+                "3924",
+                "608"
+            ]
+        ],
+        [
+            "1024",
+            [
+                "7844",
+                "465"
+            ]
+        ],
+        [
+            "7789",
+            [
+                "9357",
+                "4094"
+            ]
+        ],
+        [
+            "8468",
+            [
+                "3954",
+                "608"
+            ]
+        ],
+        [
+            "640",
+            [
+                "5223",
+                "7844"
+            ]
+        ],
+        [
+            "1387",
+            [
+                "5223",
+                "2538"
+            ]
+        ],
+        [
+            "494",
+            [
+                "3954",
+                "5081"
+            ]
+        ],
+        [
+            "8507",
+            [
+                "4538",
+                "5081"
+            ]
+        ],
+        [
+            "7544",
+            [
+                "5716",
+                "465"
+            ]
+        ],
+        [
+            "2808",
+            [
+                "1024",
+                "1209"
+            ]
+        ],
+        [
+            "94",
+            [
+                "7844",
+                "7807"
+            ]
+        ],
+        [
+            "1068",
+            [
+                "7807",
+                "608"
+            ]
+        ],
+        [
+            "8914",
+            [
+                "9357",
+                "4538"
+            ]
+        ],
+        [
+            "1417",
+            [
+                "1024",
+                "3954"
+            ]
+        ],
+        [
+            "7671",
+            [
+                "94",
+                "465"
+            ]
+        ],
+        [
+            "7575",
+            [
+                "5081",
+                "1209"
+            ]
+        ],
+        [
+            "7531",
+            [
+                "2538",
+                "3954"
+            ]
+        ],
+        [
+            "1482",
+            [
+                "1417",
+                "5716"
+            ]
+        ],
+        [
+            "1305",
+            [
+                "7531",
+                "8468"
+            ]
+        ],
+        [
+            "4714",
+            [
+                "494",
+                "7844"
+            ]
+        ],
+        [
+            "2058",
+            [
+                "3003",
+                "7844"
+            ]
+        ],
+        [
+            "4252",
+            [
+                "7671",
+                "9357"
+            ]
+        ],
+        [
+            "6083",
+            [
+                "4252",
+                "4455"
+            ]
+        ],
+        [
+            "5441",
+            [
+                "2718",
+                "7807"
+            ]
+        ],
+        [
+            "6717",
+            [
+                "4252",
+                "7575"
+            ]
+        ],
+        [
+            "7316",
+            [
+                "1482",
+                "8468"
+            ]
+        ],
+        [
+            "4630",
+            [
+                "6083",
+                "5716"
+            ]
+        ],
+        [
+            "2174",
+            [
+                "6717",
+                "4094"
+            ]
+        ],
+        [
+            "288",
+            [
+                "6717",
+                "7671"
+            ]
+        ],
+        [
+            "5377",
+            [
+                "3003",
+                "7022"
+            ]
+        ],
+        [
+            "1718",
+            [
+                "1024",
+                "7844"
+            ]
+        ],
+        [
+            "2785",
+            [
+                "2058",
+                "9357"
+            ]
+        ],
+        [
+            "9168",
+            [
+                "5377",
+                "3954"
+            ]
+        ],
+        [
+            "1297",
+            [
+                "94",
+                "3924"
+            ]
+        ],
+        [
+            "3916",
+            [
+                "7844",
+                "608"
+            ]
+        ],
+        [
+            "4378",
+            [
+                "1417",
+                "7022"
+            ]
+        ],
+        [
+            "1877",
+            [
+                "4378",
+                "2785"
+            ]
+        ],
+        [
+            "6540",
+            [
+                "3916",
+                "7789"
+            ]
+        ],
+        [
+            "8649",
+            [
+                "6717",
+                "465"
+            ]
+        ],
+        [
+            "6640",
+            [
+                "94",
+                "265"
+            ]
+        ],
+        [
+            "3370",
+            [
+                "6380",
+                "3924"
+            ]
+        ],
+        [
+            "1926",
+            [
+                "494",
+                "265"
+            ]
+        ],
+        [
+            "500",
+            [
+                "4714",
+                "7807"
+            ]
+        ],
+        [
+            "5643",
+            [
+                "6717",
+                "6083"
+            ]
+        ],
+        [
+            "1472",
+            [
+                "1877",
+                "7807"
+            ]
+        ],
+        [
+            "1166",
+            [
+                "1417",
+                "5716"
+            ]
+        ],
+        [
+            "4541",
+            [
+                "3916",
+                "4714"
+            ]
+        ],
+        [
+            "5947",
+            [
+                "640",
+                "4538"
+            ]
+        ],
+        [
+            "358",
+            [
+                "4541",
+                "3054"
+            ]
+        ],
+        [
+            "227",
+            [
+                "5441",
+                "8408"
+            ]
+        ],
+        [
+            "193",
+            [
+                "7575",
+                "94"
+            ]
+        ],
+        [
+            "2724",
+            [
+                "7671",
+                "3924"
+            ]
+        ],
+        [
+            "441",
+            [
+                "4378",
+                "3954"
+            ]
+        ],
+        [
+            "3154",
+            [
+                "94",
+                "3054"
+            ]
+        ],
+        [
+            "4156",
+            [
+                "1718",
+                "6083"
+            ]
+        ],
+        [
+            "2352",
+            [
+                "4541",
+                "1305"
+            ]
+        ],
+        [
+            "3425",
+            [
+                "1166",
+                "1877"
+            ]
+        ],
+        [
+            "4339",
+            [
+                "5716",
+                "7844"
+            ]
+        ],
+        [
+            "1806",
+            [
+                "1877",
+                "7807"
+            ]
+        ],
+        [
+            "6240",
+            [
+                "441",
+                "1718"
+            ]
+        ],
+        [
+            "1857",
+            [
+                "2724",
+                "7807"
+            ]
+        ],
+        [
+            "8057",
+            [
+                "8649",
+                "9357"
+            ]
+        ],
+        [
+            "3787",
+            [
+                "8649",
+                "1305"
+            ]
+        ],
+        [
+            "7077",
+            [
+                "7844",
+                "465"
+            ]
+        ],
+        [
+            "3182",
+            [
+                "6083",
+                "7544"
+            ]
+        ],
+        [
+            "2628",
+            [
+                "3425",
+                "7531"
+            ]
+        ],
+        [
+            "766",
+            [
+                "3425",
+                "8649"
+            ]
+        ],
+        [
+            "6365",
+            [
+                "6083",
+                "1209"
+            ]
+        ],
+        [
+            "7347",
+            [
+                "193",
+                "608"
+            ]
+        ],
+        [
+            "4478",
+            [
+                "9357",
+                "3054"
+            ]
+        ],
+        [
+            "2660",
+            [
+                "7077",
+                "5643"
+            ]
+        ],
+        [
+            "8402",
+            [
+                "1387",
+                "4455"
+            ]
+        ],
+        [
+            "8469",
+            [
+                "1482",
+                "1024"
+            ]
+        ],
+        [
+            "5820",
+            [
+                "1718",
+                "5441"
+            ]
+        ],
+        [
+            "5685",
+            [
+                "4378",
+                "4630"
+            ]
+        ],
+        [
+            "5707",
+            [
+                "5820",
+                "1209"
+            ]
+        ],
+        [
+            "5615",
+            [
+                "766",
+                "3916"
+            ]
+        ]
+    ],
+    "conditional_probabilities": {
+        "608": [
+            0.5297472984500355,
+            0.3717126028893609,
+            0.09854009866060354
+        ],
+        "1209": {
+            "[0]": [
+                0.7041911863342996,
+                0.2319014489989396,
+                0.06390736466676082
+            ],
+            "[1]": [
+                0.48865337379738266,
+                0.44745656235746856,
+                0.06389006384514884
+            ],
+            "[2]": [
+                0.720935085382708,
+                0.26052697752162113,
+                0.01853793709567087
+            ]
+        },
+        "5081": {
+            "[0, 0]": [
+                0.9099684710401007,
+                0.09003152895989928,
+                0.0
+            ],
+            "[0, 1]": [
+                0.34051699994676027,
+                0.3068869846800374,
+                0.35259601537320234
+            ],
+            "[0, 2]": [
+                0.4611226006879065,
+                0.2906581629499929,
+                0.24821923636210058
+            ],
+            "[1, 0]": [
+                0.9336791550004281,
+                0.06632084499957192,
+                0.0
+            ],
+            "[1, 1]": [
+                0.40957224225937816,
+                0.5904277577406217,
+                0.0
+            ],
+            "[1, 2]": [
+                0.07359618367017551,
+                0.0003260018414047106,
+                0.9260778144884197
+            ],
+            "[2, 0]": [
+                0.4909462964732349,
+                0.4945065976134067,
+                0.014547105913358439
+            ],
+            "[2, 1]": [
+                0.8091522565733965,
+                0.0,
+                0.1908477434266035
+            ],
+            "[2, 2]": [
+                0.5867103003267387,
+                0.0,
+                0.4132896996732613
+            ]
+        },
+        "4538": {
+            "[0, 0]": [
+                0.915304391187388,
+                0.08145235187921993,
+                0.003243256933392089
+            ],
+            "[0, 1]": [
+                0.9951792068810386,
+                0.004820793118961549,
+                0.0
+            ],
+            "[0, 2]": [
+                0.4749152439261716,
+                0.5170394318387593,
+                0.008045324235068929
+            ],
+            "[1, 0]": [
+                0.8455384522150302,
+                0.004416168974605032,
+                0.15004537881036475
+            ],
+            "[1, 1]": [
+                0.7797424046045806,
+                0.19042508383886103,
+                0.029832511556558312
+            ],
+            "[1, 2]": [
+                0.7578651259007464,
+                0.0,
+                0.24213487409925358
+            ],
+            "[2, 0]": [
+                0.9551314170490023,
+                0.0448685829509976,
+                0.0
+            ],
+            "[2, 1]": [
+                0.13467188488705206,
+                0.41751844757991596,
+                0.44780966753303203
+            ],
+            "[2, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ]
+        },
+        "3924": {
+            "[0, 0]": [
+                0.43023702421833715,
+                0.41863153153916566,
+                0.15113144424249708
+            ],
+            "[0, 1]": [
+                0.46245328881467557,
+                0.5375467111853245,
+                0.0
+            ],
+            "[0, 2]": [
+                0.0,
+                0.5282693156883925,
+                0.47173068431160753
+            ],
+            "[1, 0]": [
+                0.30367255564945045,
+                0.6114325741103762,
+                0.0848948702401734
+            ],
+            "[1, 1]": [
+                0.4073578117586576,
+                0.5926421882413423,
+                0.0
+            ],
+            "[1, 2]": [
+                0.13132212404687751,
+                0.8595165847000283,
+                0.009161291253094098
+            ],
+            "[2, 0]": [
+                0.0,
+                0.9151863639731775,
+                0.08481363602682254
+            ],
+            "[2, 1]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 2]": [
+                0.7867306026656052,
+                0.21326939733439468,
+                0.0
+            ]
+        },
+        "7807": {
+            "[0, 0]": [
+                0.7962007557753701,
+                0.13574101154999474,
+                0.06805823267463514
+            ],
+            "[0, 1]": [
+                0.5218316673208014,
+                0.4727180774821524,
+                0.005450255197046069
+            ],
+            "[0, 2]": [
+                0.00666485724329156,
+                0.9377465132696463,
+                0.05558862948706221
+            ],
+            "[1, 0]": [
+                0.666288311812037,
+                0.33371168818796304,
+                0.0
+            ],
+            "[1, 1]": [
+                0.2996797029406884,
+                0.6866698496283197,
+                0.013650447430991839
+            ],
+            "[1, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ],
+            "[2, 0]": [
+                0.3333333333333333,
+                0.3333333333333333,
+                0.3333333333333333
+            ],
+            "[2, 1]": [
+                0.5459870783342413,
+                0.24597034862555026,
+                0.20804257304020837
+            ],
+            "[2, 2]": [
+                0.2740088226878513,
+                0.0,
+                0.7259911773121488
+            ]
+        },
+        "7022": {
+            "[0, 0]": [
+                0.2382181412528615,
+                0.3758722906231347,
+                0.38590956812400384
+            ],
+            "[0, 1]": [
+                0.3118437622085812,
+                0.6745515567364927,
+                0.013604681054926104
+            ],
+            "[0, 2]": [
+                0.28981121252464287,
+                0.0,
+                0.7101887874753571
+            ],
+            "[1, 0]": [
+                0.19321259933147228,
+                0.6008906809675364,
+                0.20589671970099124
+            ],
+            "[1, 1]": [
+                0.49333176164169135,
+                0.35816909177880196,
+                0.14849914657950666
+            ],
+            "[1, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ],
+            "[2, 0]": [
+                0.18106659765237354,
+                0.8189334023476266,
+                0.0
+            ],
+            "[2, 1]": [
+                0.784246993527647,
+                0.21575300647235288,
+                0.0
+            ],
+            "[2, 2]": [
+                0.9960507757409456,
+                0.003949224259054415,
+                0.0
+            ]
+        },
+        "465": {
+            "[0, 0]": [
+                0.3235687075610108,
+                0.4540683293202974,
+                0.22236296311869166
+            ],
+            "[0, 1]": [
+                0.20075991091994042,
+                0.3840637543483841,
+                0.41517633473167564
+            ],
+            "[0, 2]": [
+                0.7571805185101991,
+                0.24049122643460855,
+                0.0023282550551924305
+            ],
+            "[1, 0]": [
+                0.19883526191997372,
+                0.6972381637141611,
+                0.10392657436586498
+            ],
+            "[1, 1]": [
+                0.30775655485741155,
+                0.27372629506645096,
+                0.4185171500761375
+            ],
+            "[1, 2]": [
+                0.7047349483859667,
+                0.0,
+                0.2952650516140332
+            ],
+            "[2, 0]": [
+                0.2313882158524584,
+                0.5978864746954967,
+                0.17072530945204503
+            ],
+            "[2, 1]": [
+                0.0,
+                0.9657113625441998,
+                0.03428863745580023
+            ],
+            "[2, 2]": [
+                0.22371852012032903,
+                0.39653111817819464,
+                0.3797503617014764
+            ]
+        },
+        "9224": {
+            "[0, 0]": [
+                0.834005697064477,
+                0.16599430293552286
+            ],
+            "[0, 1]": [
+                0.802139948175652,
+                0.19786005182434793
+            ],
+            "[0, 2]": [
+                0.38175944262524286,
+                0.6182405573747571
+            ],
+            "[1, 0]": [
+                0.9679651855581785,
+                0.032034814441821526
+            ],
+            "[1, 1]": [
+                0.7885082668701432,
+                0.21149173312985672
+            ],
+            "[1, 2]": [
+                0.22889628860569963,
+                0.7711037113943003
+            ],
+            "[2, 0]": [
+                0.9363963149061837,
+                0.06360368509381638
+            ],
+            "[2, 1]": [
+                0.7751876474850767,
+                0.22481235251492318
+            ],
+            "[2, 2]": [
+                0.9735244634063039,
+                0.02647553659369615
+            ]
+        },
+        "3954": {
+            "[0, 0]": [
+                0.3144666653927543,
+                0.47067731536386054,
+                0.21485601924338527
+            ],
+            "[0, 1]": [
+                0.47287334882437887,
+                0.5271266511756211,
+                0.0
+            ],
+            "[0, 2]": [
+                0.5396362529657794,
+                0.4603637470342205,
+                0.0
+            ],
+            "[1, 0]": [
+                0.684037515720369,
+                0.21386277007910107,
+                0.10209971420053006
+            ],
+            "[1, 1]": [
+                0.2552415160896438,
+                0.2976672484175012,
+                0.447091235492855
+            ],
+            "[1, 2]": [
+                0.5962177075316699,
+                0.0,
+                0.4037822924683302
+            ],
+            "[2, 0]": [
+                0.45612707484616405,
+                0.4903320354046482,
+                0.05354088974918776
+            ],
+            "[2, 1]": [
+                0.0965506289537335,
+                0.6331227007592259,
+                0.2703266702870405
+            ],
+            "[2, 2]": [
+                1.0,
+                0.0,
+                0.0
+            ]
+        },
+        "7844": {
+            "[0, 0]": [
+                0.32103641337864,
+                0.6572620468050493,
+                0.021701539816310653
+            ],
+            "[0, 1]": [
+                0.17559706205173095,
+                0.5790083084845203,
+                0.24539462946374885
+            ],
+            "[0, 2]": [
+                0.4617223812264065,
+                0.47860890243822146,
+                0.05966871633537205
+            ],
+            "[1, 0]": [
+                0.3959849837508565,
+                0.5020582566374822,
+                0.10195675961166144
+            ],
+            "[1, 1]": [
+                0.2195737085047754,
+                0.4994583850632757,
+                0.2809679064319489
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 0]": [
+                0.12576398722567622,
+                0.42937949620369326,
+                0.4448565165706305
+            ],
+            "[2, 1]": [
+                0.5186859553421724,
+                0.0,
+                0.4813140446578276
+            ],
+            "[2, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ]
+        },
+        "8408": {
+            "[0, 0]": [
+                0.5646477250934643,
+                0.43535227490653583
+            ],
+            "[0, 1]": [
+                0.9275649330003062,
+                0.0724350669996938
+            ],
+            "[0, 2]": [
+                0.8844469794765034,
+                0.11555302052349653
+            ],
+            "[1, 0]": [
+                0.3683210877473573,
+                0.6316789122526428
+            ],
+            "[1, 1]": [
+                0.2874677651775029,
+                0.7125322348224971
+            ],
+            "[1, 2]": [
+                0.5641143791074764,
+                0.4358856208925236
+            ],
+            "[2, 0]": [
+                0.0,
+                1.0
+            ],
+            "[2, 1]": [
+                0.18315198359520124,
+                0.8168480164047986
+            ],
+            "[2, 2]": [
+                0.7658976607105333,
+                0.23410233928946672
+            ]
+        },
+        "3003": {
+            "[0, 0]": [
+                1.0,
+                0.0
+            ],
+            "[0, 1]": [
+                0.5548442159957931,
+                0.44515578400420674
+            ],
+            "[0, 2]": [
+                1.0,
+                0.0
+            ],
+            "[1, 0]": [
+                0.745977665517998,
+                0.25402233448200195
+            ],
+            "[1, 1]": [
+                0.7134201035442512,
+                0.2865798964557488
+            ],
+            "[1, 2]": [
+                0.9958604941139559,
+                0.0041395058860441035
+            ]
+        },
+        "5716": {
+            "[0, 0]": [
+                0.32246791312373135,
+                0.5712376591551732,
+                0.1062944277210955
+            ],
+            "[0, 1]": [
+                0.7999932188175073,
+                0.13814722310934052,
+                0.061859558073152236
+            ],
+            "[0, 2]": [
+                0.7882243451024307,
+                0.21177565489756928,
+                0.0
+            ],
+            "[1, 0]": [
+                0.1616572380185816,
+                0.43376807491906866,
+                0.4045746870623497
+            ],
+            "[1, 1]": [
+                0.5921951794942273,
+                0.364901714298411,
+                0.04290310620736154
+            ],
+            "[1, 2]": [
+                0.5479569330010378,
+                0.41815212632858845,
+                0.033890940670373834
+            ]
+        },
+        "6380": {
+            "[0, 0]": [
+                0.8573558722570177,
+                0.10046782151097867,
+                0.04217630623200366
+            ],
+            "[0, 1]": [
+                0.3300113891989174,
+                0.2618672454740264,
+                0.4081213653270562
+            ],
+            "[1, 0]": [
+                0.4295794364559324,
+                0.46171657703036184,
+                0.10870398651370583
+            ],
+            "[1, 1]": [
+                0.166627988277958,
+                0.833372011722042,
+                0.0
+            ],
+            "[2, 0]": [
+                0.10699033096917164,
+                0.669608184675149,
+                0.22340148435567933
+            ],
+            "[2, 1]": [
+                0.0,
+                0.4126143022057414,
+                0.5873856977942586
+            ]
+        },
+        "4455": {
+            "[0, 0]": [
+                0.3133119035490476,
+                0.49045432697713087,
+                0.19623376947382162
+            ],
+            "[0, 1]": [
+                0.8907715005406991,
+                0.06797055376472061,
+                0.04125794569458032
+            ],
+            "[0, 2]": [
+                0.5170108134240736,
+                0.4829891865759263,
+                0.0
+            ],
+            "[1, 0]": [
+                0.25575619746219136,
+                0.5346061208585466,
+                0.20963768167926217
+            ],
+            "[1, 1]": [
+                0.2332686709289869,
+                0.5458052799293291,
+                0.22092604914168387
+            ],
+            "[1, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ],
+            "[2, 0]": [
+                0.18045589621722902,
+                0.38559127676176896,
+                0.433952827021002
+            ],
+            "[2, 1]": [
+                0.4820524126143938,
+                0.5179475873856061,
+                0.0
+            ],
+            "[2, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ]
+        },
+        "8013": {
+            "[0, 0]": [
+                0.9099167677445846,
+                0.0,
+                0.09008323225541533
+            ],
+            "[0, 1]": [
+                0.42366582448625156,
+                0.5650488638775336,
+                0.011285311636214847
+            ],
+            "[0, 2]": [
+                0.0,
+                0.9966896055614288,
+                0.003310394438571083
+            ],
+            "[1, 0]": [
+                0.9424535145912493,
+                0.0014295213838637127,
+                0.05611696402488696
+            ],
+            "[1, 1]": [
+                0.6731967318723449,
+                0.32680326812765503,
+                0.0
+            ],
+            "[1, 2]": [
+                0.8962074131434917,
+                0.10379258685650836,
+                0.0
+            ],
+            "[2, 0]": [
+                0.7336261071025,
+                0.24194012322057706,
+                0.02443376967692293
+            ],
+            "[2, 1]": [
+                0.8093310265411723,
+                0.11937310143631837,
+                0.07129587202250934
+            ],
+            "[2, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ]
+        },
+        "265": {
+            "[0, 0]": [
+                0.7085859058589125,
+                0.2914140941410876
+            ],
+            "[0, 1]": [
+                0.9842623241491646,
+                0.01573767585083543
+            ],
+            "[0, 2]": [
+                0.9550830773648293,
+                0.04491692263517063
+            ],
+            "[1, 0]": [
+                0.694819762784328,
+                0.305180237215672
+            ],
+            "[1, 1]": [
+                1.0,
+                0.0
+            ],
+            "[1, 2]": [
+                0.06781902090600002,
+                0.932180979094
+            ],
+            "[2, 0]": [
+                0.7947383054387405,
+                0.20526169456125945
+            ],
+            "[2, 1]": [
+                0.7036837744632907,
+                0.2963162255367094
+            ],
+            "[2, 2]": [
+                0.0,
+                1.0
+            ]
+        },
+        "3054": {
+            "[0, 0]": [
+                0.7003189378878452,
+                0.2661147908490691,
+                0.03356627126308581
+            ],
+            "[0, 1]": [
+                0.7683203325048849,
+                0.2213358421242853,
+                0.010343825370829708
+            ],
+            "[0, 2]": [
+                0.8375292296449925,
+                0.16247077035500757,
+                0.0
+            ],
+            "[1, 0]": [
+                0.8005045555797047,
+                0.19949544442029526,
+                0.0
+            ],
+            "[1, 1]": [
+                0.9942868976911342,
+                0.0,
+                0.005713102308865847
+            ],
+            "[1, 2]": [
+                0.3362784751338781,
+                0.3982550568755451,
+                0.26546646799057677
+            ],
+            "[2, 0]": [
+                0.8447207055348841,
+                0.14855331033489969,
+                0.006725984130216306
+            ],
+            "[2, 1]": [
+                0.9950221297667182,
+                0.0,
+                0.004977870233281865
+            ],
+            "[2, 2]": [
+                0.47280461248223915,
+                0.5271953875177607,
+                0.0
+            ]
+        },
+        "2538": {
+            "[0, 0]": [
+                0.2937011632715424,
+                0.6724368189681508,
+                0.033862017760306826
+            ],
+            "[0, 1]": [
+                0.7196431169159608,
+                0.24701729428077976,
+                0.03333958880325933
+            ],
+            "[1, 0]": [
+                0.18790586607845658,
+                0.7314938644883726,
+                0.08060026943317077
+            ],
+            "[1, 1]": [
+                0.5796300478235233,
+                0.197573609289298,
+                0.22279634288717862
+            ],
+            "[2, 0]": [
+                0.7648835785145608,
+                0.22046156669859612,
+                0.014654854786843082
+            ],
+            "[2, 1]": [
+                0.3512419261391854,
+                0.22015069157236064,
+                0.4286073822884539
+            ]
+        },
+        "4094": {
+            "[0, 0]": [
+                0.862126486524674,
+                0.13397237791093594,
+                0.0039011355643900794
+            ],
+            "[0, 1]": [
+                0.4836409683951911,
+                0.31368438969806045,
+                0.20267464190674844
+            ],
+            "[0, 2]": [
+                0.42656889701070416,
+                0.366832909938461,
+                0.2065981930508348
+            ],
+            "[1, 0]": [
+                0.7821266733263612,
+                0.0019546430964253836,
+                0.21591868357721333
+            ],
+            "[1, 1]": [
+                0.0,
+                0.7018899134537936,
+                0.2981100865462064
+            ],
+            "[1, 2]": [
+                0.31061895947835566,
+                0.6893810405216443,
+                0.0
+            ],
+            "[2, 0]": [
+                0.0,
+                0.0,
+                1.0
+            ],
+            "[2, 1]": [
+                0.15490377914642564,
+                0.13184312583263463,
+                0.7132530950209398
+            ],
+            "[2, 2]": [
+                0.0,
+                0.9605057186820973,
+                0.03949428131790275
+            ]
+        },
+        "2718": {
+            "[0, 0]": [
+                0.9359118193896386,
+                0.0640881806103614,
+                0.0
+            ],
+            "[0, 1]": [
+                0.48841449463834674,
+                0.2778634316206221,
+                0.2337220737410312
+            ],
+            "[0, 2]": [
+                0.4694607316411075,
+                0.5305392683588923,
+                0.0
+            ],
+            "[1, 0]": [
+                0.5393344615207214,
+                0.36172977356370833,
+                0.09893576491557021
+            ],
+            "[1, 1]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[1, 2]": [
+                0.43977025243412843,
+                0.5380702904165544,
+                0.022159457149317236
+            ],
+            "[2, 0]": [
+                0.6201982002206625,
+                0.3449092145128574,
+                0.03489258526647996
+            ],
+            "[2, 1]": [
+                0.8397178075446149,
+                0.15317693315571218,
+                0.007105259299672933
+            ],
+            "[2, 2]": [
+                0.32828458905278485,
+                0.18879944139819488,
+                0.4829159695490202
+            ]
+        },
+        "5223": {
+            "[0, 0]": [
+                0.7766873079891722,
+                0.147416009064431,
+                0.07589668294639677
+            ],
+            "[0, 1]": [
+                0.8597708830593874,
+                0.1402291169406125,
+                0.0
+            ],
+            "[0, 2]": [
+                0.8595947810628399,
+                0.14040521893715996,
+                0.0
+            ],
+            "[1, 0]": [
+                0.7077534205631295,
+                0.21061910038259912,
+                0.08162747905427138
+            ],
+            "[1, 1]": [
+                0.8448773183610415,
+                0.1343306093310296,
+                0.02079207230792879
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 0]": [
+                0.7756444922514448,
+                0.1617918034141192,
+                0.06256370433443588
+            ],
+            "[2, 1]": [
+                0.9722087698849399,
+                0.024360582350688453,
+                0.0034306477643716977
+            ],
+            "[2, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ]
+        },
+        "9357": {
+            "[0, 0]": [
+                0.7546923963603462,
+                0.20229058989969897,
+                0.043017013739954806
+            ],
+            "[0, 1]": [
+                0.30934357507260174,
+                0.33064217790940986,
+                0.36001424701798834
+            ],
+            "[0, 2]": [
+                0.0,
+                0.513806564396257,
+                0.4861934356037429
+            ],
+            "[1, 0]": [
+                0.6704612059496443,
+                0.32914738462356463,
+                0.0003914094267909946
+            ],
+            "[1, 1]": [
+                0.2845707472696233,
+                0.43208147219683246,
+                0.2833477805335443
+            ],
+            "[1, 2]": [
+                0.7751386829733896,
+                0.22486131702661044,
+                0.0
+            ],
+            "[2, 0]": [
+                0.9716635544874984,
+                0.009747409079831492,
+                0.01858903643267012
+            ],
+            "[2, 1]": [
+                0.0,
+                1.0,
+                0.0
+            ],
+            "[2, 2]": [
+                0.3093727096831156,
+                0.17022986060874382,
+                0.5203974297081406
+            ]
+        },
+        "1024": {
+            "[0, 0]": [
+                0.5954302254146585,
+                0.38013366796152287,
+                0.024436106623818617
+            ],
+            "[0, 1]": [
+                0.5905591589082133,
+                0.40944084109178663,
+                0.0
+            ],
+            "[0, 2]": [
+                0.2447772554644825,
+                0.3541212899257392,
+                0.40110145460977825
+            ],
+            "[1, 0]": [
+                0.7261043712123207,
+                0.2232391375904811,
+                0.05065649119719812
+            ],
+            "[1, 1]": [
+                0.9973736681484628,
+                0.0,
+                0.0026263318515371485
+            ],
+            "[1, 2]": [
+                0.6569015164163123,
+                0.048985641685751126,
+                0.29411284189793657
+            ],
+            "[2, 0]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 1]": [
+                0.9666523258190035,
+                0.018377877529824237,
+                0.014969796651172412
+            ],
+            "[2, 2]": [
+                0.6595159732367757,
+                0.34048402676322437,
+                0.0
+            ]
+        },
+        "7789": {
+            "[0, 0]": [
+                0.965554938345909,
+                0.0344450616540909
+            ],
+            "[0, 1]": [
+                0.15634888650462886,
+                0.8436511134953711
+            ],
+            "[0, 2]": [
+                1.0,
+                0.0
+            ],
+            "[1, 0]": [
+                0.9081505214241264,
+                0.09184947857587342
+            ],
+            "[1, 1]": [
+                0.7410465686872953,
+                0.2589534313127047
+            ],
+            "[1, 2]": [
+                0.6350246779991441,
+                0.36497532200085586
+            ],
+            "[2, 0]": [
+                0.0,
+                1.0
+            ],
+            "[2, 1]": [
+                0.6438087329994473,
+                0.3561912670005528
+            ],
+            "[2, 2]": [
+                0.30532834267026987,
+                0.6946716573297301
+            ]
+        },
+        "8468": {
+            "[0, 0]": [
+                1.0
+            ],
+            "[0, 1]": [
+                1.0
+            ],
+            "[0, 2]": [
+                1.0
+            ],
+            "[1, 0]": [
+                1.0
+            ],
+            "[1, 1]": [
+                1.0
+            ],
+            "[1, 2]": [
+                1.0
+            ],
+            "[2, 0]": [
+                1.0
+            ],
+            "[2, 1]": [
+                1.0
+            ],
+            "[2, 2]": [
+                1.0
+            ]
+        },
+        "640": {
+            "[0, 0]": [
+                0.8824497394952504,
+                0.11755026050474959
+            ],
+            "[0, 1]": [
+                0.812516428686709,
+                0.18748357131329096
+            ],
+            "[0, 2]": [
+                0.7779369928492934,
+                0.22206300715070654
+            ],
+            "[1, 0]": [
+                0.6192848650473906,
+                0.3807151349526094
+            ],
+            "[1, 1]": [
+                0.9880768907118065,
+                0.011923109288193408
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0
+            ],
+            "[2, 0]": [
+                1.0,
+                0.0
+            ],
+            "[2, 1]": [
+                0.007193237555562918,
+                0.9928067624444371
+            ],
+            "[2, 2]": [
+                1.0,
+                0.0
+            ]
+        },
+        "1387": {
+            "[0, 0]": [
+                0.6499794321731389,
+                0.35002056782686114
+            ],
+            "[0, 1]": [
+                0.6101716232845811,
+                0.389828376715419
+            ],
+            "[0, 2]": [
+                1.0,
+                0.0
+            ],
+            "[1, 0]": [
+                0.14948419401643667,
+                0.8505158059835634
+            ],
+            "[1, 1]": [
+                0.8057883579544436,
+                0.19421164204555644
+            ],
+            "[1, 2]": [
+                0.5,
+                0.5
+            ],
+            "[2, 0]": [
+                0.0,
+                1.0
+            ],
+            "[2, 1]": [
+                0.0,
+                1.0
+            ],
+            "[2, 2]": [
+                1.0,
+                0.0
+            ]
+        },
+        "494": {
+            "[0, 0]": [
+                1.0,
+                0.0
+            ],
+            "[0, 1]": [
+                0.9942554393860371,
+                0.005744560613962856
+            ],
+            "[0, 2]": [
+                0.4444418311969947,
+                0.5555581688030053
+            ],
+            "[1, 0]": [
+                0.8100020895771,
+                0.18999791042289998
+            ],
+            "[1, 1]": [
+                0.8063086677024693,
+                0.1936913322975307
+            ],
+            "[1, 2]": [
+                0.42723426580931995,
+                0.57276573419068
+            ],
+            "[2, 0]": [
+                0.5321184891729102,
+                0.46788151082708984
+            ],
+            "[2, 1]": [
+                1.0,
+                0.0
+            ],
+            "[2, 2]": [
+                1.0,
+                0.0
+            ]
+        },
+        "8507": {
+            "[0, 0]": [
+                0.888755407523865,
+                0.11124459247613505,
+                0.0
+            ],
+            "[0, 1]": [
+                0.8275231676133694,
+                0.08053346804047586,
+                0.0919433643461547
+            ],
+            "[0, 2]": [
+                0.3124219616762325,
+                0.6875780383237675,
+                0.0
+            ],
+            "[1, 0]": [
+                0.9898575024282191,
+                0.01014249757178085,
+                0.0
+            ],
+            "[1, 1]": [
+                0.02536234728129117,
+                0.32579724104725916,
+                0.6488404116714497
+            ],
+            "[1, 2]": [
+                0.1756305041633661,
+                0.8196971818363821,
+                0.0046723140002518015
+            ],
+            "[2, 0]": [
+                0.6880560182542843,
+                0.015618899052773473,
+                0.2963250826929423
+            ],
+            "[2, 1]": [
+                0.029286751285867458,
+                0.0,
+                0.9707132487141327
+            ],
+            "[2, 2]": [
+                0.3333333333333333,
+                0.3333333333333333,
+                0.3333333333333333
+            ]
+        },
+        "7544": {
+            "[0, 0]": [
+                0.22003522948872858,
+                0.5426501673559149,
+                0.23731460315535652
+            ],
+            "[0, 1]": [
+                0.5366833155572556,
+                0.4517027022095631,
+                0.011613982233181313
+            ],
+            "[0, 2]": [
+                0.5879221581816183,
+                0.4120778418183818,
+                0.0
+            ],
+            "[1, 0]": [
+                0.4015928597820134,
+                0.47490972197085896,
+                0.12349741824712762
+            ],
+            "[1, 1]": [
+                0.8751634172701672,
+                0.12483658272983279,
+                0.0
+            ],
+            "[1, 2]": [
+                0.32051846300291736,
+                0.6794815369970827,
+                0.0
+            ],
+            "[2, 0]": [
+                0.9115545864497917,
+                0.03632201588505362,
+                0.05212339766515478
+            ],
+            "[2, 1]": [
+                0.0,
+                0.8103005003976383,
+                0.18969949960236163
+            ],
+            "[2, 2]": [
+                1.0,
+                0.0,
+                0.0
+            ]
+        },
+        "2808": {
+            "[0, 0]": [
+                0.5683421070252935,
+                0.305688705869355,
+                0.1259691871053514
+            ],
+            "[0, 1]": [
+                0.4526878561757453,
+                0.4788859654392033,
+                0.06842617838505133
+            ],
+            "[0, 2]": [
+                0.02566661175811539,
+                0.0,
+                0.9743333882418845
+            ],
+            "[1, 0]": [
+                0.8218472684277467,
+                0.1781527315722534,
+                0.0
+            ],
+            "[1, 1]": [
+                0.3838037265354556,
+                0.6161962734645445,
+                0.0
+            ],
+            "[1, 2]": [
+                0.03261236726314293,
+                0.487609381103078,
+                0.4797782516337791
+            ],
+            "[2, 0]": [
+                0.43014211983380923,
+                0.4001597701231747,
+                0.1696981100430161
+            ],
+            "[2, 1]": [
+                0.0,
+                0.671238573247967,
+                0.32876142675203296
+            ],
+            "[2, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ]
+        },
+        "94": {
+            "[0, 0]": [
+                0.7002892338025117,
+                0.22924567298571089,
+                0.0704650932117773
+            ],
+            "[0, 1]": [
+                0.47566031922171215,
+                0.5019137006767731,
+                0.02242598010151495
+            ],
+            "[0, 2]": [
+                0.5039217204600009,
+                0.49607827953999895,
+                0.0
+            ],
+            "[1, 0]": [
+                0.48610000175988965,
+                0.40236440669540113,
+                0.11153559154470918
+            ],
+            "[1, 1]": [
+                0.7668739161742795,
+                0.0,
+                0.23312608382572048
+            ],
+            "[1, 2]": [
+                0.9791139166105239,
+                0.0,
+                0.020886083389475906
+            ],
+            "[2, 0]": [
+                0.723601529892565,
+                0.2684177973390312,
+                0.007980672768403852
+            ],
+            "[2, 1]": [
+                0.7044989702055531,
+                0.2189098453464522,
+                0.07659118444799468
+            ],
+            "[2, 2]": [
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "1068": {
+            "[0, 0]": [
+                0.8139553839648836,
+                0.1860446160351163,
+                0.0
+            ],
+            "[0, 1]": [
+                0.4008936619069219,
+                0.5720308822513647,
+                0.027075455841713614
+            ],
+            "[0, 2]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[1, 0]": [
+                0.73814078866505,
+                0.05437189167900264,
+                0.20748731965594738
+            ],
+            "[1, 1]": [
+                0.48337543925626536,
+                0.48271702266909705,
+                0.03390753807463773
+            ],
+            "[1, 2]": [
+                0.03687728609988776,
+                0.9631227139001123,
+                0.0
+            ],
+            "[2, 0]": [
+                0.8116299861195054,
+                0.0,
+                0.18837001388049454
+            ],
+            "[2, 1]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 2]": [
+                0.033304851785420087,
+                0.38847992462862324,
+                0.5782152235859567
+            ]
+        },
+        "8914": {
+            "[0, 0]": [
+                0.7505242196566353,
+                0.2494757803433648,
+                0.0
+            ],
+            "[0, 1]": [
+                0.996018956666011,
+                0.0,
+                0.003981043333988893
+            ],
+            "[0, 2]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[1, 0]": [
+                0.867769760367647,
+                0.11210438309395823,
+                0.02012585653839474
+            ],
+            "[1, 1]": [
+                0.6770566241212373,
+                0.03796795212016723,
+                0.2849754237585954
+            ],
+            "[1, 2]": [
+                0.08981685837388997,
+                0.43456029030555676,
+                0.4756228513205532
+            ],
+            "[2, 0]": [
+                0.9551908038981154,
+                0.02464844801277839,
+                0.020160748089106124
+            ],
+            "[2, 1]": [
+                0.7447002007106454,
+                0.25529979928935453,
+                0.0
+            ],
+            "[2, 2]": [
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "1417": {
+            "[0, 0]": [
+                0.30259585665824307,
+                0.5147053222707384,
+                0.1826988210710185
+            ],
+            "[0, 1]": [
+                0.31264363393699884,
+                0.3819199965233113,
+                0.30543636953968994
+            ],
+            "[0, 2]": [
+                0.22013190805989677,
+                0.1938592529655549,
+                0.5860088389745483
+            ],
+            "[1, 0]": [
+                0.0,
+                0.7071375043240008,
+                0.29286249567599915
+            ],
+            "[1, 1]": [
+                0.23136160061564662,
+                0.5273028280543874,
+                0.241335571329966
+            ],
+            "[1, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ],
+            "[2, 0]": [
+                0.4055340470030915,
+                0.4321666871922277,
+                0.16229926580468093
+            ],
+            "[2, 1]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 2]": [
+                0.9390916870245686,
+                0.0,
+                0.06090831297543134
+            ]
+        },
+        "7671": {
+            "[0, 0]": [
+                0.4876267138081109,
+                0.4865798328565308,
+                0.02579345333535837
+            ],
+            "[0, 1]": [
+                0.5777385707218812,
+                0.24255415887546386,
+                0.179707270402655
+            ],
+            "[0, 2]": [
+                0.7509578872045954,
+                0.24904211279540456,
+                0.0
+            ],
+            "[1, 0]": [
+                0.7161173865808087,
+                0.0,
+                0.2838826134191913
+            ],
+            "[1, 1]": [
+                0.5226938830721384,
+                0.36693139723990664,
+                0.11037471968795488
+            ],
+            "[1, 2]": [
+                0.33735515103282554,
+                0.6626448489671745,
+                0.0
+            ],
+            "[2, 0]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 1]": [
+                0.9720376148143911,
+                0.027962385185608857,
+                0.0
+            ],
+            "[2, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ]
+        },
+        "7575": {
+            "[0, 0]": [
+                0.8871562814798384,
+                0.11284371852016159,
+                0.0
+            ],
+            "[0, 1]": [
+                0.7624005406847492,
+                0.15816074635646554,
+                0.07943871295878532
+            ],
+            "[0, 2]": [
+                0.0,
+                0.48320854243580663,
+                0.5167914575641933
+            ],
+            "[1, 0]": [
+                0.6124720816213078,
+                0.3423379335256356,
+                0.04518998485305656
+            ],
+            "[1, 1]": [
+                0.14984434182596681,
+                0.7241137016481353,
+                0.1260419565258979
+            ],
+            "[1, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ],
+            "[2, 0]": [
+                0.5853006741426898,
+                0.4146993258573103,
+                0.0
+            ],
+            "[2, 1]": [
+                0.1984570011517716,
+                0.8015429988482284,
+                0.0
+            ],
+            "[2, 2]": [
+                0.21091250371598733,
+                0.0012721397150691801,
+                0.7878153565689435
+            ]
+        },
+        "7531": {
+            "[0, 0]": [
+                0.5521539474417221,
+                0.11623513807981153,
+                0.33161091447846647
+            ],
+            "[0, 1]": [
+                0.168289493702643,
+                0.534203751509706,
+                0.29750675478765093
+            ],
+            "[0, 2]": [
+                0.7362161884708248,
+                0.25807691476302935,
+                0.005706896766145679
+            ],
+            "[1, 0]": [
+                0.23427183711136756,
+                0.6975708799372532,
+                0.06815728295137925
+            ],
+            "[1, 1]": [
+                0.34946672459429046,
+                0.1992335063767301,
+                0.45129976902897934
+            ],
+            "[1, 2]": [
+                0.2526611225326832,
+                0.5789785557150658,
+                0.1683603217522509
+            ],
+            "[2, 0]": [
+                0.8885163401785051,
+                0.11148365982149484,
+                0.0
+            ],
+            "[2, 1]": [
+                0.00419274773354647,
+                0.9958072522664535,
+                0.0
+            ],
+            "[2, 2]": [
+                0.9642292208635173,
+                0.03577077913648269,
+                0.0
+            ]
+        },
+        "1482": {
+            "[0, 0]": [
+                0.878417990567212,
+                0.12158200943278791
+            ],
+            "[0, 1]": [
+                0.9419183937217335,
+                0.05808160627826662
+            ],
+            "[0, 2]": [
+                1.0,
+                0.0
+            ],
+            "[1, 0]": [
+                0.7419719746534532,
+                0.2580280253465467
+            ],
+            "[1, 1]": [
+                1.0,
+                0.0
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0
+            ],
+            "[2, 0]": [
+                1.0,
+                0.0
+            ],
+            "[2, 1]": [
+                0.4110907544550501,
+                0.5889092455449498
+            ],
+            "[2, 2]": [
+                0.4769907004334502,
+                0.5230092995665498
+            ]
+        },
+        "1305": {
+            "[0, 0]": [
+                0.7082520303732722,
+                0.24100244804327872,
+                0.050745521583449166
+            ],
+            "[1, 0]": [
+                0.7344285604724136,
+                0.2571720947808117,
+                0.008399344746774732
+            ],
+            "[2, 0]": [
+                0.23519584589117848,
+                0.6912123111361752,
+                0.07359184297264622
+            ]
+        },
+        "4714": {
+            "[0, 0]": [
+                0.5960432350696059,
+                0.3054287969924437,
+                0.09852796793795048
+            ],
+            "[0, 1]": [
+                0.6954020410150784,
+                0.22028035122387407,
+                0.08431760776104756
+            ],
+            "[0, 2]": [
+                0.7649929414965023,
+                0.15998296930742878,
+                0.07502408919606897
+            ],
+            "[1, 0]": [
+                0.26688079190226893,
+                0.733119208097731,
+                0.0
+            ],
+            "[1, 1]": [
+                0.9568666502640734,
+                0.014015795275110488,
+                0.0291175544608162
+            ],
+            "[1, 2]": [
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "2058": {
+            "[0, 0]": [
+                0.33234176738463567,
+                0.5853055615342507,
+                0.08235267108111352
+            ],
+            "[0, 1]": [
+                0.2536955085690366,
+                0.6170601227706446,
+                0.12924436866031874
+            ],
+            "[0, 2]": [
+                0.6030905885742757,
+                0.39690941142572433,
+                0.0
+            ],
+            "[1, 0]": [
+                0.41436839268646564,
+                0.5352358021070092,
+                0.05039580520652513
+            ],
+            "[1, 1]": [
+                0.005910234300690135,
+                0.5139273695570112,
+                0.48016239614229866
+            ],
+            "[1, 2]": [
+                0.46765666684071194,
+                0.10884317704644948,
+                0.4235001561128386
+            ]
+        },
+        "4252": {
+            "[0, 0]": [
+                0.945401497310317,
+                0.028027610201400887,
+                0.026570892488282094
+            ],
+            "[0, 1]": [
+                0.6032670198235301,
+                0.3967329801764699,
+                0.0
+            ],
+            "[0, 2]": [
+                0.10239807892928848,
+                0.7015887290161495,
+                0.19601319205456194
+            ],
+            "[1, 0]": [
+                0.6648395146232607,
+                0.25313572543156815,
+                0.08202475994517114
+            ],
+            "[1, 1]": [
+                0.6338745324888889,
+                0.36466298303562433,
+                0.0014624844754867316
+            ],
+            "[1, 2]": [
+                0.45243912378870266,
+                0.5475608762112973,
+                0.0
+            ],
+            "[2, 0]": [
+                0.5407090910602357,
+                0.4407648764633621,
+                0.018526032476402256
+            ],
+            "[2, 1]": [
+                0.26427106831690367,
+                0.05129562804236382,
+                0.6844333036407325
+            ],
+            "[2, 2]": [
+                1.0,
+                0.0,
+                0.0
+            ]
+        },
+        "6083": {
+            "[0, 0]": [
+                0.8516905128050288,
+                0.14830948719497114,
+                0.0
+            ],
+            "[0, 1]": [
+                0.7582736684320107,
+                0.1459932464875026,
+                0.09573308508048671
+            ],
+            "[0, 2]": [
+                0.9976065291495235,
+                0.0023934708504764605,
+                0.0
+            ],
+            "[1, 0]": [
+                0.6186547229081334,
+                0.34307068256420287,
+                0.03827459452766377
+            ],
+            "[1, 1]": [
+                0.3396520945330209,
+                0.6596491105945499,
+                0.0006987948724293934
+            ],
+            "[1, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ],
+            "[2, 0]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 1]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 2]": [
+                0.754612042301007,
+                0.0,
+                0.24538795769899305
+            ]
+        },
+        "5441": {
+            "[0, 0]": [
+                0.9661865527824378,
+                0.03381344721756215
+            ],
+            "[0, 1]": [
+                0.8977895210334303,
+                0.10221047896656968
+            ],
+            "[0, 2]": [
+                0.9784855407858032,
+                0.021514459214196882
+            ],
+            "[1, 0]": [
+                0.8929324900933295,
+                0.10706750990667054
+            ],
+            "[1, 1]": [
+                1.0,
+                0.0
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0
+            ],
+            "[2, 0]": [
+                0.7923084615770704,
+                0.20769153842292967
+            ],
+            "[2, 1]": [
+                0.0,
+                1.0
+            ],
+            "[2, 2]": [
+                0.0,
+                1.0
+            ]
+        },
+        "6717": {
+            "[0, 0]": [
+                0.7984084493511403,
+                0.19590858500899788,
+                0.005682965639861775
+            ],
+            "[0, 1]": [
+                0.35282203245955884,
+                0.6471779675404412,
+                0.0
+            ],
+            "[0, 2]": [
+                0.04390563804296176,
+                0.0,
+                0.9560943619570381
+            ],
+            "[1, 0]": [
+                0.24102709582124568,
+                0.512055964219411,
+                0.24691693995934336
+            ],
+            "[1, 1]": [
+                0.7763293047663118,
+                0.2143718105859095,
+                0.009298884647778708
+            ],
+            "[1, 2]": [
+                0.8250769888444968,
+                0.0,
+                0.17492301115550338
+            ],
+            "[2, 0]": [
+                0.6887531680453122,
+                0.2534071969553245,
+                0.0578396349993633
+            ],
+            "[2, 1]": [
+                0.0,
+                0.8859014303390389,
+                0.11409856966096112
+            ],
+            "[2, 2]": [
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "7316": {
+            "[0, 0]": [
+                0.7326549105182399,
+                0.2665628144302975,
+                0.0007822750514624781
+            ],
+            "[1, 0]": [
+                0.6274696036226177,
+                0.228836059845034,
+                0.14369433653234828
+            ]
+        },
+        "4630": {
+            "[0, 0]": [
+                0.8812668414896436,
+                0.11873315851035642
+            ],
+            "[0, 1]": [
+                0.7979043445724396,
+                0.20209565542756033
+            ],
+            "[0, 2]": [
+                0.7697903241010595,
+                0.23020967589894042
+            ],
+            "[1, 0]": [
+                1.0,
+                0.0
+            ],
+            "[1, 1]": [
+                0.8217765319820924,
+                0.1782234680179075
+            ],
+            "[1, 2]": [
+                0.7491960180161787,
+                0.25080398198382137
+            ],
+            "[2, 0]": [
+                0.07488729970790518,
+                0.9251127002920948
+            ],
+            "[2, 1]": [
+                0.5,
+                0.5
+            ],
+            "[2, 2]": [
+                0.6004410058093647,
+                0.3995589941906354
+            ]
+        },
+        "2174": {
+            "[0, 0]": [
+                0.9413958709931531,
+                0.050708227795237655,
+                0.007895901211609097
+            ],
+            "[0, 1]": [
+                0.5315282683370175,
+                0.108255419217526,
+                0.3602163124454566
+            ],
+            "[0, 2]": [
+                0.385240239530764,
+                0.4008981344571788,
+                0.2138616260120572
+            ],
+            "[1, 0]": [
+                0.5284848656119956,
+                0.47151513438800424,
+                0.0
+            ],
+            "[1, 1]": [
+                0.3811866046376028,
+                0.5802795409106142,
+                0.038533854451782916
+            ],
+            "[1, 2]": [
+                0.9691602819677403,
+                0.03083971803225959,
+                0.0
+            ],
+            "[2, 0]": [
+                0.6973081233212597,
+                0.06734806070174734,
+                0.23534381597699286
+            ],
+            "[2, 1]": [
+                0.4791324177841318,
+                0.0,
+                0.5208675822158682
+            ],
+            "[2, 2]": [
+                0.9537882370022726,
+                0.0,
+                0.04621176299772743
+            ]
+        },
+        "288": {
+            "[0, 0]": [
+                0.9280672696572022,
+                0.03658010081863801,
+                0.03535262952415972
+            ],
+            "[0, 1]": [
+                0.6884030822381797,
+                0.25565151319287704,
+                0.05594540456894319
+            ],
+            "[0, 2]": [
+                0.7027661825882618,
+                0.1591504078070787,
+                0.1380834096046594
+            ],
+            "[1, 0]": [
+                0.8598441951259341,
+                0.14015580487406593,
+                0.0
+            ],
+            "[1, 1]": [
+                0.42890249165425787,
+                0.5655128711266446,
+                0.005584637219097623
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 0]": [
+                0.9180825714118259,
+                0.08191742858817402,
+                0.0
+            ],
+            "[2, 1]": [
+                0.5297121175710308,
+                0.4702878824289693,
+                0.0
+            ],
+            "[2, 2]": [
+                0.3333333333333333,
+                0.3333333333333333,
+                0.3333333333333333
+            ]
+        },
+        "5377": {
+            "[0, 0]": [
+                0.9194234504402997,
+                0.0,
+                0.08057654955970034
+            ],
+            "[0, 1]": [
+                0.8324117085258383,
+                0.16738914003868524,
+                0.0001991514354764124
+            ],
+            "[0, 2]": [
+                0.9127175017155646,
+                0.07401442532519165,
+                0.013268072959243793
+            ],
+            "[1, 0]": [
+                0.5861846542849566,
+                0.27646781977658297,
+                0.13734752593846042
+            ],
+            "[1, 1]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[1, 2]": [
+                0.686146095001426,
+                0.23782174890128238,
+                0.07603215609729164
+            ]
+        },
+        "1718": {
+            "[0, 0]": [
+                0.8054805515746528,
+                0.19451944842534716,
+                0.0
+            ],
+            "[0, 1]": [
+                0.8049485254186459,
+                0.1711674505403252,
+                0.02388402404102879
+            ],
+            "[0, 2]": [
+                0.7874116883854628,
+                0.08923270518080845,
+                0.12335560643372868
+            ],
+            "[1, 0]": [
+                0.8792097337639984,
+                0.12079026623600167,
+                0.0
+            ],
+            "[1, 1]": [
+                0.4967618082688524,
+                0.4314578439276195,
+                0.07178034780352803
+            ],
+            "[1, 2]": [
+                0.9248653731590147,
+                0.07513462684098535,
+                0.0
+            ],
+            "[2, 0]": [
+                0.15024845628599715,
+                0.8497515437140027,
+                0.0
+            ],
+            "[2, 1]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ]
+        },
+        "2785": {
+            "[0, 0]": [
+                0.18324765002900825,
+                0.8167523499709918,
+                0.0
+            ],
+            "[0, 1]": [
+                0.25228385227561495,
+                0.717413132698596,
+                0.030303015025789158
+            ],
+            "[0, 2]": [
+                0.4386631897195851,
+                0.0,
+                0.5613368102804148
+            ],
+            "[1, 0]": [
+                0.695790831883504,
+                0.1472413955450127,
+                0.15696777257148323
+            ],
+            "[1, 1]": [
+                0.1694371830473443,
+                0.8305628169526558,
+                0.0
+            ],
+            "[1, 2]": [
+                0.5679901368176516,
+                0.4155880154414405,
+                0.01642184774090785
+            ],
+            "[2, 0]": [
+                0.763756178701266,
+                0.23624382129873392,
+                0.0
+            ],
+            "[2, 1]": [
+                0.9268244260586435,
+                0.042713081147706035,
+                0.030462492793650528
+            ],
+            "[2, 2]": [
+                0.3333333333333333,
+                0.3333333333333333,
+                0.3333333333333333
+            ]
+        },
+        "9168": {
+            "[0, 0]": [
+                0.995866010783481,
+                0.00413398921651897
+            ],
+            "[0, 1]": [
+                0.7592224922466277,
+                0.24077750775337217
+            ],
+            "[0, 2]": [
+                0.46743899584081033,
+                0.5325610041591897
+            ],
+            "[1, 0]": [
+                0.8070559161501956,
+                0.19294408384980452
+            ],
+            "[1, 1]": [
+                1.0,
+                0.0
+            ],
+            "[1, 2]": [
+                0.8233769819128102,
+                0.17662301808718991
+            ],
+            "[2, 0]": [
+                1.0,
+                0.0
+            ],
+            "[2, 1]": [
+                0.0,
+                1.0
+            ],
+            "[2, 2]": [
+                0.0,
+                1.0
+            ]
+        },
+        "1297": {
+            "[0, 0]": [
+                0.26705161190704,
+                0.6541426194266883,
+                0.07880576866627174
+            ],
+            "[0, 1]": [
+                0.32941173436210625,
+                0.6227072589559646,
+                0.04788100668192909
+            ],
+            "[0, 2]": [
+                0.23694677265541955,
+                0.5215975188604348,
+                0.24145570848414563
+            ],
+            "[1, 0]": [
+                0.46861079494117014,
+                0.362246889632589,
+                0.16914231542624075
+            ],
+            "[1, 1]": [
+                0.6334276681140604,
+                0.2687160290689525,
+                0.0978563028169872
+            ],
+            "[1, 2]": [
+                0.0,
+                0.9132905913483599,
+                0.08670940865164013
+            ],
+            "[2, 0]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 1]": [
+                0.36920712854864857,
+                0.6307928714513515,
+                0.0
+            ],
+            "[2, 2]": [
+                0.0,
+                0.8631359351898121,
+                0.13686406481018779
+            ]
+        },
+        "3916": {
+            "[0, 0]": [
+                0.7226886783657306,
+                0.27731132163426936
+            ],
+            "[0, 1]": [
+                0.8524615922058104,
+                0.14753840779418956
+            ],
+            "[0, 2]": [
+                0.664948195245736,
+                0.33505180475426405
+            ],
+            "[1, 0]": [
+                0.9727240910247982,
+                0.027275908975201747
+            ],
+            "[1, 1]": [
+                0.9808880513467361,
+                0.019111948653264065
+            ],
+            "[1, 2]": [
+                0.0358189502637601,
+                0.9641810497362397
+            ],
+            "[2, 0]": [
+                0.7441268305525562,
+                0.2558731694474438
+            ],
+            "[2, 1]": [
+                0.39817294218904636,
+                0.6018270578109537
+            ],
+            "[2, 2]": [
+                1.0,
+                0.0
+            ]
+        },
+        "4378": {
+            "[0, 0]": [
+                0.5217742516253279,
+                0.4782257483746721,
+                0.0
+            ],
+            "[0, 1]": [
+                0.864563641668881,
+                0.0,
+                0.13543635833111897
+            ],
+            "[0, 2]": [
+                0.6602457054121227,
+                0.3342893788873466,
+                0.005464915700530754
+            ],
+            "[1, 0]": [
+                0.399335756503616,
+                0.5112644759553856,
+                0.08939976754099835
+            ],
+            "[1, 1]": [
+                0.10451827280608846,
+                0.6634811273945215,
+                0.23200059979938997
+            ],
+            "[1, 2]": [
+                0.17498923082870194,
+                0.5022479549841595,
+                0.32276281418713865
+            ],
+            "[2, 0]": [
+                0.5266489628456228,
+                0.35396203048430747,
+                0.11938900667006969
+            ],
+            "[2, 1]": [
+                0.5660731604537708,
+                0.3367397822429431,
+                0.09718705730328618
+            ],
+            "[2, 2]": [
+                0.6608503599928847,
+                0.0,
+                0.3391496400071153
+            ]
+        },
+        "1877": {
+            "[0, 0]": [
+                0.8893234536882555,
+                0.1106765463117444
+            ],
+            "[0, 1]": [
+                1.0,
+                0.0
+            ],
+            "[0, 2]": [
+                0.9885983284353044,
+                0.011401671564695638
+            ],
+            "[1, 0]": [
+                0.8385316122209779,
+                0.16146838777902206
+            ],
+            "[1, 1]": [
+                0.9071079864456253,
+                0.09289201355437475
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0
+            ],
+            "[2, 0]": [
+                1.0,
+                0.0
+            ],
+            "[2, 1]": [
+                0.9767321002360678,
+                0.023267899763932228
+            ],
+            "[2, 2]": [
+                0.5,
+                0.5
+            ]
+        },
+        "6540": {
+            "[0, 0]": [
+                0.7177316001821757,
+                0.28226839981782414
+            ],
+            "[0, 1]": [
+                1.0,
+                0.0
+            ],
+            "[1, 0]": [
+                0.6654871981271542,
+                0.3345128018728458
+            ],
+            "[1, 1]": [
+                0.4531897930103999,
+                0.5468102069896001
+            ]
+        },
+        "8649": {
+            "[0, 0]": [
+                0.8038299641575503,
+                0.19617003584244969
+            ],
+            "[0, 1]": [
+                0.899387681367508,
+                0.10061231863249198
+            ],
+            "[0, 2]": [
+                0.9918541939748261,
+                0.008145806025173891
+            ],
+            "[1, 0]": [
+                0.6806074105206941,
+                0.31939258947930604
+            ],
+            "[1, 1]": [
+                0.9110976243780903,
+                0.08890237562190981
+            ],
+            "[1, 2]": [
+                0.7299235776922309,
+                0.27007642230776907
+            ],
+            "[2, 0]": [
+                0.6392786330744564,
+                0.36072136692554363
+            ],
+            "[2, 1]": [
+                1.0,
+                0.0
+            ],
+            "[2, 2]": [
+                0.7575383735518445,
+                0.24246162644815544
+            ]
+        },
+        "6640": {
+            "[0, 0]": [
+                0.9015515905327667,
+                0.09844840946723339
+            ],
+            "[0, 1]": [
+                1.0,
+                0.0
+            ],
+            "[1, 0]": [
+                0.8930830807954404,
+                0.10691691920455966
+            ],
+            "[1, 1]": [
+                0.787437670051094,
+                0.21256232994890603
+            ],
+            "[2, 0]": [
+                0.9961577782975192,
+                0.0038422217024808116
+            ],
+            "[2, 1]": [
+                1.0,
+                0.0
+            ]
+        },
+        "3370": {
+            "[0, 0]": [
+                0.9771458585553294,
+                0.02285414144467056
+            ],
+            "[0, 1]": [
+                0.986990636938387,
+                0.013009363061613056
+            ],
+            "[0, 2]": [
+                0.9733791102540686,
+                0.026620889745931443
+            ],
+            "[1, 0]": [
+                1.0,
+                0.0
+            ],
+            "[1, 1]": [
+                0.9003192645889004,
+                0.09968073541109958
+            ],
+            "[1, 2]": [
+                0.9724689808077166,
+                0.027531019192283412
+            ],
+            "[2, 0]": [
+                0.9272993692817787,
+                0.07270063071822132
+            ],
+            "[2, 1]": [
+                0.7981639307155968,
+                0.20183606928440329
+            ],
+            "[2, 2]": [
+                1.0,
+                0.0
+            ]
+        },
+        "1926": {
+            "[0, 0]": [
+                1.0
+            ],
+            "[0, 1]": [
+                1.0
+            ],
+            "[1, 0]": [
+                1.0
+            ],
+            "[1, 1]": [
+                1.0
+            ]
+        },
+        "500": {
+            "[0, 0]": [
+                0.6721321517952925,
+                0.32440781163618565,
+                0.003460036568521757
+            ],
+            "[0, 1]": [
+                0.2238399605302198,
+                0.5100034983433478,
+                0.2661565411264324
+            ],
+            "[0, 2]": [
+                0.3280469717979058,
+                0.6719530282020941,
+                0.0
+            ],
+            "[1, 0]": [
+                0.4116845615628589,
+                0.5626643542230733,
+                0.025651084214067796
+            ],
+            "[1, 1]": [
+                0.7868316871531971,
+                0.21316831284680282,
+                0.0
+            ],
+            "[1, 2]": [
+                0.3333333333333333,
+                0.3333333333333333,
+                0.3333333333333333
+            ],
+            "[2, 0]": [
+                0.44500221882877367,
+                0.5549977811712263,
+                0.0
+            ],
+            "[2, 1]": [
+                0.0,
+                0.9676173492392102,
+                0.032382650760789805
+            ],
+            "[2, 2]": [
+                0.0968852623527693,
+                0.5566527596438372,
+                0.3464619780033934
+            ]
+        },
+        "5643": {
+            "[0, 0]": [
+                0.8764284775990066,
+                0.12357152240099348
+            ],
+            "[0, 1]": [
+                0.7481565162387722,
+                0.2518434837612277
+            ],
+            "[0, 2]": [
+                0.22381231196509288,
+                0.7761876880349071
+            ],
+            "[1, 0]": [
+                0.6597334611330966,
+                0.34026653886690333
+            ],
+            "[1, 1]": [
+                0.8502088944966417,
+                0.14979110550335833
+            ],
+            "[1, 2]": [
+                0.958835395680999,
+                0.04116460431900105
+            ],
+            "[2, 0]": [
+                0.9929631341077362,
+                0.00703686589226388
+            ],
+            "[2, 1]": [
+                0.10091826654998187,
+                0.8990817334500182
+            ],
+            "[2, 2]": [
+                1.0,
+                0.0
+            ]
+        },
+        "1472": {
+            "[0, 0]": [
+                0.5662806730798424,
+                0.3384992940813244,
+                0.09522003283883307
+            ],
+            "[0, 1]": [
+                0.5500426847164835,
+                0.37776153908024696,
+                0.07219577620326953
+            ],
+            "[0, 2]": [
+                0.7024515384022152,
+                0.0,
+                0.29754846159778486
+            ],
+            "[1, 0]": [
+                0.42764481195255305,
+                0.5042446793092265,
+                0.06811050873822062
+            ],
+            "[1, 1]": [
+                0.4517363889705246,
+                0.4978085753974295,
+                0.05045503563204575
+            ],
+            "[1, 2]": [
+                0.3333333333333333,
+                0.3333333333333333,
+                0.3333333333333333
+            ]
+        },
+        "1166": {
+            "[0, 0]": [
+                0.6419357289619451,
+                0.35402412409275275,
+                0.004040146945302081
+            ],
+            "[0, 1]": [
+                0.7346988889487692,
+                0.043838704802166895,
+                0.22146240624906383
+            ],
+            "[0, 2]": [
+                0.9306611782443819,
+                0.06933882175561817,
+                0.0
+            ],
+            "[1, 0]": [
+                0.632931563935318,
+                0.3670684360646819,
+                0.0
+            ],
+            "[1, 1]": [
+                0.7080619183043448,
+                0.2409721879147059,
+                0.05096589378094924
+            ],
+            "[1, 2]": [
+                0.9197932445417896,
+                0.08020675545821046,
+                0.0
+            ],
+            "[2, 0]": [
+                0.8983255784292156,
+                0.10167442157078439,
+                0.0
+            ],
+            "[2, 1]": [
+                0.36133674323037346,
+                0.6386632567696267,
+                0.0
+            ],
+            "[2, 2]": [
+                0.9272994741948185,
+                0.018491714450796774,
+                0.054208811354384816
+            ]
+        },
+        "4541": {
+            "[0, 0]": [
+                0.0933183505674786,
+                0.6705527844502552,
+                0.23612886498226618
+            ],
+            "[0, 1]": [
+                0.14362733757746804,
+                0.8441574340216995,
+                0.01221522840083254
+            ],
+            "[0, 2]": [
+                0.943429064043151,
+                0.028354382782017958,
+                0.028216553174831096
+            ],
+            "[1, 0]": [
+                0.4253234447514521,
+                0.31200893538958063,
+                0.26266761985896736
+            ],
+            "[1, 1]": [
+                0.3875331822523051,
+                0.6012472505652168,
+                0.011219567182478025
+            ],
+            "[1, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ]
+        },
+        "5947": {
+            "[0, 0]": [
+                0.8983456521714841,
+                0.10165434782851593
+            ],
+            "[0, 1]": [
+                1.0,
+                0.0
+            ],
+            "[0, 2]": [
+                0.8350205415057846,
+                0.1649794584942154
+            ],
+            "[1, 0]": [
+                0.9901445028982875,
+                0.009855497101712539
+            ],
+            "[1, 1]": [
+                1.0,
+                0.0
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0
+            ]
+        },
+        "358": {
+            "[0, 0]": [
+                0.5892669419859853,
+                0.35911084130147214,
+                0.0516222167125426
+            ],
+            "[0, 1]": [
+                0.9173931692584079,
+                0.08260683074159214,
+                0.0
+            ],
+            "[0, 2]": [
+                0.19082096701466567,
+                0.5646340334049218,
+                0.24454499958041262
+            ],
+            "[1, 0]": [
+                0.7224779095148389,
+                0.23920092473323698,
+                0.03832116575192417
+            ],
+            "[1, 1]": [
+                0.5192556553817116,
+                0.44129998060262504,
+                0.03944436401566332
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 0]": [
+                0.5504889433300088,
+                0.44921632472128215,
+                0.000294731948709101
+            ],
+            "[2, 1]": [
+                0.03973618940232121,
+                0.7593428092575701,
+                0.20092100134010862
+            ],
+            "[2, 2]": [
+                0.7092889088028226,
+                0.07308392855067691,
+                0.2176271626465006
+            ]
+        },
+        "227": {
+            "[0, 0]": [
+                0.8200893459234034,
+                0.08459570164075474,
+                0.09531495243584184
+            ],
+            "[0, 1]": [
+                0.9735043824181355,
+                0.02649561758186455,
+                0.0
+            ],
+            "[1, 0]": [
+                0.0,
+                0.08449580806525171,
+                0.9155041919347482
+            ],
+            "[1, 1]": [
+                0.85657273592556,
+                0.14342726407444,
+                0.0
+            ]
+        },
+        "193": {
+            "[0, 0]": [
+                0.9226847741034474,
+                0.07731522589655253
+            ],
+            "[0, 1]": [
+                0.7385245789199808,
+                0.26147542108001914
+            ],
+            "[0, 2]": [
+                0.951425307393915,
+                0.048574692606085004
+            ],
+            "[1, 0]": [
+                0.9812133976312784,
+                0.018786602368721605
+            ],
+            "[1, 1]": [
+                1.0,
+                0.0
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0
+            ],
+            "[2, 0]": [
+                0.9606245175923765,
+                0.039375482407623466
+            ],
+            "[2, 1]": [
+                0.666867394933622,
+                0.33313260506637793
+            ],
+            "[2, 2]": [
+                0.0,
+                1.0
+            ]
+        },
+        "2724": {
+            "[0, 0]": [
+                0.12307845496959435,
+                0.7813208433779538,
+                0.09560070165245188
+            ],
+            "[0, 1]": [
+                0.4773957734983467,
+                0.2838118124052938,
+                0.2387924140963595
+            ],
+            "[0, 2]": [
+                0.4925882159887339,
+                0.3251075657942682,
+                0.18230421821699794
+            ],
+            "[1, 0]": [
+                0.3471114980918153,
+                0.3619986017567098,
+                0.290889900151475
+            ],
+            "[1, 1]": [
+                0.3157765884093283,
+                0.4894571898861166,
+                0.1947662217045552
+            ],
+            "[1, 2]": [
+                0.6006110294295312,
+                0.3177732237204737,
+                0.08161574684999516
+            ],
+            "[2, 0]": [
+                0.5516522785109733,
+                0.1572928608569736,
+                0.291054860632053
+            ],
+            "[2, 1]": [
+                0.054174239658190515,
+                0.7895023010709987,
+                0.15632345927081082
+            ],
+            "[2, 2]": [
+                0.3333333333333333,
+                0.3333333333333333,
+                0.3333333333333333
+            ]
+        },
+        "441": {
+            "[0, 0]": [
+                0.21375146168719408,
+                0.6226422857690486,
+                0.1636062525437573
+            ],
+            "[0, 1]": [
+                0.5942882873268907,
+                0.19726561983676538,
+                0.20844609283634397
+            ],
+            "[0, 2]": [
+                0.19307230066443837,
+                0.3986098652653207,
+                0.4083178340702409
+            ],
+            "[1, 0]": [
+                0.3464435419149241,
+                0.4821234426055322,
+                0.17143301547954376
+            ],
+            "[1, 1]": [
+                0.3154451619951397,
+                0.33179550133175767,
+                0.35275933667310255
+            ],
+            "[1, 2]": [
+                0.48251770832890367,
+                0.5174822916710963,
+                0.0
+            ],
+            "[2, 0]": [
+                0.3151147830989541,
+                0.0021363106269452867,
+                0.6827489062741007
+            ],
+            "[2, 1]": [
+                0.20269072056083517,
+                0.4548616008421574,
+                0.3424476785970075
+            ],
+            "[2, 2]": [
+                0.0,
+                1.0,
+                0.0
+            ]
+        },
+        "3154": {
+            "[0, 0]": [
+                0.7453530341900175,
+                0.19347451718221634,
+                0.06117244862776616
+            ],
+            "[0, 1]": [
+                0.47430087233680573,
+                0.5256991276631943,
+                0.0
+            ],
+            "[0, 2]": [
+                0.23878671140445382,
+                0.25288448797618407,
+                0.508328800619362
+            ],
+            "[1, 0]": [
+                0.710011664181306,
+                0.20735866443616904,
+                0.08262967138252494
+            ],
+            "[1, 1]": [
+                0.6709730093371549,
+                0.3290269906628451,
+                0.0
+            ],
+            "[1, 2]": [
+                0.3333333333333333,
+                0.3333333333333333,
+                0.3333333333333333
+            ],
+            "[2, 0]": [
+                0.4928762389353044,
+                0.5071237610646956,
+                0.0
+            ],
+            "[2, 1]": [
+                0.3333333333333333,
+                0.3333333333333333,
+                0.3333333333333333
+            ],
+            "[2, 2]": [
+                0.8587080856719754,
+                0.14129191432802451,
+                0.0
+            ]
+        },
+        "4156": {
+            "[0, 0]": [
+                0.8331557706101962,
+                0.16684422938980376
+            ],
+            "[0, 1]": [
+                0.9867782978503481,
+                0.013221702149651805
+            ],
+            "[0, 2]": [
+                0.874858178820548,
+                0.1251418211794521
+            ],
+            "[1, 0]": [
+                0.7528844409917624,
+                0.2471155590082376
+            ],
+            "[1, 1]": [
+                0.7617427604089843,
+                0.23825723959101572
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0
+            ],
+            "[2, 0]": [
+                1.0,
+                0.0
+            ],
+            "[2, 1]": [
+                0.5,
+                0.5
+            ],
+            "[2, 2]": [
+                0.37025742196736156,
+                0.6297425780326384
+            ]
+        },
+        "2352": {
+            "[0, 0]": [
+                0.48587090685927675,
+                0.40221534656235797,
+                0.11191374657836534
+            ],
+            "[0, 1]": [
+                0.6973730470314614,
+                0.28978093732878885,
+                0.012846015639749669
+            ],
+            "[0, 2]": [
+                0.48934629261771156,
+                0.43506718711238224,
+                0.07558652026990614
+            ],
+            "[1, 0]": [
+                0.5496043568023252,
+                0.3159482594848868,
+                0.13444738371278792
+            ],
+            "[1, 1]": [
+                0.46338536355737464,
+                0.5366146364426254,
+                0.0
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 0]": [
+                0.0,
+                1.0,
+                0.0
+            ],
+            "[2, 1]": [
+                0.9285178217037743,
+                0.06397497188186263,
+                0.007507206414363088
+            ],
+            "[2, 2]": [
+                0.8069433455155257,
+                0.0,
+                0.19305665448447432
+            ]
+        },
+        "3425": {
+            "[0, 0]": [
+                0.5380995019112819,
+                0.39208309194153756,
+                0.06981740614718054
+            ],
+            "[0, 1]": [
+                0.9341634063760862,
+                0.0,
+                0.06583659362391378
+            ],
+            "[1, 0]": [
+                0.5109987003067976,
+                0.47523348696996703,
+                0.013767812723235465
+            ],
+            "[1, 1]": [
+                0.03809314125036134,
+                0.8730769232160253,
+                0.08882993553361343
+            ],
+            "[2, 0]": [
+                0.0205312976047446,
+                0.9794687023952554,
+                0.0
+            ],
+            "[2, 1]": [
+                0.03455139854737663,
+                0.0,
+                0.9654486014526235
+            ]
+        },
+        "4339": {
+            "[0, 0]": [
+                0.8816001590165579,
+                0.1183998409834421
+            ],
+            "[0, 1]": [
+                0.9999449597233786,
+                5.5040276621293134e-05
+            ],
+            "[0, 2]": [
+                0.9954742862891294,
+                0.004525713710870671
+            ],
+            "[1, 0]": [
+                0.9859993843375924,
+                0.014000615662407635
+            ],
+            "[1, 1]": [
+                0.9441844125438584,
+                0.05581558745614164
+            ],
+            "[1, 2]": [
+                0.7431769326997258,
+                0.2568230673002741
+            ],
+            "[2, 0]": [
+                1.0,
+                0.0
+            ],
+            "[2, 1]": [
+                0.9649539149160046,
+                0.03504608508399544
+            ],
+            "[2, 2]": [
+                0.932768787489437,
+                0.06723121251056298
+            ]
+        },
+        "1806": {
+            "[0, 0]": [
+                0.8585253590280322,
+                0.10806398362190148,
+                0.033410657350066354
+            ],
+            "[0, 1]": [
+                0.8993907574890139,
+                0.08547365366563038,
+                0.015135588845355766
+            ],
+            "[0, 2]": [
+                0.8148201615897592,
+                0.18517983841024072,
+                0.0
+            ],
+            "[1, 0]": [
+                0.0,
+                1.0,
+                0.0
+            ],
+            "[1, 1]": [
+                0.5047097254041609,
+                0.49529027459583896,
+                0.0
+            ],
+            "[1, 2]": [
+                0.11526358237636686,
+                0.0,
+                0.8847364176236332
+            ]
+        },
+        "6240": {
+            "[0, 0]": [
+                0.9350155737089041,
+                0.06498442629109587
+            ],
+            "[0, 1]": [
+                1.0,
+                0.0
+            ],
+            "[0, 2]": [
+                0.0,
+                1.0
+            ],
+            "[1, 0]": [
+                1.0,
+                0.0
+            ],
+            "[1, 1]": [
+                0.6884104621023504,
+                0.3115895378976497
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0
+            ],
+            "[2, 0]": [
+                1.0,
+                0.0
+            ],
+            "[2, 1]": [
+                0.8367498264037024,
+                0.16325017359629748
+            ],
+            "[2, 2]": [
+                0.5,
+                0.5
+            ]
+        },
+        "1857": {
+            "[0, 0]": [
+                1.0
+            ],
+            "[0, 1]": [
+                1.0
+            ],
+            "[0, 2]": [
+                1.0
+            ],
+            "[1, 0]": [
+                1.0
+            ],
+            "[1, 1]": [
+                1.0
+            ],
+            "[1, 2]": [
+                1.0
+            ],
+            "[2, 0]": [
+                1.0
+            ],
+            "[2, 1]": [
+                1.0
+            ],
+            "[2, 2]": [
+                1.0
+            ]
+        },
+        "8057": {
+            "[0, 0]": [
+                0.8004490450399592,
+                0.18310262613395653,
+                0.016448328826084303
+            ],
+            "[0, 1]": [
+                0.577819825706234,
+                0.41942134067409903,
+                0.002758833619667122
+            ],
+            "[0, 2]": [
+                0.13860240782076247,
+                0.7178723466568113,
+                0.1435252455224262
+            ],
+            "[1, 0]": [
+                0.8840946206032392,
+                0.11590537939676077,
+                0.0
+            ],
+            "[1, 1]": [
+                0.9325713144891397,
+                0.0,
+                0.0674286855108603
+            ],
+            "[1, 2]": [
+                0.3333333333333333,
+                0.3333333333333333,
+                0.3333333333333333
+            ]
+        },
+        "3787": {
+            "[0, 0]": [
+                0.9496819221626581,
+                0.050318077837341824
+            ],
+            "[0, 1]": [
+                0.9851061932226041,
+                0.014893806777395989
+            ],
+            "[0, 2]": [
+                0.9164831084986996,
+                0.08351689150130037
+            ],
+            "[1, 0]": [
+                0.7532310625751012,
+                0.24676893742489883
+            ],
+            "[1, 1]": [
+                0.9768990659345539,
+                0.023100934065446103
+            ],
+            "[1, 2]": [
+                0.0,
+                1.0
+            ]
+        },
+        "7077": {
+            "[0, 0]": [
+                0.7768147088948149,
+                0.2231852911051852,
+                0.0
+            ],
+            "[0, 1]": [
+                0.49088323878287404,
+                0.498405085835658,
+                0.010711675381467898
+            ],
+            "[0, 2]": [
+                0.662711848849263,
+                0.0,
+                0.337288151150737
+            ],
+            "[1, 0]": [
+                0.7459830137611153,
+                0.14350692098072232,
+                0.11051006525816244
+            ],
+            "[1, 1]": [
+                0.6193721171961951,
+                0.3399764021916702,
+                0.04065148061213464
+            ],
+            "[1, 2]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[2, 0]": [
+                0.47454322633710655,
+                0.0,
+                0.5254567736628936
+            ],
+            "[2, 1]": [
+                0.4206294739751302,
+                0.5793705260248698,
+                0.0
+            ],
+            "[2, 2]": [
+                0.9930190083521905,
+                0.006980991647809546,
+                0.0
+            ]
+        },
+        "3182": {
+            "[0, 0]": [
+                0.8348768088982452,
+                0.16455472518521969,
+                0.0005684659165350941
+            ],
+            "[0, 1]": [
+                0.7498879199916597,
+                0.14310848723667421,
+                0.10700359277166613
+            ],
+            "[0, 2]": [
+                0.6544425852277481,
+                0.345557414772252,
+                0.0
+            ],
+            "[1, 0]": [
+                0.7933054768520861,
+                0.20669452314791395,
+                0.0
+            ],
+            "[1, 1]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[1, 2]": [
+                0.5665330069947031,
+                0.0,
+                0.433466993005297
+            ],
+            "[2, 0]": [
+                0.7813255546120133,
+                0.0,
+                0.2186744453879868
+            ],
+            "[2, 1]": [
+                0.056524842417264284,
+                0.9434751575827357,
+                0.0
+            ],
+            "[2, 2]": [
+                0.0,
+                0.02969397496430942,
+                0.9703060250356905
+            ]
+        },
+        "2628": {
+            "[0, 0]": [
+                0.9909912561837078,
+                0.009008743816292263
+            ],
+            "[0, 1]": [
+                0.9979417891448039,
+                0.0020582108551961023
+            ],
+            "[0, 2]": [
+                0.5758449668543311,
+                0.424155033145669
+            ],
+            "[1, 0]": [
+                0.8662895999302094,
+                0.13371040006979068
+            ],
+            "[1, 1]": [
+                1.0,
+                0.0
+            ],
+            "[1, 2]": [
+                0.937317755996403,
+                0.06268224400359709
+            ],
+            "[2, 0]": [
+                1.0,
+                0.0
+            ],
+            "[2, 1]": [
+                1.0,
+                0.0
+            ],
+            "[2, 2]": [
+                1.0,
+                0.0
+            ]
+        },
+        "766": {
+            "[0, 0]": [
+                1.0,
+                0.0
+            ],
+            "[0, 1]": [
+                0.8959098990135068,
+                0.1040901009864932
+            ],
+            "[1, 0]": [
+                1.0,
+                0.0
+            ],
+            "[1, 1]": [
+                0.9799329129515837,
+                0.020067087048416192
+            ],
+            "[2, 0]": [
+                0.9592700856890904,
+                0.04072991431090954
+            ],
+            "[2, 1]": [
+                1.0,
+                0.0
+            ]
+        },
+        "6365": {
+            "[0, 0]": [
+                1.0
+            ],
+            "[0, 1]": [
+                1.0
+            ],
+            "[0, 2]": [
+                1.0
+            ],
+            "[1, 0]": [
+                1.0
+            ],
+            "[1, 1]": [
+                1.0
+            ],
+            "[1, 2]": [
+                1.0
+            ],
+            "[2, 0]": [
+                1.0
+            ],
+            "[2, 1]": [
+                1.0
+            ],
+            "[2, 2]": [
+                1.0
+            ]
+        },
+        "7347": {
+            "[0, 0]": [
+                1.0
+            ],
+            "[0, 1]": [
+                1.0
+            ],
+            "[0, 2]": [
+                1.0
+            ],
+            "[1, 0]": [
+                1.0
+            ],
+            "[1, 1]": [
+                1.0
+            ],
+            "[1, 2]": [
+                1.0
+            ]
+        },
+        "4478": {
+            "[0, 0]": [
+                0.7486884255711792,
+                0.18086599927063565,
+                0.0704455751581852
+            ],
+            "[0, 1]": [
+                0.7201036506081886,
+                0.2349925351255701,
+                0.04490381426624146
+            ],
+            "[0, 2]": [
+                0.990703031260295,
+                0.009296968739705001,
+                0.0
+            ],
+            "[1, 0]": [
+                0.7373537751750188,
+                0.1936977699519562,
+                0.06894845487302503
+            ],
+            "[1, 1]": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "[1, 2]": [
+                0.3333333333333333,
+                0.3333333333333333,
+                0.3333333333333333
+            ],
+            "[2, 0]": [
+                0.8941067821743239,
+                0.10589321782567604,
+                0.0
+            ],
+            "[2, 1]": [
+                0.9438460657338552,
+                0.05615393426614483,
+                0.0
+            ],
+            "[2, 2]": [
+                1.0,
+                0.0,
+                0.0
+            ]
+        },
+        "2660": {
+            "[0, 0]": [
+                1.0
+            ],
+            "[0, 1]": [
+                1.0
+            ],
+            "[1, 0]": [
+                1.0
+            ],
+            "[1, 1]": [
+                1.0
+            ],
+            "[2, 0]": [
+                1.0
+            ],
+            "[2, 1]": [
+                1.0
+            ]
+        },
+        "8402": {
+            "[0, 0]": [
+                1.0
+            ],
+            "[0, 1]": [
+                1.0
+            ],
+            "[0, 2]": [
+                1.0
+            ],
+            "[1, 0]": [
+                1.0
+            ],
+            "[1, 1]": [
+                1.0
+            ],
+            "[1, 2]": [
+                1.0
+            ]
+        },
+        "8469": {
+            "[0, 0]": [
+                1.0
+            ],
+            "[0, 1]": [
+                1.0
+            ],
+            "[0, 2]": [
+                1.0
+            ],
+            "[1, 0]": [
+                1.0
+            ],
+            "[1, 1]": [
+                1.0
+            ],
+            "[1, 2]": [
+                1.0
+            ]
+        },
+        "5820": {
+            "[0, 0]": [
+                1.0
+            ],
+            "[0, 1]": [
+                1.0
+            ],
+            "[1, 0]": [
+                1.0
+            ],
+            "[1, 1]": [
+                1.0
+            ],
+            "[2, 0]": [
+                1.0
+            ],
+            "[2, 1]": [
+                1.0
+            ]
+        },
+        "5685": {
+            "[0, 0]": [
+                1.0
+            ],
+            "[0, 1]": [
+                1.0
+            ],
+            "[1, 0]": [
+                1.0
+            ],
+            "[1, 1]": [
+                1.0
+            ],
+            "[2, 0]": [
+                1.0
+            ],
+            "[2, 1]": [
+                1.0
+            ]
+        },
+        "5707": {
+            "[0, 0]": [
+                1.0
+            ],
+            "[0, 1]": [
+                1.0
+            ],
+            "[0, 2]": [
+                1.0
+            ]
+        },
+        "5615": {
+            "[0, 0]": [
+                1.0
+            ],
+            "[0, 1]": [
+                1.0
+            ],
+            "[1, 0]": [
+                1.0
+            ],
+            "[1, 1]": [
+                1.0
+            ]
+        }
+    }
+}
