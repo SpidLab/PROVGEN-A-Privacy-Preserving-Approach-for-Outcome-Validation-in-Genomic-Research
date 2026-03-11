@@ -59,6 +59,7 @@ MIA_METHODS = ["hamming_distance", "xgboost", "decision_tree", "random_forest", 
 class Context:
     root: Path
     workers: int
+    no_overwrite_results: bool = False
 
     @property
     def data_dir(self) -> Path:
@@ -75,6 +76,20 @@ class Context:
 
 def ensure_dir(path: Path) -> None:
     path.mkdir(parents=True, exist_ok=True)
+
+
+def write_results_csv(ctx: Context, filename: str, rows: list[dict]) -> Path:
+    out = ctx.results_dir / filename
+    if ctx.no_overwrite_results and out.exists():
+        i = 1
+        while True:
+            candidate = ctx.results_dir / f"{out.stem}_new{i}{out.suffix}"
+            if not candidate.exists():
+                out = candidate
+                break
+            i += 1
+    pd.DataFrame(rows).to_csv(out, index=False)
+    return out
 
 
 def load_target_dataframe(ctx: Context, dataset: DATASET, snp_count: int = 0, idx: int = 0) -> pd.DataFrame:
@@ -381,9 +396,9 @@ def maybe_generate_100_snp_methods(ctx: Context, datasets: list[DATASET], valida
 
 
 def run_privbayes_generation(ctx: Context, datasets: list[DATASET], validate_only: bool, copies: int) -> None:
-    script = ctx.root / "PrivBayes" / "experiment.py"
+    script = ctx.root / "comparison_methods" / "PrivBayes" / "experiment.py"
     if not script.exists():
-        print("[warn] Skipping PrivBayes generation: artifact/PrivBayes/experiment.py not found")
+        print("[warn] Skipping PrivBayes generation: artifact/comparison_methods/PrivBayes/experiment.py not found")
         return
 
     total_tasks = len(datasets) * len(STANDARD_EFFECTIVE_EPS) * copies
@@ -408,15 +423,15 @@ def run_privbayes_generation(ctx: Context, datasets: list[DATASET], validate_onl
                     "100",
                     str(idx),
                 ]
-                subprocess.run(cmd, cwd=ctx.root / "PrivBayes", check=True)
+                subprocess.run(cmd, cwd=ctx.root / "comparison_methods" / "PrivBayes", check=True)
                 pbar.update(1)
     pbar.close()
 
 
 def run_dpsyn_generation(ctx: Context, datasets: list[DATASET], validate_only: bool, copies: int) -> None:
-    script = ctx.root / "DPSyn" / "experiment.py"
+    script = ctx.root / "comparison_methods" / "DPSyn" / "experiment.py"
     if not script.exists():
-        print("[warn] Skipping DPSyn generation: artifact/DPSyn/experiment.py not found")
+        print("[warn] Skipping DPSyn generation: artifact/comparison_methods/DPSyn/experiment.py not found")
         return
 
     total_tasks = len(datasets) * len(STANDARD_EFFECTIVE_EPS) * copies
@@ -434,9 +449,9 @@ def run_dpsyn_generation(ctx: Context, datasets: list[DATASET], validate_only: b
                     continue
 
                 priv_data = ctx.cleansed_dir / dataset.value / f"data_100_{idx}.csv"
-                params = ctx.root / "DPSyn" / "config" / f"parameters_{dataset.value}_{total_eps:.4f}_100_{idx}.json"
-                datatype = ctx.root / "DPSyn" / "config" / f"column_datatypes_{dataset.value}_{total_eps:.4f}_100_{idx}.json"
-                marginal = ctx.root / "DPSyn" / "config" / f"eps_{total_eps:.4f}.yaml"
+                params = ctx.root / "comparison_methods" / "DPSyn" / "config" / f"parameters_{dataset.value}_{total_eps:.4f}_100_{idx}.json"
+                datatype = ctx.root / "comparison_methods" / "DPSyn" / "config" / f"column_datatypes_{dataset.value}_{total_eps:.4f}_100_{idx}.json"
+                marginal = ctx.root / "comparison_methods" / "DPSyn" / "config" / f"eps_{total_eps:.4f}.yaml"
                 target_path = out
 
                 missing = [p for p in [params, datatype, marginal] if not p.exists()]
@@ -453,7 +468,7 @@ def run_dpsyn_generation(ctx: Context, datasets: list[DATASET], validate_only: b
                     "--priv_data_name",
                     f"{dataset.value}_{total_eps:.4f}_100_{idx}",
                     "--config",
-                    str(ctx.root / "DPSyn" / "config" / "data.yaml"),
+                    str(ctx.root / "comparison_methods" / "DPSyn" / "config" / "data.yaml"),
                     "--n",
                     "100",
                     "--params",
@@ -467,7 +482,7 @@ def run_dpsyn_generation(ctx: Context, datasets: list[DATASET], validate_only: b
                     "--synthetic_count",
                     "100",
                 ]
-                subprocess.run(cmd, cwd=ctx.root / "DPSyn", check=True)
+                subprocess.run(cmd, cwd=ctx.root / "comparison_methods" / "DPSyn", check=True)
                 pbar.update(1)
     pbar.close()
 
@@ -758,9 +773,8 @@ def evaluate_gwas(ctx: Context, datasets: list[DATASET], copies: int) -> None:
                                 )
                             pbar.update(1)
 
-    out = ctx.results_dir / "gwas_df_full.csv"
     ensure_dir(ctx.results_dir)
-    pd.DataFrame(rows).to_csv(out, index=False)
+    out = write_results_csv(ctx, "gwas_df_full.csv", rows)
     pbar.close()
     print(f"[done] {out}")
 
@@ -808,8 +822,7 @@ def evaluate_gwas_maf(ctx: Context, datasets: list[DATASET], copies: int) -> Non
                             )
                         pbar.update(1)
 
-    out = ctx.results_dir / "gwas_df_full_maf.csv"
-    pd.DataFrame(rows).to_csv(out, index=False)
+    out = write_results_csv(ctx, "gwas_df_full_maf.csv", rows)
     pbar.close()
     print(f"[done] {out}")
 
@@ -864,8 +877,7 @@ def evaluate_mia(ctx: Context, datasets: list[DATASET], effective_eps: Iterable[
                         )
                     pbar.update(1)
 
-    out = ctx.results_dir / out_name
-    pd.DataFrame(rows).to_csv(out, index=False)
+    out = write_results_csv(ctx, out_name, rows)
     pbar.close()
     print(f"[done] {out}")
 
@@ -905,8 +917,7 @@ def evaluate_utility(ctx: Context, datasets: list[DATASET], copies: int) -> None
                         )
                         pbar.update(1)
 
-    out = ctx.results_dir / "utility_df_full.csv"
-    pd.DataFrame(rows).to_csv(out, index=False)
+    out = write_results_csv(ctx, "utility_df_full.csv", rows)
     pbar.close()
     print(f"[done] {out}")
 
@@ -945,8 +956,7 @@ def evaluate_utility_100(ctx: Context, datasets: list[DATASET], copies: int) -> 
                         )
                         pbar.update(1)
 
-    out = ctx.results_dir / "utility_100_df_full.csv"
-    pd.DataFrame(rows).to_csv(out, index=False)
+    out = write_results_csv(ctx, "utility_100_df_full.csv", rows)
     pbar.close()
     print(f"[done] {out}")
 
@@ -963,11 +973,6 @@ def validate_inputs(ctx: Context, datasets: list[DATASET], include_large_mia: bo
             for name in [f"data_100_{idx}.csv", f"reference_100_{idx}.csv"]:
                 if not (d / name).exists():
                     missing.append(str(d / name))
-
-    # Optional external code checks
-    for p in [ctx.root / "DPSyn" / "experiment.py", ctx.root / "PrivBayes" / "experiment.py"]:
-        if not p.exists():
-            print(f"[warn] optional missing: {p}")
 
     if include_large_mia:
         print("[info] large-scale MIA enabled; this requires generating additional shared data at eps=[1e-2,1e-1,1,10,100].")
@@ -1005,6 +1010,11 @@ def main() -> int:
     parser.add_argument("--copies", type=int, default=10, help="number of replicate groups to process (default: 10)")
     parser.add_argument("--workers", type=int, default=max(1, mp.cpu_count() // 2))
     parser.add_argument(
+        "--no-overwrite-results",
+        action="store_true",
+        help="write result CSVs to new suffixed files instead of overwriting existing files",
+    )
+    parser.add_argument(
         "--datasets",
         type=str,
         default="hair,lactose,eye",
@@ -1025,7 +1035,7 @@ def main() -> int:
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parent
-    ctx = Context(root=root, workers=args.workers)
+    ctx = Context(root=root, workers=args.workers, no_overwrite_results=args.no_overwrite_results)
     ensure_dir(ctx.results_dir)
     ensure_dir(root / "figures")
 

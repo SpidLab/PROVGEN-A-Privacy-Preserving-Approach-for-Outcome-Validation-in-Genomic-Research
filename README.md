@@ -38,7 +38,7 @@ Each dataset folder should contain:
 - `data_100_0.csv ... data_100_9.csv`
 - `reference_100_0.csv ... reference_100_9.csv`
 
-If generation is needed, `DPSyn/` and `PrivBayes/` runtime/config files must also exist under `artifact/`.
+This artifact package does not include DPSyn/PrivBayes source code. For comparison methods, use the precomputed outputs already provided in `data/dpsyn/` and `data/privbayes/`.
 
 ## 3) Validate Wiring First
 

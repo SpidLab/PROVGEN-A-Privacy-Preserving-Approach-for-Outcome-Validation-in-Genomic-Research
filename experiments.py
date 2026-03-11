@@ -14,6 +14,7 @@ def main() -> int:
     parser.add_argument("--copies", type=int, default=10)
     parser.add_argument("--include-large-mia", action="store_true")
     parser.add_argument("--only-100-snp", action="store_true")
+    parser.add_argument("--no-overwrite-results", action="store_true")
     parser.add_argument(
         "--experiment",
         choices=["all", "gwas_standard", "gwas_maf", "mia_standard", "mia_large", "utility_standard", "utility_100"],
@@ -38,6 +39,8 @@ def main() -> int:
         cmd.append("--include-large-mia")
     if args.only_100_snp:
         cmd.append("--only-100-snp")
+    if args.no_overwrite_results:
+        cmd.append("--no-overwrite-results")
 
     return subprocess.run(cmd, cwd=root).returncode
 
