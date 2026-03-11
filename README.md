@@ -38,7 +38,7 @@ Each dataset folder should contain:
 - `data_100_0.csv ... data_100_9.csv`
 - `reference_100_0.csv ... reference_100_9.csv`
 
-This artifact package does not include DPSyn/PrivBayes source code. For comparison methods, use the precomputed outputs already provided in `data/dpsyn/` and `data/privbayes/`.
+This artifact package does not include DPSyn/PrivBayes/LDP source code. Baseline comparison results are stored in `precomputed_results/` and are merged automatically with freshly computed PROVGEN results.
 
 ## 3) Validate Wiring First
 
@@ -57,7 +57,7 @@ python run_experiments.py --mode validate --datasets lactose --only-100-snp --co
 
 ## 4) Experiments-Only (No Generation, recommended for reviewers)
 
-Use this when generated data already exists in `data/{proposed,ldp,proposed_dp_maf,privbayes,dpsyn}`.
+Use this when generated PROVGEN data already exists in `data/{proposed,proposed_dp_maf}` (and `data/proposed` for the 100-SNP branch). Baseline methods are loaded from `precomputed_results/`.
 
 ### Main paper experiments (all datasets, standard scale)
 
@@ -143,11 +143,8 @@ Run only one generator target (separated):
 
 ```bash
 python generation.py --generation-target proposed
-python generation.py --generation-target ldp
 python generation.py --generation-target proposed_dp_maf
 python generation.py --generation-target proposed_100
-python generation.py --generation-target privbayes --only-100-snp
-python generation.py --generation-target dpsyn --only-100-snp
 ```
 
 ## 6) Plot Figures
@@ -158,6 +155,17 @@ After experiments complete:
 python plotting.py
 ```
 
+Plot only one experiment group (prints absolute figure paths):
+
+```bash
+python plotting.py --plot-target gwas_standard
+python plotting.py --plot-target gwas_maf
+python plotting.py --plot-target mia_standard
+python plotting.py --plot-target mia_large
+```
+
+Utility experiments do not generate a dedicated figure. Reviewers should inspect the terminal summary printed by `python experiments.py --experiment utility_standard` / `python experiments.py --experiment utility_100` and the CSVs in `results/`.
+
 ## 7) Command Cheat Sheet
 
 ### A) Plotting only
@@ -165,6 +173,11 @@ python plotting.py
 ```bash
 source .venv/bin/activate
 python plotting.py
+```
+
+```bash
+source .venv/bin/activate
+python plotting.py --plot-target gwas_standard
 ```
 
 ### B) Experiments -> Plotting (no generation)

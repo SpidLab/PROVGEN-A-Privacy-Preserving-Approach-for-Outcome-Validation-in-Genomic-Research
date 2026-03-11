@@ -6,6 +6,7 @@ Reads from artifact/results and writes PDFs to artifact/figures.
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -26,18 +27,24 @@ MIA_METHOD_MAPPING = {
 }
 
 
-def safe_savefig(path: Path, **kwargs) -> None:
+def safe_savefig(path: Path, dry_run: bool = False, **kwargs) -> Path:
+    if dry_run:
+        print(f"[dry-run] would write figure {path}")
+        return path
     try:
         plt.savefig(path, **kwargs)
+        return path
     except PermissionError:
         alt = path.with_name(f"{path.stem}_new{path.suffix}")
         print(f"[warn] cannot overwrite {path}, writing {alt}")
         plt.savefig(alt, **kwargs)
+        return alt
 
 
-def plot_gwas_results(gwas_df: pd.DataFrame, output_dir: Path) -> None:
+def plot_gwas_results(gwas_df: pd.DataFrame, output_dir: Path, dry_run: bool = False) -> list[Path]:
     sns.set_theme(style="whitegrid")
     datasets = ["lactose", "hair", "eye"]
+    written: list[Path] = []
 
     for gwas in sorted(gwas_df["GWAS Type"].unique()):
         for error in sorted(gwas_df["Error Type"].unique()):
@@ -77,11 +84,12 @@ def plot_gwas_results(gwas_df: pd.DataFrame, output_dir: Path) -> None:
             handles, labels = ax.get_legend_handles_labels()
             fig.legend(handles, labels, loc="lower center", ncol=max(1, len(labels)), frameon=True, bbox_to_anchor=(0.5, -0.02), fontsize=11)
             plt.tight_layout(rect=[0.02, 0.05, 1, 1])
-            safe_savefig(output_dir / f"gwas_results_{gwas}_{error}.pdf", bbox_inches="tight", dpi=300)
+            written.append(safe_savefig(output_dir / f"gwas_results_{gwas}_{error}.pdf", dry_run=dry_run, bbox_inches="tight", dpi=300))
             plt.close(fig)
+    return written
 
 
-def plot_gwas_maf(gwas_df: pd.DataFrame, gwas_maf_df: pd.DataFrame, output_dir: Path, large: bool) -> None:
+def plot_gwas_maf(gwas_df: pd.DataFrame, gwas_maf_df: pd.DataFrame, output_dir: Path, dry_run: bool = False) -> Path:
     sns.set_theme(style="whitegrid")
     baseline_df = gwas_df[(gwas_df["Approach"] == "proposed") & (gwas_df["Epsilon"] == 1)]
 
@@ -90,7 +98,7 @@ def plot_gwas_maf(gwas_df: pd.DataFrame, gwas_maf_df: pd.DataFrame, output_dir: 
     datasets = ["lactose", "hair", "eye"]
     errors = ["flipping", "noise"]
 
-    fig, axes = plt.subplots(2, 6, figsize=(15, 5) if large else (13, 4.5), sharey=True)
+    fig, axes = plt.subplots(2, 6, figsize=(13, 4.5), sharey=True)
     for r, gwas in enumerate(gwas_types):
         for c, (dataset, error) in enumerate([(d, e) for d in datasets for e in errors]):
             ax = axes[r, c]
@@ -124,8 +132,9 @@ def plot_gwas_maf(gwas_df: pd.DataFrame, gwas_maf_df: pd.DataFrame, output_dir: 
     ]
     fig.legend(handles, [h.get_label() for h in handles], loc="lower center", ncol=6, frameon=False, bbox_to_anchor=(0.5, -0.05), fontsize=12)
     plt.tight_layout(rect=[0.05, 0.09, 1, 1])
-    safe_savefig(output_dir / ("gwas_results_maf_large.pdf" if large else "gwas_results_maf.pdf"), bbox_inches="tight", dpi=300)
+    out = safe_savefig(output_dir / "gwas_results_maf.pdf", dry_run=dry_run, bbox_inches="tight", dpi=300)
     plt.close(fig)
+    return out
 
 
 def map_mia(df: pd.DataFrame) -> pd.DataFrame:
@@ -136,9 +145,10 @@ def map_mia(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-def plot_mia(mia_df: pd.DataFrame, output_dir: Path, large_scale: bool) -> None:
+def plot_mia(mia_df: pd.DataFrame, output_dir: Path, large_scale: bool, dry_run: bool = False) -> list[Path]:
     sns.set_theme(style="whitegrid")
     ordered = ["hamming_distance", "decision_tree", "random_forest", "xgboost", "svm", "nn"]
+    written: list[Path] = []
 
     for dataset in DATASET_NAME_MAPPING.values():
         num_methods = 6 if dataset == "Eye Color" else 5
@@ -171,72 +181,116 @@ def plot_mia(mia_df: pd.DataFrame, output_dir: Path, large_scale: bool) -> None:
         plt.figlegend(handles, labels, loc="lower center", ncol=max(1, len(labels)), fontsize=10)
         plt.tight_layout(rect=[0, 0.1, 1, 0.95])
         suffix = "_large_scale" if large_scale else ""
-        safe_savefig(output_dir / f"mia_{dataset.lower().replace(' ', '_')}{suffix}.pdf", bbox_inches="tight")
+        written.append(safe_savefig(output_dir / f"mia_{dataset.lower().replace(' ', '_')}{suffix}.pdf", bbox_inches="tight"))
         plt.close(fig)
+    return written
 
 
-def plot_time(output_dir: Path, results_dir: Path) -> None:
-    time_csv = results_dir / "time.csv"
-    if not time_csv.exists():
-        data = {
-            "SNPs": [10, 10, 10, 10, 10, 50, 50, 50, 50, 50, 100, 100, 100, 100, 100, 500, 500, 500, 1000, 1000, 1000, 5000, 5000, 10000, 10000, 28000, 28000],
-            "Time": [575.6069, 0.0047, 0.0009, 3.3142, 7.5779, np.nan, 0.0118, 0.001, 43.8204, 42.3977, np.nan, 0.0306, 0.0014, 448.6869, 243.6263, np.nan, 0.2294, 0.0025, np.nan, 0.6987, 0.0042, 14.256, 0.0197, 53.9606, 0.0347, 446.6277, 0.1045],
-            "Method": ["Original XOR", "Proposed", "LDP", "DPSyn", "PrivBayes", "Original XOR", "Proposed", "LDP", "DPSyn", "PrivBayes", "Original XOR", "Proposed", "LDP", "DPSyn", "PrivBayes", "Original XOR", "Proposed", "LDP", "Original XOR", "Proposed", "LDP", "Proposed", "LDP", "Proposed", "LDP", "Proposed", "LDP"],
-        }
-        df = pd.DataFrame(data).dropna()
-        df["Method"] = df["Method"].map({"LDP": "LDP [25]", "Original XOR": "Vanilla XOR [24]", "Proposed": "Ours", "DPSyn": "DPSyn [27]", "PrivBayes": "PrivBayes [54]"})
-        df.to_csv(time_csv, index=False)
-    else:
-        df = pd.read_csv(time_csv)
-
-    fig, ax = plt.subplots(figsize=(8, 4.5))
-    sns.lineplot(data=df, x="SNPs", y="Time", hue="Method", marker="o", linewidth=2, errorbar=None, ax=ax)
-    ax.set_xscale("log")
-    ax.set_yscale("log")
-    ax.set_xlim(8, 30000)
-    ax.set_ylim(1e-4, 1e4)
-    ax.set_xlabel("# of SNPs (log scale)")
-    ax.set_ylabel("Time Complexity (sec, log scale)")
-    safe_savefig(output_dir / "time.pdf", bbox_inches="tight", dpi=400)
-    plt.close(fig)
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Generate figure PDFs from experiment result CSVs.")
+    parser.add_argument(
+        "--results-dir",
+        type=str,
+        default="results",
+        help="path to folder containing result CSVs (default: results)",
+    )
+    parser.add_argument(
+        "--figures-dir",
+        type=str,
+        default="figures",
+        help="path to output figure folder (default: figures)",
+    )
+    parser.add_argument(
+        "--plot-target",
+        choices=["all", "gwas_standard", "gwas_maf", "mia_standard", "mia_large", "utility_standard", "utility_100"],
+        default="all",
+        help="which experiment-style plot group to generate",
+    )
+    parser.add_argument("--dry-run", action="store_true", help="render plots without writing figure files")
+    args = parser.parse_args()
+
     root = Path(__file__).resolve().parent
-    results = root / "results"
-    figures = root / "figures"
-    figures.mkdir(parents=True, exist_ok=True)
+    results = Path(args.results_dir)
+    if not results.is_absolute():
+        results = root / results
+    figures = Path(args.figures_dir)
+    if not figures.is_absolute():
+        figures = root / figures
+    if not args.dry_run:
+        figures.mkdir(parents=True, exist_ok=True)
 
-    req = [results / "gwas_df_full.csv", results / "gwas_df_full_maf.csv", results / "mia_experiments_results_full.csv"]
-    missing = [p.name for p in req if not p.exists()]
-    if missing:
-        raise FileNotFoundError(f"Missing required result CSVs in artifact/results: {', '.join(missing)}")
+    target = args.plot_target
+    generated: list[Path] = []
+    gwas = None
+    gwas_maf = None
+    mia = None
+    mia_large = None
 
-    gwas = pd.read_csv(results / "gwas_df_full.csv")
-    gwas["Retention Ratio"] = gwas["Retention Ratio"].abs()
-    gwas.loc[gwas["Error Rate"] == 0.0, "Retention Ratio"] = 0.0
+    def load_gwas() -> tuple[pd.DataFrame, pd.DataFrame]:
+        g = pd.read_csv(results / "gwas_df_full.csv")
+        g["Retention Ratio"] = g["Retention Ratio"].abs()
+        g.loc[g["Error Rate"] == 0.0, "Retention Ratio"] = 0.0
+        gm = pd.read_csv(results / "gwas_df_full_maf.csv")
+        gm["Retention Ratio"] = gm["Retention Ratio"].abs()
+        gm.loc[gm["Error Rate"] == 0.0, "Retention Ratio"] = 0.0
+        return g, gm
 
-    gwas_maf = pd.read_csv(results / "gwas_df_full_maf.csv")
-    gwas_maf["Retention Ratio"] = gwas_maf["Retention Ratio"].abs()
-    gwas_maf.loc[gwas_maf["Error Rate"] == 0.0, "Retention Ratio"] = 0.0
+    def load_mia() -> tuple[pd.DataFrame, pd.DataFrame]:
+        m = map_mia(pd.read_csv(results / "mia_experiments_results_full.csv"))
+        large_path = results / "mia_experiments_results_large_scale.csv"
+        if large_path.exists():
+            ml = map_mia(pd.read_csv(large_path))
+            print(f"[info] using large-scale MIA from {large_path}")
+        else:
+            print("[warn] missing mia_experiments_results_large_scale.csv; reusing standard MIA CSV for large-scale plot")
+            ml = m.copy()
+        return m, ml
 
-    mia = map_mia(pd.read_csv(results / "mia_experiments_results_full.csv"))
+    if target in {"all", "gwas_standard", "gwas_maf"}:
+        req = [results / "gwas_df_full.csv", results / "gwas_df_full_maf.csv"]
+        missing = [p.name for p in req if not p.exists()]
+        if missing:
+            raise FileNotFoundError(f"Missing required GWAS result CSVs in {results}: {', '.join(missing)}")
+        gwas, gwas_maf = load_gwas()
 
-    large_path = results / "mia_experiments_results_large_scale.csv"
-    if large_path.exists():
-        mia_large = map_mia(pd.read_csv(large_path))
-        print(f"[info] using large-scale MIA from {large_path}")
+    if target in {"all", "mia_standard", "mia_large"}:
+        req = [results / "mia_experiments_results_full.csv"]
+        missing = [p.name for p in req if not p.exists()]
+        if missing:
+            raise FileNotFoundError(f"Missing required MIA result CSVs in {results}: {', '.join(missing)}")
+        mia, mia_large = load_mia()
+
+    if target in {"all", "gwas_standard"}:
+        generated.extend(plot_gwas_results(gwas, figures, dry_run=args.dry_run))
+
+    if target in {"all", "gwas_maf"}:
+        generated.append(plot_gwas_maf(gwas, gwas_maf, figures, dry_run=args.dry_run))
+
+    if target in {"all", "mia_standard"}:
+        generated.extend(plot_mia(mia, figures, large_scale=False, dry_run=args.dry_run))
+
+    if target in {"all", "mia_large"}:
+        generated.extend(plot_mia(mia_large, figures, large_scale=True, dry_run=args.dry_run))
+
+    if target in {"utility_standard", "utility_100"}:
+        utility_map = {
+            "utility_standard": results / "utility_df_full.csv",
+            "utility_100": results / "utility_100_df_full.csv",
+        }
+        csv_path = utility_map[target]
+        print(f"[info] No dedicated utility figure is included for {target}.")
+        print(f"[info] Review the terminal summary from experiments.py and the CSV at {csv_path.resolve()}")
+
+    if args.dry_run:
+        print(f"[done] dry-run completed; no figures written")
     else:
-        print("[warn] missing mia_experiments_results_large_scale.csv; reusing standard MIA CSV for large-scale plot")
-        mia_large = mia.copy()
-
-    plot_gwas_results(gwas, figures)
-    plot_gwas_maf(gwas, gwas_maf, figures, large=False)
-    plot_gwas_maf(gwas, gwas_maf, figures, large=True)
-    plot_mia(mia, figures, large_scale=False)
-    plot_mia(mia_large, figures, large_scale=True)
-    plot_time(figures, results)
-    print(f"[done] figures written to {figures}")
+        print(f"[done] figures written to {figures}")
+    if generated:
+        print("[plots]")
+        for p in generated:
+            print(f" - {p.resolve()}")
 
 
 if __name__ == "__main__":

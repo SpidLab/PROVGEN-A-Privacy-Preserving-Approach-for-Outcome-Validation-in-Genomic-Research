@@ -4,8 +4,8 @@
 This script is designed to run from inside `artifact/` and use only files under it.
 
 It supports:
-- generation: proposed XOR, LDP, proposed_dp_maf, PrivBayes, DPSyn
-- evaluation: GWAS, MIA (standard + large-scale), utility (full + 100 SNP)
+- generation: proposed XOR, proposed_dp_maf, proposed_100
+- evaluation: proposed/proposed_dp_maf metrics merged with precomputed baseline result CSVs
 - validate-only mode to verify data/config wiring without heavy generation
 """
 
@@ -60,6 +60,7 @@ class Context:
     root: Path
     workers: int
     no_overwrite_results: bool = False
+    dry_run: bool = False
 
     @property
     def data_dir(self) -> Path:
@@ -73,12 +74,16 @@ class Context:
     def results_dir(self) -> Path:
         return self.root / "results"
 
+    @property
+    def precomputed_results_dir(self) -> Path:
+        return self.root / "precomputed_results"
+
 
 def ensure_dir(path: Path) -> None:
     path.mkdir(parents=True, exist_ok=True)
 
 
-def write_results_csv(ctx: Context, filename: str, rows: list[dict]) -> Path:
+def next_results_path(ctx: Context, filename: str) -> Path:
     out = ctx.results_dir / filename
     if ctx.no_overwrite_results and out.exists():
         i = 1
@@ -88,8 +93,62 @@ def write_results_csv(ctx: Context, filename: str, rows: list[dict]) -> Path:
                 out = candidate
                 break
             i += 1
+    return out
+
+
+def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+    if df.empty:
+        return df
+    keep = [c for c in df.columns if c and not str(c).startswith("Unnamed")]
+    return df.loc[:, keep].copy()
+
+
+def write_results_csv(ctx: Context, filename: str, rows: list[dict]) -> Path:
+    out = next_results_path(ctx, filename)
+    if ctx.dry_run:
+        print(f"[dry-run] would write {out}")
+        return out
     pd.DataFrame(rows).to_csv(out, index=False)
     return out
+
+
+def write_results_dataframe(ctx: Context, filename: str, df: pd.DataFrame) -> Path:
+    out = next_results_path(ctx, filename)
+    if ctx.dry_run:
+        print(f"[dry-run] would write {out}")
+        return out
+    clean_dataframe(df).to_csv(out, index=False)
+    return out
+
+
+def load_precomputed_results(ctx: Context, filename: str, datasets: list[DATASET]) -> pd.DataFrame:
+    path = ctx.precomputed_results_dir / filename
+    if not path.exists():
+        return pd.DataFrame()
+    df = clean_dataframe(pd.read_csv(path))
+    if df.empty or "Dataset" not in df.columns:
+        return df
+    df["Dataset"] = df["Dataset"].astype(str).str.replace("DATASET.", "", regex=False)
+    allowed = [d.value for d in datasets]
+    return df[df["Dataset"].isin(allowed)].copy()
+
+
+def merge_result_rows(ctx: Context, rows: list[dict], baseline_filename: str | None, datasets: list[DATASET]) -> pd.DataFrame:
+    fresh = clean_dataframe(pd.DataFrame(rows))
+    baseline = clean_dataframe(load_precomputed_results(ctx, baseline_filename, datasets)) if baseline_filename else pd.DataFrame()
+    if baseline.empty:
+        return fresh
+    if fresh.empty:
+        return baseline
+    return pd.concat([baseline, fresh], ignore_index=True, sort=False)
+
+
+def print_dry_run_preview(label: str, df: pd.DataFrame, max_rows: int = 5) -> None:
+    if df.empty:
+        print(f"[dry-run] {label}: no rows produced")
+        return
+    print(f"[dry-run] {label}: {len(df)} rows")
+    print(df.head(max_rows).to_string(index=False))
 
 
 def load_target_dataframe(ctx: Context, dataset: DATASET, snp_count: int = 0, idx: int = 0) -> pd.DataFrame:
@@ -119,19 +178,16 @@ def load_reference_data(ctx: Context, dataset: DATASET, snp_count: int = 0, idx:
 def shared_path(ctx: Context, dataset: DATASET, epsilon: float, method: str, snp_count: int = 0, idx: int = 0) -> Path:
     if method in {"proposed", "proposed_dp_maf", "ldp", "ldp_pp"}:
         base = ctx.data_dir / method / dataset.value
-        ensure_dir(base)
         if snp_count:
             return base / f"{epsilon:.4f}_{snp_count}_{idx}.npy"
         return base / f"{epsilon:.4f}_{idx}.npy"
 
     if method == "privbayes":
         base = ctx.data_dir / "privbayes"
-        ensure_dir(base)
         return base / f"{dataset.value}_{epsilon:.1f}_{snp_count}_{idx}.csv"
 
     if method == "dpsyn":
         base = ctx.data_dir / "dpsyn"
-        ensure_dir(base)
         return base / f"{dataset.value}_{epsilon:.4f}_{snp_count}_{idx}.csv"
 
     raise ValueError(f"Unsupported method: {method}")
@@ -139,6 +195,10 @@ def shared_path(ctx: Context, dataset: DATASET, epsilon: float, method: str, snp
 
 def save_shared_data(ctx: Context, data: np.ndarray, dataset: DATASET, epsilon: float, method: str, snp_count: int = 0, idx: int = 0) -> None:
     out = shared_path(ctx, dataset, epsilon, method, snp_count, idx)
+    if ctx.dry_run:
+        print(f"[dry-run] generated {method} dataset in memory; would save {out}")
+        return
+    ensure_dir(out.parent)
     np.save(out, data)
 
 
@@ -279,7 +339,7 @@ def maybe_generate_proposed(ctx: Context, datasets: list[DATASET], include_large
                 if validate_only:
                     pbar.update(1)
                     continue
-                if not proposed_out.exists():
+                if ctx.dry_run or not proposed_out.exists():
                     proposed = generate_proposed_dataset(target, reference, total_eps)
                     save_shared_data(ctx, proposed, dataset, total_eps, "proposed", idx=idx)
                 pbar.update(1)
@@ -319,7 +379,7 @@ def maybe_generate_proposed_dp_maf(ctx: Context, datasets: list[DATASET], valida
                 if validate_only:
                     pbar_maf.update(1)
                     continue
-                if not out.exists():
+                if ctx.dry_run or not out.exists():
                     proposed_maf = generate_proposed_dataset(target, reference, eps_maf)
                     save_shared_data(ctx, proposed_maf, dataset, eps_maf, "proposed_dp_maf", idx=idx)
                 pbar_maf.update(1)
@@ -351,10 +411,10 @@ def maybe_generate_core(ctx: Context, datasets: list[DATASET], include_large_mia
                     if validate_only:
                         pbar_main.update(1)
                         continue
-                    if not proposed_out.exists():
+                    if ctx.dry_run or not proposed_out.exists():
                         proposed = generate_proposed_dataset(target, reference, total_eps)
                         save_shared_data(ctx, proposed, dataset, total_eps, "proposed", idx=idx)
-                    if not ldp_out.exists():
+                    if ctx.dry_run or not ldp_out.exists():
                         ldp = generate_ldp_dataset(target, eff_eps)
                         save_shared_data(ctx, ldp, dataset, total_eps, "ldp", idx=idx)
                     pbar_main.update(1)
@@ -365,7 +425,7 @@ def maybe_generate_core(ctx: Context, datasets: list[DATASET], include_large_mia
                 if validate_only:
                     pbar_maf.update(1)
                     continue
-                if not out.exists():
+                if ctx.dry_run or not out.exists():
                     proposed_maf = generate_proposed_dataset(target, reference, eps_maf)
                     save_shared_data(ctx, proposed_maf, dataset, eps_maf, "proposed_dp_maf", idx=idx)
                 pbar_maf.update(1)
@@ -729,7 +789,7 @@ def run_mia_experiment_with_split(target_data: np.ndarray, shared_data: np.ndarr
 
 def evaluate_gwas(ctx: Context, datasets: list[DATASET], copies: int) -> None:
     rows = []
-    total_tasks = len(datasets) * 2 * 2 * 2 * len(STANDARD_EFFECTIVE_EPS) * copies
+    total_tasks = len(datasets) * 2 * 2 * len(STANDARD_EFFECTIVE_EPS) * copies
     pbar = tqdm(total=total_tasks, desc="GWAS standard", dynamic_ncols=True)
     for dataset in datasets:
         base = EPSILON_BASES[dataset]
@@ -737,7 +797,7 @@ def evaluate_gwas(ctx: Context, datasets: list[DATASET], copies: int) -> None:
         reference = load_reference_data(ctx, dataset)
         for gwas_type in ["chi2", "odds"]:
             for error_type in ["flipping", "noise"]:
-                for method in ["ldp", "proposed"]:
+                for method in ["proposed"]:
                     for eff_eps in STANDARD_EFFECTIVE_EPS:
                         total_eps = eff_eps * base
                         for idx in range(copies):
@@ -774,9 +834,12 @@ def evaluate_gwas(ctx: Context, datasets: list[DATASET], copies: int) -> None:
                             pbar.update(1)
 
     ensure_dir(ctx.results_dir)
-    out = write_results_csv(ctx, "gwas_df_full.csv", rows)
+    merged = merge_result_rows(ctx, rows, "gwas_df_full_baselines.csv", datasets)
+    out = write_results_dataframe(ctx, "gwas_df_full.csv", merged)
     pbar.close()
     print(f"[done] {out}")
+    if ctx.dry_run:
+        print_dry_run_preview("GWAS standard", merged)
 
 
 def evaluate_gwas_maf(ctx: Context, datasets: list[DATASET], copies: int) -> None:
@@ -825,6 +888,8 @@ def evaluate_gwas_maf(ctx: Context, datasets: list[DATASET], copies: int) -> Non
     out = write_results_csv(ctx, "gwas_df_full_maf.csv", rows)
     pbar.close()
     print(f"[done] {out}")
+    if ctx.dry_run:
+        print_dry_run_preview("GWAS MAF", pd.DataFrame(rows))
 
 
 def evaluate_mia(ctx: Context, datasets: list[DATASET], effective_eps: Iterable[float], out_name: str, copies: int) -> None:
@@ -859,27 +924,32 @@ def evaluate_mia(ctx: Context, datasets: list[DATASET], effective_eps: Iterable[
                             }
                         )
 
-                    try:
-                        shared = load_shared_data(ctx, dataset, total_eps, "ldp", idx=idx)
-                    except FileNotFoundError:
-                        shared = None
-                    if shared is not None:
-                        val = run_mia_experiment_with_split(target, shared, reference, method_name)
-                        rows.append(
-                            {
-                                "Dataset": dataset.value,
-                                "Epsilon": eff_eps,
-                                "Approach": "ldp",
-                                "MIAMethod": method_name,
-                                "MIAResult": val,
-                                "Group": idx,
-                            }
-                        )
                     pbar.update(1)
 
-    out = write_results_csv(ctx, out_name, rows)
+    merged = merge_result_rows(ctx, rows, out_name.replace(".csv", "_baselines.csv"), datasets)
+    out = write_results_dataframe(ctx, out_name, merged)
     pbar.close()
     print(f"[done] {out}")
+    if ctx.dry_run:
+        print_dry_run_preview(out_name, merged)
+
+
+def print_utility_summary(out: Path, df: pd.DataFrame, label: str) -> None:
+    df = clean_dataframe(df)
+    if df.empty:
+        print(f"[warn] no utility rows produced for {label}")
+        return
+
+    summary = (
+        df.groupby(["Dataset", "Utility Metric", "Approach", "Epsilon"], as_index=False)["Utility"]
+        .agg(["mean", "std", "count"])
+        .reset_index()
+        .rename(columns={"mean": "Mean", "std": "Std", "count": "Count"})
+    )
+    summary["Std"] = summary["Std"].fillna(0.0)
+    print(f"[summary] utility results: {label}")
+    print(summary.to_string(index=False, float_format=lambda x: f"{x:.6f}"))
+    print(f"[csv] {out}")
 
 
 def evaluate_utility(ctx: Context, datasets: list[DATASET], copies: int) -> None:
@@ -891,13 +961,13 @@ def evaluate_utility(ctx: Context, datasets: list[DATASET], copies: int) -> None
     }
 
     rows = []
-    total_tasks = len(datasets) * len(metrics) * 2 * len(STANDARD_EFFECTIVE_EPS) * copies
+    total_tasks = len(datasets) * len(metrics) * len(STANDARD_EFFECTIVE_EPS) * copies
     pbar = tqdm(total=total_tasks, desc="Utility standard", dynamic_ncols=True)
     for dataset in datasets:
         original = load_target_data(ctx, dataset)
         base = EPSILON_BASES[dataset]
         for metric_name, metric_fn in metrics.items():
-            for method in ["ldp", "proposed"]:
+            for method in ["proposed"]:
                 for eff_eps in STANDARD_EFFECTIVE_EPS:
                     total_eps = eff_eps * base
                     for idx in range(copies):
@@ -917,9 +987,11 @@ def evaluate_utility(ctx: Context, datasets: list[DATASET], copies: int) -> None
                         )
                         pbar.update(1)
 
-    out = write_results_csv(ctx, "utility_df_full.csv", rows)
+    merged = merge_result_rows(ctx, rows, "utility_df_full_baselines.csv", datasets)
+    out = write_results_dataframe(ctx, "utility_df_full.csv", merged)
     pbar.close()
     print(f"[done] {out}")
+    print_utility_summary(out, merged, "standard")
 
 
 def evaluate_utility_100(ctx: Context, datasets: list[DATASET], copies: int) -> None:
@@ -931,11 +1003,11 @@ def evaluate_utility_100(ctx: Context, datasets: list[DATASET], copies: int) -> 
     }
 
     rows = []
-    total_tasks = len(datasets) * len(metrics) * 3 * len(STANDARD_EFFECTIVE_EPS) * copies
+    total_tasks = len(datasets) * len(metrics) * len(STANDARD_EFFECTIVE_EPS) * copies
     pbar = tqdm(total=total_tasks, desc="Utility 100-SNP", dynamic_ncols=True)
     for dataset in datasets:
         for metric_name, metric_fn in metrics.items():
-            for method in ["dpsyn", "privbayes", "proposed"]:
+            for method in ["proposed"]:
                 for eff_eps in STANDARD_EFFECTIVE_EPS:
                     total_eps = 100 * eff_eps
                     for idx in range(copies):
@@ -956,9 +1028,11 @@ def evaluate_utility_100(ctx: Context, datasets: list[DATASET], copies: int) -> 
                         )
                         pbar.update(1)
 
-    out = write_results_csv(ctx, "utility_100_df_full.csv", rows)
+    merged = merge_result_rows(ctx, rows, "utility_100_df_full_baselines.csv", datasets)
+    out = write_results_dataframe(ctx, "utility_100_df_full.csv", merged)
     pbar.close()
     print(f"[done] {out}")
+    print_utility_summary(out, merged, "100-SNP")
 
 
 def validate_inputs(ctx: Context, datasets: list[DATASET], include_large_mia: bool, only_100_snp: bool, copies: int) -> int:
@@ -1005,10 +1079,11 @@ def main() -> int:
     parser.add_argument(
         "--only-100-snp",
         action="store_true",
-        help="run/validate only the 100-SNP branch (proposed+dpsyn+privbayes generation and utility_100 evaluation)",
+        help="run/validate only the 100-SNP branch (proposed_100 generation and utility_100 evaluation with precomputed baselines)",
     )
     parser.add_argument("--copies", type=int, default=10, help="number of replicate groups to process (default: 10)")
     parser.add_argument("--workers", type=int, default=max(1, mp.cpu_count() // 2))
+    parser.add_argument("--dry-run", action="store_true", help="execute computations without writing generated data or result CSVs")
     parser.add_argument(
         "--no-overwrite-results",
         action="store_true",
@@ -1028,16 +1103,17 @@ def main() -> int:
     )
     parser.add_argument(
         "--generation-target",
-        choices=["all", "proposed", "ldp", "proposed_dp_maf", "proposed_100", "privbayes", "dpsyn"],
+        choices=["all", "proposed", "proposed_dp_maf", "proposed_100"],
         default="all",
         help="generation target when mode is generate/all",
     )
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parent
-    ctx = Context(root=root, workers=args.workers, no_overwrite_results=args.no_overwrite_results)
-    ensure_dir(ctx.results_dir)
-    ensure_dir(root / "figures")
+    ctx = Context(root=root, workers=args.workers, no_overwrite_results=args.no_overwrite_results, dry_run=args.dry_run)
+    if not ctx.dry_run:
+        ensure_dir(ctx.results_dir)
+        ensure_dir(root / "figures")
 
     try:
         selected = [DATASET[s.strip()] for s in args.datasets.split(",") if s.strip()]
@@ -1069,23 +1145,13 @@ def main() -> int:
         if args.only_100_snp:
             if gen in {"all", "proposed_100"}:
                 maybe_generate_100_snp_methods(ctx, selected, validate_only=False, copies=args.copies)
-            if gen in {"all", "privbayes"}:
-                run_privbayes_generation(ctx, selected, validate_only=False, copies=args.copies)
-            if gen in {"all", "dpsyn"}:
-                run_dpsyn_generation(ctx, selected, validate_only=False, copies=args.copies)
         else:
             if gen in {"all", "proposed"}:
                 maybe_generate_proposed(ctx, selected, include_large_mia=args.include_large_mia, validate_only=False, copies=args.copies)
-            if gen in {"all", "ldp"}:
-                maybe_generate_ldp(ctx, selected, include_large_mia=args.include_large_mia, validate_only=False, copies=args.copies)
             if gen in {"all", "proposed_dp_maf"}:
                 maybe_generate_proposed_dp_maf(ctx, selected, validate_only=False, copies=args.copies)
             if gen in {"all", "proposed_100"}:
                 maybe_generate_100_snp_methods(ctx, selected, validate_only=False, copies=args.copies)
-            if gen in {"all", "privbayes"}:
-                run_privbayes_generation(ctx, selected, validate_only=False, copies=args.copies)
-            if gen in {"all", "dpsyn"}:
-                run_dpsyn_generation(ctx, selected, validate_only=False, copies=args.copies)
 
     if args.mode in {"evaluate", "all"}:
         exp = args.experiment

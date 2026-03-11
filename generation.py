@@ -14,9 +14,10 @@ def main() -> int:
     parser.add_argument("--copies", type=int, default=10)
     parser.add_argument("--include-large-mia", action="store_true")
     parser.add_argument("--only-100-snp", action="store_true")
+    parser.add_argument("--dry-run", action="store_true")
     parser.add_argument(
         "--generation-target",
-        choices=["all", "proposed", "ldp", "proposed_dp_maf", "proposed_100", "privbayes", "dpsyn"],
+        choices=["all", "proposed", "proposed_dp_maf", "proposed_100"],
         default="all",
     )
     args = parser.parse_args()
@@ -38,6 +39,8 @@ def main() -> int:
         cmd.append("--include-large-mia")
     if args.only_100_snp:
         cmd.append("--only-100-snp")
+    if args.dry_run:
+        cmd.append("--dry-run")
 
     return subprocess.run(cmd, cwd=root).returncode
 

@@ -16,12 +16,13 @@ This artifact supports the PoPETs paper above. It contains:
 - experiment pipeline (`experiments.py`) for evaluation CSVs,
 - plotting pipeline (`plotting.py`) for final figures.
 
-The artifact is designed so reviewers can run experiments without regenerating datasets if generated data is already provided.
+The artifact is designed so reviewers regenerate only PROVGEN outputs, while baseline method results (`ldp`, `dpsyn`, `privbayes`) are loaded from bundled precomputed CSVs.
 
 ### Security/Privacy Issues and Ethical Concerns
 
 - No exploit or malware code is included.
-- The artifact executes local Python scripts and external baseline code (`DPSyn`, `PrivBayes`) in this repository.
+- The artifact executes local Python scripts only.
+- Baseline comparison results for `ldp`, `dpsyn`, and `privbayes` are provided as precomputed CSVs in `precomputed_results/`.
 - Reviewers should run in an isolated environment (virtualenv/container/VM) as standard best practice.
 - Datasets in `data/cleansed` are preprocessed and expected to be non-identifying for artifact review usage.
 
@@ -40,9 +41,6 @@ The artifact is designed so reviewers can run experiments without regenerating d
 - Python dependencies: see `requirements.txt` (pinned versions can be added if required by reviewers).
 - Docker: **not required**. The artifact is runnable with Python virtualenv.
 - Docker is optional if reviewers prefer container isolation.
-- Optional baseline runtimes:
-  - `DPSyn/` folder for DPSyn generation.
-  - `PrivBayes/` folder for PrivBayes generation.
 
 ### Estimated Time and Storage Consumption
 
@@ -100,12 +98,12 @@ The artifact supports these core claims:
 1. **GWAS outcome validation quality** under perturbation and error settings.
 2. **MIA behavior** across methods under standard epsilon scale.
 3. **MIA large-scale trend** under epsilon scale `10^-2 ... 10^2`.
-4. **Utility comparison** across methods, including 100-SNP setting with external baselines.
+4. **Utility comparison** across methods, including 100-SNP setting with bundled baseline results.
 5. **Figure regeneration** from experiment outputs.
 
 ### Experiments
 
-All commands below are experiments-only (assume generated datasets already exist).
+All commands below recompute only PROVGEN outputs. Baseline methods (`ldp`, `dpsyn`, `privbayes`) are merged automatically from `precomputed_results/`.
 
 #### Experiment 1: GWAS Outcome Validation (supports claim 1)
 
@@ -117,6 +115,8 @@ Commands:
 ```bash
 python experiments.py --experiment gwas_standard
 python experiments.py --experiment gwas_maf
+python plotting.py --plot-target gwas_standard
+python plotting.py --plot-target gwas_maf
 ```
 
 #### Experiment 2: MIA Standard Scale (supports claim 2)
@@ -128,6 +128,7 @@ Command:
 
 ```bash
 python experiments.py --experiment mia_standard
+python plotting.py --plot-target mia_standard
 ```
 
 #### Experiment 3: MIA Large Scale (supports claim 3)
@@ -139,6 +140,7 @@ Command:
 
 ```bash
 python experiments.py --experiment mia_large --include-large-mia
+python plotting.py --plot-target mia_large
 ```
 
 #### Experiment 4: Utility Comparisons (supports claim 4)
@@ -153,6 +155,13 @@ python experiments.py --experiment utility_standard
 python experiments.py --experiment utility_100
 ```
 
+Expected output:
+- terminal summary tables printed by `experiments.py`
+- `results/utility_df_full.csv`
+- `results/utility_100_df_full.csv`
+
+Note: there is no dedicated utility figure in this artifact. This is acceptable because the utility claim is reviewed directly from the tabulated terminal/CSV outputs rather than from a paper-style plot.
+
 #### Experiment 5: Figure Reproduction (supports claim 5)
 
 - Time: low to medium
@@ -164,6 +173,17 @@ Command:
 python plotting.py
 ```
 
+Per-experiment plotting commands:
+
+```bash
+python plotting.py --plot-target gwas_standard
+python plotting.py --plot-target gwas_maf
+python plotting.py --plot-target mia_standard
+python plotting.py --plot-target mia_large
+```
+
+The plotting script prints absolute paths of generated figures for quick review.
+
 Expected figures include:
 
 - `figures/gwas_results_chi2_flipping.pdf`
@@ -171,14 +191,12 @@ Expected figures include:
 - `figures/gwas_results_odds_flipping.pdf`
 - `figures/gwas_results_odds_noise.pdf`
 - `figures/gwas_results_maf.pdf`
-- `figures/gwas_results_maf_large.pdf`
 - `figures/mia_hair_color.pdf`
 - `figures/mia_eye_color.pdf`
 - `figures/mia_lactose_intolerance.pdf`
 - `figures/mia_hair_color_large_scale.pdf`
 - `figures/mia_eye_color_large_scale.pdf`
 - `figures/mia_lactose_intolerance_large_scale.pdf`
-- `figures/time.pdf`
 
 Optional one-shot command for all experiments:
 
@@ -189,19 +207,20 @@ python experiments.py --include-large-mia
 ## Limitations
 
 - Full generation (`generation.py`) can be resource-intensive and may be impractical on low-resource machines.
-- For artifact review, we recommend experiments-only mode with pre-generated data.
+- For artifact review, we recommend generating only PROVGEN data and reusing the bundled baseline result CSVs.
 - Runtime variability may occur due to hardware and library differences.
 - Reproduced assessment is based on qualitative/visual agreement of generated CSV trends and figures with paper claims.
 
 ## Notes on Reusability
 
 - The workflow is modular:
-  - `generation.py` for data production,
-  - `experiments.py` for evaluation,
+  - `generation.py` for PROVGEN data production,
+  - `experiments.py` for PROVGEN evaluation plus baseline-result merging,
   - `plotting.py` for visualization.
 - `experiments.py` supports per-experiment execution via `--experiment`:
   - `gwas_standard`, `gwas_maf`, `mia_standard`, `mia_large`, `utility_standard`, `utility_100`.
 - `generation.py` supports per-generator execution via `--generation-target`:
-  - `proposed`, `ldp`, `proposed_dp_maf`, `proposed_100`, `privbayes`, `dpsyn`.
+  - `proposed`, `proposed_dp_maf`, `proposed_100`.
+- `plotting.py` supports `--plot-target` for one experiment group at a time.
 - `--datasets`, `--copies`, and `--only-100-snp` allow scoped runs for rapid debugging and extension.
 - Researchers can add new datasets/methods by extending loaders and evaluation loops in `run_experiments.py`.
