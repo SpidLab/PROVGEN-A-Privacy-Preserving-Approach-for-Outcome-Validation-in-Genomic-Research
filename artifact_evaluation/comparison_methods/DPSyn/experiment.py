@@ -55,25 +55,13 @@ init_dataset()
 # ep=1.0
 # snp_cnt = 100
 
-# print(args)
-# assert False
-# PRIV_DATA = f'../datasets/{dataset_name.value}/{dataset_name.value}_{snp_cnt}.csv'
-# PRIV_DATA_NAME = f'{dataset_name.value}_{snp_cnt}_{ep}'
-# CONFIG_DATA = './config/data.yaml'
-# PARAMS = f'./parameters/{dataset_name.value}/{ep}/parameters.json'
-# DATA_TYPE = f'./parameters/{dataset_name.value}/{ep}/column_datatypes.json'
-# MARGINAL_CONFIG = f'./config/eps={ep}.yaml'
-# UPDATE_ITERATIONS = 30
-# TARGET_PATH = f'./dpsyn_release/{dataset_name.value}/'
-# TARGET_FILE_PATH = f'./dpsyn_release/{dataset_name.value}/{dataset_name.value}_{snp_cnt}_{ep}.csv'
-
 parser = argparse.ArgumentParser()
 # original dataset file 
-parser.add_argument("--priv_data", type=str, default="./data/accidential_drug_deaths.csv",
+parser.add_argument("--priv_data", type=str, required=True,
                     help="specify the path of original data file in csv format")
 
 # priv_data_name for use of naming mile-stone files
-parser.add_argument("--priv_data_name", type=str, 
+parser.add_argument("--priv_data_name", type=str, required=True,
 help="users must specify it to help mid-way naming and avoid possible mistakings")
 
 # config file which include identifier and binning settings 
@@ -85,15 +73,15 @@ parser.add_argument("--n", type=int, default=0,
                     help="specify the number of records to generate")
 
 # params file which include schema of the original dataset
-parser.add_argument("--params", type=str, default="./data/parameters.json",
+parser.add_argument("--params", type=str, required=True,
                     help="specify the path of parameters file in json format")
 
 # datatype file which include the data types of the columns
-parser.add_argument("--datatype", type=str, default="./data/column_datatypes.json",
+parser.add_argument("--datatype", type=str, required=True,
                     help="specify the path of datatype file in json format")
 
 # marginal_config which specify marginal usage method
-parser.add_argument("--marginal_config", type=str, default="./config/eps=10.0.yaml",
+parser.add_argument("--marginal_config", type=str, required=True,
 help="specify the path of marginal config file in yaml format")
 
 # hyper parameter, the num of update iterations
@@ -101,7 +89,7 @@ parser.add_argument("--update_iterations", type=int, default=30,
                    help="specify the num of update iterations")
 
 # target path of synthetic dataset
-parser.add_argument("--target_path", type=str, default="out.csv",
+parser.add_argument("--target_path", type=str, required=True,
 help="specify the target path of the synthetic dataset")
 
 # target path of synthetic dataset
