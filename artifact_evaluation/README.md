@@ -39,4 +39,4 @@ python run_evaluation.py --include-large-mia
 python run_plotting.py
 ```
 
-The `eye` PROVGEN generation path is memory-heavy and can require about 200 GB RAM. Machines below that range should use smaller-dataset smoke runs such as `--datasets hair,lactose --copies 1` instead of full from-scratch `eye` generation.
+Generation is intentionally single-process at the artifact dispatcher level. The `eye` PROVGEN generation path is memory-heavy and can require about 200 GB RAM for one run, so PROVGEN generation should not be manually parallelized unless the machine has enough memory for every concurrent run. PrivBayes and DPSyn generation jobs are also invoked one at a time by this artifact because their bundled runtimes may manage their own internal processing. Machines below the full-eye memory range should use smaller-dataset smoke runs such as `--datasets hair,lactose --copies 1` instead of full from-scratch `eye` generation.

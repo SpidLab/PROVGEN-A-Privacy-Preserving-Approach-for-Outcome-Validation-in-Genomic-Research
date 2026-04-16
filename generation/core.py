@@ -97,8 +97,9 @@ def generate_ldp_dataset(matrix: np.ndarray, epsilon_per_snp: float) -> np.ndarr
     """Generate the local-DP baseline used in the paper."""
     nrows, ncols = matrix.shape
     keep_probability = np.exp(epsilon_per_snp / ncols) / (np.exp(epsilon_per_snp / ncols) + 2)
+    randomize_probability = 1 - keep_probability
     perturbed = np.copy(matrix)
-    flip_mask = np.random.binomial(1, keep_probability, size=matrix.shape)
+    flip_mask = np.random.binomial(1, randomize_probability, size=matrix.shape)
     random_values = np.random.choice([0, 1, 2], size=matrix.shape)
     perturbed[flip_mask == 1] = random_values[flip_mask == 1]
     return perturbed

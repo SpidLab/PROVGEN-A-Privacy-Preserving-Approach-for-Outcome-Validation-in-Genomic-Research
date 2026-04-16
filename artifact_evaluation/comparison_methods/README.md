@@ -17,6 +17,8 @@ These folders are invoked by `run_experiments.py` through:
 - `python run_generation.py --only-100-snp --generation-target privbayes`
 - `python run_generation.py --only-100-snp --generation-target dpsyn`
 
+The artifact wrapper invokes PrivBayes and DPSyn generation jobs serially. These comparison-method runtimes may use their own internal processing, so the artifact does not add another multiprocessing layer around them.
+
 Generated datasets are written under:
 
 - `generated/privbayes/`

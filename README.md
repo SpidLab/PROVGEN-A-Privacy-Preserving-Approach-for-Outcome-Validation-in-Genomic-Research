@@ -37,6 +37,8 @@ python -m generation \
 
 Inputs may be `.csv` or `.npy`; the output format is inferred from the output suffix.
 
+PROVGEN generation can have a high per-run memory cost on large SNP matrices. For the paper's full `eye` dataset, one generation run can require about 200 GB RAM. The artifact generation dispatcher therefore runs all generation jobs serially. Users should not manually run multiple PROVGEN generation jobs in parallel unless the machine has enough memory for each concurrent run, and the PrivBayes/DPSyn comparison-method wrappers are also invoked one job at a time because those runtimes may manage their own internal processing.
+
 ## Artifact Evaluation
 
 All artifact-evaluation material is under `artifact_evaluation/`.

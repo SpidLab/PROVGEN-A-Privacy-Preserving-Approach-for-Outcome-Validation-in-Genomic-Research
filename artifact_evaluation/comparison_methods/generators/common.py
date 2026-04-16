@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import multiprocessing as mp
 import sys
 from pathlib import Path
 
@@ -28,7 +27,7 @@ DEFAULT_COPIES = 10
 
 
 def build_context(dry_run: bool = False) -> Context:
-    return Context(root=ROOT, workers=max(1, mp.cpu_count() // 2), dry_run=dry_run)
+    return Context(root=ROOT, workers=1, dry_run=dry_run)
 
 
 def parse_datasets(raw: str) -> list[DATASET]:

@@ -379,15 +379,11 @@ def maybe_generate_proposed(ctx: Context, datasets: list[DATASET], include_large
                 tasks.append((str(ctx.root), dataset.value, total_eps, idx))
 
     if tasks:
-        if ctx.workers > 1 and not ctx.dry_run:
-            chunksize = max(1, len(tasks) // max(1, ctx.workers * 8))
-            with mp.Pool(processes=ctx.workers) as pool:
-                for _ in pool.imap_unordered(_generate_proposed_task, tasks, chunksize=chunksize):
-                    pbar.update(1)
-        else:
-            for task in tasks:
-                _generate_proposed_task(task)
-                pbar.update(1)
+        # PROVGEN can require hundreds of GB for a single full eye-dataset run.
+        # Keep generation serial even if the caller's context has evaluation workers.
+        for task in tasks:
+            _generate_proposed_task(task)
+            pbar.update(1)
     pbar.close()
 
 
@@ -512,6 +508,8 @@ def run_privbayes_generation(ctx: Context, datasets: list[DATASET], validate_onl
         print("[warn] Skipping PrivBayes generation: artifact_evaluation/comparison_methods/PrivBayes/experiment.py not found")
         return
 
+    # Keep external comparison-method runs serial; their runtimes may manage
+    # internal processing, and wrapping them in a Pool risks oversubscription.
     total_tasks = len(datasets) * len(STANDARD_EFFECTIVE_EPS) * copies
     pbar = tqdm(total=total_tasks, desc="Generate PrivBayes 100-SNP", dynamic_ncols=True)
     for dataset in datasets:
@@ -554,6 +552,8 @@ def run_dpsyn_generation(ctx: Context, datasets: list[DATASET], validate_only: b
         print("[warn] Skipping DPSyn generation: artifact_evaluation/comparison_methods/DPSyn/experiment.py not found")
         return
 
+    # Keep external comparison-method runs serial; their runtimes may manage
+    # internal processing, and wrapping them in a Pool risks oversubscription.
     total_tasks = len(datasets) * len(STANDARD_EFFECTIVE_EPS) * copies
     pbar = tqdm(total=total_tasks, desc="Generate DPSyn 100-SNP", dynamic_ncols=True)
     for dataset in datasets:
@@ -1259,7 +1259,7 @@ def main() -> int:
         help="run/validate only the 100-SNP branch (proposed_100, PrivBayes, DPSyn, and utility_100)",
     )
     parser.add_argument("--copies", type=int, default=10, help="number of replicate groups to process (default: 10)")
-    parser.add_argument("--workers", type=int, default=max(1, mp.cpu_count() // 2))
+    parser.add_argument("--workers", type=int, default=max(1, mp.cpu_count() // 2), help="evaluation worker processes; generation is forced to one worker")
     parser.add_argument("--dry-run", action="store_true", help="execute computations without writing generated data or result CSVs")
     parser.add_argument(
         "--no-overwrite-results",
@@ -1318,27 +1318,31 @@ def main() -> int:
         return code
 
     if args.mode in {"generate", "all"}:
+        gen_ctx = ctx
+        if ctx.workers != 1:
+            print("[info] Generation runs single-worker; --workers is used only by evaluation.")
+            gen_ctx = Context(root=root, workers=1, no_overwrite_results=args.no_overwrite_results, dry_run=args.dry_run)
         gen = args.generation_target
         if args.only_100_snp:
             if gen in {"all", "proposed_100"}:
-                maybe_generate_100_snp_methods(ctx, selected, validate_only=False, copies=args.copies)
+                maybe_generate_100_snp_methods(gen_ctx, selected, validate_only=False, copies=args.copies)
             if gen in {"all", "privbayes"}:
-                run_privbayes_generation(ctx, selected, validate_only=False, copies=args.copies)
+                run_privbayes_generation(gen_ctx, selected, validate_only=False, copies=args.copies)
             if gen in {"all", "dpsyn"}:
-                run_dpsyn_generation(ctx, selected, validate_only=False, copies=args.copies)
+                run_dpsyn_generation(gen_ctx, selected, validate_only=False, copies=args.copies)
         else:
             if gen in {"all", "proposed"}:
-                maybe_generate_proposed(ctx, selected, include_large_mia=args.include_large_mia, validate_only=False, copies=args.copies)
+                maybe_generate_proposed(gen_ctx, selected, include_large_mia=args.include_large_mia, validate_only=False, copies=args.copies)
             if gen in {"all", "ldp"}:
-                maybe_generate_ldp(ctx, selected, include_large_mia=args.include_large_mia, validate_only=False, copies=args.copies)
+                maybe_generate_ldp(gen_ctx, selected, include_large_mia=args.include_large_mia, validate_only=False, copies=args.copies)
             if gen in {"all", "proposed_dp_maf"}:
-                maybe_generate_proposed_dp_maf(ctx, selected, validate_only=False, copies=args.copies)
+                maybe_generate_proposed_dp_maf(gen_ctx, selected, validate_only=False, copies=args.copies)
             if gen in {"all", "proposed_100"}:
-                maybe_generate_100_snp_methods(ctx, selected, validate_only=False, copies=args.copies)
+                maybe_generate_100_snp_methods(gen_ctx, selected, validate_only=False, copies=args.copies)
             if gen in {"all", "privbayes"}:
-                run_privbayes_generation(ctx, selected, validate_only=False, copies=args.copies)
+                run_privbayes_generation(gen_ctx, selected, validate_only=False, copies=args.copies)
             if gen in {"all", "dpsyn"}:
-                run_dpsyn_generation(ctx, selected, validate_only=False, copies=args.copies)
+                run_dpsyn_generation(gen_ctx, selected, validate_only=False, copies=args.copies)
 
     if args.mode in {"evaluate", "all"}:
         exp = args.experiment

@@ -61,7 +61,7 @@ Recommended minimums:
 - Validation, plotting, and smoke tests: 4 GB RAM, <5 GB free disk.
 - Standard PROVGEN generation/evaluation: 16-32 GB RAM recommended.
 - Full regeneration including large-scale MIA and 100-SNP baselines: 64-128 GB RAM recommended, multi-core CPU strongly recommended.
-- Full PROVGEN regeneration for the `eye` dataset is substantially more memory intensive than `hair` and `lactose`. In our local tests, regenerating full `eye` PROVGEN standard/large-scale outputs can require about 200 GB RAM. Reviewers without this memory should skip full from-scratch `eye` PROVGEN generation and run the smaller-dataset smoke workflow instead.
+- Full PROVGEN regeneration for the `eye` dataset is substantially more memory intensive than `hair` and `lactose`. In our local tests, one full `eye` PROVGEN generation run can require about 200 GB RAM. Reviewers should not manually parallelize PROVGEN generation unless the machine has enough memory for every concurrent run; reviewers without this memory should skip full from-scratch `eye` PROVGEN generation and run the smaller-dataset smoke workflow instead.
 
 Runtime depends strongly on CPU count, selected datasets, number of copies, and whether data generation is rerun. The evaluation scripts now expose `--workers` for the expensive loops, so runtimes should be estimated from the chosen worker count rather than from a fixed single-machine number.
 
@@ -83,7 +83,7 @@ The evaluation backend uses Python multiprocessing for the expensive experiment 
 - `utility_standard`
 - `utility_100`
 
-Control the process count with `--workers`, for example:
+Control the evaluation process count with `--workers`, for example:
 
 ```bash
 python run_evaluation.py --datasets hair,lactose --copies 1 --experiment gwas_standard --workers 4
@@ -92,7 +92,7 @@ python run_evaluation.py --datasets hair,lactose --copies 1 --experiment mia_lar
 
 Some ML classifiers used in the MIA experiments are configured with single-threaded internal jobs where possible, so the outer experiment-level multiprocessing controls the main parallelism and avoids CPU oversubscription.
 
-Generation is partly parallelizable through `run_experiments.py --mode generate --workers N`, but reviewers should be conservative for memory-heavy runs. In particular, use `--workers 1` for full PROVGEN `eye` generation.
+Generation is intentionally single-process at the artifact dispatcher level. A single full `eye` PROVGEN generation run can require about 200 GB RAM, so manually parallelizing PROVGEN generation is not recommended unless the machine has enough memory for each concurrent run. PrivBayes and DPSyn generation jobs are also invoked one at a time because their bundled runtimes may manage their own internal processing; the artifact does not add another multiprocessing layer around them or launch multiple generation jobs in parallel.
 
 ### Software Requirements
 
