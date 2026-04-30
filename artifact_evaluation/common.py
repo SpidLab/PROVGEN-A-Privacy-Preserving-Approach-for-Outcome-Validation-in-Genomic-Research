@@ -181,13 +181,14 @@ def load_mia_results(results_dir: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 def plot_gwas_results(gwas_df: pd.DataFrame, output_dir: Path, dry_run: bool = False) -> list[Path]:
     sns.set_theme(style="whitegrid")
-    datasets = ["lactose", "hair", "eye"]
+    datasets = [d for d in ["lactose", "hair", "eye"] if d in set(gwas_df["Dataset"].dropna())]
     written: list[Path] = []
 
     for gwas in sorted(gwas_df["GWAS Type"].unique()):
         for error in sorted(gwas_df["Error Type"].unique()):
             subset = gwas_df[(gwas_df["GWAS Type"] == gwas) & (gwas_df["Error Type"] == error)]
-            fig, axes = plt.subplots(1, 3, figsize=(10, 3.5), sharey=True)
+            fig, axes = plt.subplots(1, len(datasets), figsize=(3.4 * len(datasets), 3.5), sharey=True)
+            axes = np.atleast_1d(axes)
 
             for i, dataset in enumerate(datasets):
                 ax = axes[i]
@@ -239,10 +240,12 @@ def plot_gwas_maf(
 
     base_color, dp_color = "#1B4F72", "#E67E22"
     gwas_types = ["chi2", "odds"]
-    datasets = ["lactose", "hair", "eye"]
+    available = set(gwas_maf_df["Dataset"].dropna()).union(set(baseline_df["Dataset"].dropna()))
+    datasets = [d for d in ["lactose", "hair", "eye"] if d in available]
     errors = ["flipping", "noise"]
 
-    fig, axes = plt.subplots(2, 6, figsize=(13, 4.5), sharey=True)
+    fig, axes = plt.subplots(2, len(datasets) * len(errors), figsize=(2.2 * len(datasets) * len(errors), 4.5), sharey=True)
+    axes = np.atleast_2d(axes)
     for r, gwas in enumerate(gwas_types):
         for c, (dataset, error) in enumerate([(d, e) for d in datasets for e in errors]):
             ax = axes[r, c]
@@ -315,7 +318,8 @@ def plot_mia(mia_df: pd.DataFrame, output_dir: Path, large_scale: bool, dry_run:
     ordered = ["hamming_distance", "decision_tree", "random_forest", "xgboost", "svm", "nn"]
     written: list[Path] = []
 
-    for dataset in DATASET_NAME_MAPPING.values():
+    available = set(mia_df["Dataset"].dropna())
+    for dataset in [d for d in DATASET_NAME_MAPPING.values() if d in available]:
         num_methods = 6 if dataset == "Eye Color" else 5
         fig = plt.figure(figsize=(14 if dataset == "Eye Color" else 12, 3))
 
