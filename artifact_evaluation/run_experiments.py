@@ -40,7 +40,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
-from generation.core import generate_ldp_dataset, generate_proposed_dataset
+from generation.core import generate_ldp_dataset, generate_proposed_dataset, generate_proposed_dataset_with_dp_mafs
 
 
 class DATASET(Enum):
@@ -143,6 +143,85 @@ def print_dry_run_preview(label: str, df: pd.DataFrame, max_rows: int = 5) -> No
         return
     print(f"[dry-run] {label}: {len(df)} rows")
     print(df.head(max_rows).to_string(index=False))
+
+
+def _utility_summary_stem(out: Path) -> str:
+    stem = out.stem
+    if stem == "utility_df_full":
+        return "utility_summary"
+    if stem == "utility_100_df_full":
+        return "utility_100_summary"
+    return f"{stem}_summary"
+
+
+def _write_utility_summary_files(out: Path, df: pd.DataFrame, dry_run: bool = False) -> tuple[Path, Path]:
+    summary_stem = _utility_summary_stem(out)
+    csv_out = out.with_name(f"{summary_stem}.csv")
+    md_out = out.with_name(f"{summary_stem}.md")
+
+    wide = (
+        df.pivot_table(
+            index=["Dataset", "Utility Metric", "Approach"],
+            columns="Epsilon",
+            values="Utility",
+            aggfunc="mean",
+        )
+        .reset_index()
+    )
+
+    epsilon_cols = sorted(
+        [col for col in wide.columns if isinstance(col, (int, float, np.integer, np.floating))],
+        key=float,
+    )
+    wide = wide[["Dataset", "Utility Metric", "Approach", *epsilon_cols]]
+    wide.columns = [
+        f"eps_{int(col)}" if isinstance(col, (int, np.integer)) or (isinstance(col, float) and float(col).is_integer()) else f"eps_{col:g}"
+        if isinstance(col, (float, np.floating))
+        else col
+        for col in wide.columns
+    ]
+
+    if dry_run:
+        print(f"[dry-run] would write {csv_out}")
+        print(f"[dry-run] would write {md_out}")
+        return csv_out, md_out
+
+    wide.to_csv(csv_out, index=False)
+
+    columns = [col for col in wide.columns if col != "Dataset"]
+    lines = [f"# {summary_stem.replace('_', ' ')}", ""]
+    for dataset in wide["Dataset"].drop_duplicates():
+        lines.append(f"## {dataset}")
+        lines.append("")
+        lines.append("| " + " | ".join(columns) + " |")
+        lines.append("| " + " | ".join(["---"] * len(columns)) + " |")
+        block = wide[wide["Dataset"] == dataset][columns]
+        for _, row in block.iterrows():
+            cells: list[str] = []
+            for col in columns:
+                value = row[col]
+                if isinstance(value, (float, np.floating)):
+                    cells.append(f"{value:.6f}")
+                else:
+                    cells.append(str(value))
+            lines.append("| " + " | ".join(cells) + " |")
+        lines.append("")
+
+    md_out.write_text("\n".join(lines), encoding="utf-8")
+    return csv_out, md_out
+
+
+def _raise_missing_generated_outputs(experiment: str, missing: list[Path], hint: str) -> None:
+    if not missing:
+        return
+
+    unique_missing = sorted(set(missing), key=str)
+    lines = [f"{experiment} is missing required generated datasets:"]
+    lines.extend(f" - {path}" for path in unique_missing[:10])
+    if len(unique_missing) > 10:
+        lines.append(f" - ... and {len(unique_missing) - 10} more")
+    lines.append(hint)
+    raise RuntimeError("\n".join(lines))
 
 
 def load_target_dataframe(ctx: Context, dataset: DATASET, snp_count: int = 0, idx: int = 0) -> pd.DataFrame:
@@ -414,6 +493,7 @@ def maybe_generate_proposed_dp_maf(ctx: Context, datasets: list[DATASET], valida
     total_maf = len(datasets) * len(MAF_EPS) * copies
     pbar_maf = tqdm(total=total_maf, desc="Generate proposed_dp_maf", dynamic_ncols=True)
     for dataset in datasets:
+        epsilon_e = EPSILON_BASES[dataset]
         target = load_target_data(ctx, dataset)
         reference = load_reference_data(ctx, dataset)
         for eps_maf in MAF_EPS:
@@ -425,7 +505,7 @@ def maybe_generate_proposed_dp_maf(ctx: Context, datasets: list[DATASET], valida
                 if ctx.dry_run:
                     print(f"[dry-run] would generate proposed_dp_maf dataset {out}")
                 elif not out.exists():
-                    proposed_maf = generate_proposed_dataset(target, reference, eps_maf)
+                    proposed_maf = generate_proposed_dataset_with_dp_mafs(target, reference, epsilon_e, eps_maf)
                     save_shared_data(ctx, proposed_maf, dataset, eps_maf, "proposed_dp_maf", idx=idx)
                 pbar_maf.update(1)
     pbar_maf.close()
@@ -471,7 +551,7 @@ def maybe_generate_core(ctx: Context, datasets: list[DATASET], include_large_mia
                     pbar_maf.update(1)
                     continue
                 if ctx.dry_run or not out.exists():
-                    proposed_maf = generate_proposed_dataset(target, reference, eps_maf)
+                    proposed_maf = generate_proposed_dataset_with_dp_mafs(target, reference, base, eps_maf)
                     save_shared_data(ctx, proposed_maf, dataset, eps_maf, "proposed_dp_maf", idx=idx)
                 pbar_maf.update(1)
 
@@ -812,23 +892,36 @@ def hamming_distance(case_matrix: np.ndarray, control_matrix: np.ndarray, dp_mat
 
 
 def neural_network(X_train: np.ndarray, y_train: np.ndarray):
+    import os
+
+    # Keep the artifact's small NN-based MIA probe on CPU for portability.
+    # Several reviewer machines expose TensorFlow GPU/CuDNN mismatches that
+    # would otherwise fail only when the eye-dataset NN branch is exercised.
+    os.environ.setdefault("CUDA_VISIBLE_DEVICES", "-1")
+    import tensorflow as tf
     from tensorflow.keras import Input
     from tensorflow.keras.layers import Dense, LeakyReLU
     from tensorflow.keras.models import Sequential
 
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
-    model = Sequential()
-    model.add(Input(shape=(X_train.shape[1],)))
-    model.add(Dense(512))
-    model.add(LeakyReLU(negative_slope=0.2))
-    model.add(Dense(128))
-    model.add(LeakyReLU(negative_slope=0.2))
-    model.add(Dense(32))
-    model.add(LeakyReLU(negative_slope=0.2))
-    model.add(Dense(1, activation="sigmoid"))
-    model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
-    model.fit(X_train, y_train, epochs=20, batch_size=32, verbose=0)
+    try:
+        tf.config.set_visible_devices([], "GPU")
+    except Exception:
+        pass
+
+    with tf.device("/CPU:0"):
+        model = Sequential()
+        model.add(Input(shape=(X_train.shape[1],)))
+        model.add(Dense(512))
+        model.add(LeakyReLU(alpha=0.2))
+        model.add(Dense(128))
+        model.add(LeakyReLU(alpha=0.2))
+        model.add(Dense(32))
+        model.add(LeakyReLU(alpha=0.2))
+        model.add(Dense(1, activation="sigmoid"))
+        model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+        model.fit(X_train, y_train, epochs=20, batch_size=32, verbose=0)
     return model, scaler
 
 
@@ -1018,6 +1111,7 @@ def evaluate_gwas(ctx: Context, datasets: list[DATASET], copies: int) -> None:
     rows: list[dict] = []
     methods = ["proposed", "ldp"]
     tasks: list[tuple[str, str, str, str, float, int]] = []
+    missing_outputs: list[Path] = []
     for dataset in datasets:
         base = EPSILON_BASES[dataset]
         for gwas_type in ["chi2", "odds"]:
@@ -1026,9 +1120,18 @@ def evaluate_gwas(ctx: Context, datasets: list[DATASET], copies: int) -> None:
                     for eff_eps in STANDARD_EFFECTIVE_EPS:
                         total_eps = eff_eps * base
                         for idx in range(copies):
-                            if not shared_path(ctx, dataset, total_eps, method, idx=idx).exists():
+                            output_path = shared_path(ctx, dataset, total_eps, method, idx=idx)
+                            if not output_path.exists():
+                                missing_outputs.append(output_path)
                                 continue
                             tasks.append((str(ctx.root), dataset.value, gwas_type, error_type, method, eff_eps, idx))
+
+    _raise_missing_generated_outputs(
+        "GWAS standard evaluation",
+        missing_outputs,
+        "Run `python run_generation.py --generation-target proposed` and "
+        "`python run_generation.py --generation-target ldp` first, or rerun the full generation workflow.",
+    )
 
     pbar = tqdm(total=len(tasks), desc="GWAS standard", dynamic_ncols=True)
     if tasks:
@@ -1055,13 +1158,24 @@ def evaluate_gwas(ctx: Context, datasets: list[DATASET], copies: int) -> None:
 def evaluate_gwas_maf(ctx: Context, datasets: list[DATASET], copies: int) -> None:
     rows: list[dict] = []
     tasks: list[tuple[str, str, str, str, float, int]] = []
+    missing_outputs: list[Path] = []
     for dataset in datasets:
         for gwas_type in ["chi2", "odds"]:
             for error_type in ["flipping", "noise"]:
                 for eps_maf in MAF_EPS:
                     for idx in range(copies):
-                        if shared_path(ctx, dataset, eps_maf, "proposed_dp_maf", idx=idx).exists():
-                            tasks.append((str(ctx.root), dataset.value, gwas_type, error_type, eps_maf, idx))
+                        output_path = shared_path(ctx, dataset, eps_maf, "proposed_dp_maf", idx=idx)
+                        if not output_path.exists():
+                            missing_outputs.append(output_path)
+                            continue
+                        tasks.append((str(ctx.root), dataset.value, gwas_type, error_type, eps_maf, idx))
+
+    _raise_missing_generated_outputs(
+        "GWAS MAF evaluation",
+        missing_outputs,
+        "Run `python run_generation.py --generation-target proposed_dp_maf` first, "
+        "or rerun the full generation workflow.",
+    )
 
     pbar = tqdm(total=len(tasks), desc="GWAS MAF", dynamic_ncols=True)
     if tasks:
@@ -1120,7 +1234,7 @@ def evaluate_mia(ctx: Context, datasets: list[DATASET], effective_eps: Iterable[
         print_dry_run_preview(out_name, df)
 
 
-def print_utility_summary(out: Path, df: pd.DataFrame, label: str) -> None:
+def print_utility_summary(out: Path, df: pd.DataFrame, label: str, dry_run: bool = False) -> None:
     df = clean_dataframe(df)
     if df.empty:
         print(f"[warn] no utility rows produced for {label}")
@@ -1136,6 +1250,9 @@ def print_utility_summary(out: Path, df: pd.DataFrame, label: str) -> None:
     print(f"[summary] utility results: {label}")
     print(summary.to_string(index=False, float_format=lambda x: f"{x:.6f}"))
     print(f"[csv] {out}")
+    summary_csv, summary_md = _write_utility_summary_files(out, df, dry_run=dry_run)
+    print(f"[summary-csv] {summary_csv}")
+    print(f"[summary-md] {summary_md}")
 
 
 def evaluate_utility(ctx: Context, datasets: list[DATASET], copies: int) -> None:
@@ -1170,7 +1287,7 @@ def evaluate_utility(ctx: Context, datasets: list[DATASET], copies: int) -> None
     out = write_results_dataframe(ctx, "utility_df_full.csv", df)
     pbar.close()
     print(f"[done] {out}")
-    print_utility_summary(out, df, "standard")
+    print_utility_summary(out, df, "standard", dry_run=ctx.dry_run)
 
 
 def evaluate_utility_100(ctx: Context, datasets: list[DATASET], copies: int) -> None:
@@ -1204,7 +1321,7 @@ def evaluate_utility_100(ctx: Context, datasets: list[DATASET], copies: int) -> 
     out = write_results_dataframe(ctx, "utility_100_df_full.csv", df)
     pbar.close()
     print(f"[done] {out}")
-    print_utility_summary(out, df, "100-SNP")
+    print_utility_summary(out, df, "100-SNP", dry_run=ctx.dry_run)
 
 
 def validate_inputs(ctx: Context, datasets: list[DATASET], include_large_mia: bool, only_100_snp: bool, copies: int) -> int:
@@ -1248,7 +1365,6 @@ def main() -> int:
         "mia_large",
         "utility_standard",
         "utility_100",
-        "time",
     ]
     parser = argparse.ArgumentParser(description="Run standalone artifact pipeline from artifact/ folder")
     parser.add_argument("--mode", choices=["validate", "generate", "evaluate", "all"], default="validate")
@@ -1374,15 +1490,6 @@ def main() -> int:
                 evaluate_utility(ctx, selected, copies=args.copies)
             if exp in {"all", "utility_100"}:
                 evaluate_utility_100(ctx, selected, copies=args.copies)
-            if exp in {"all", "time"}:
-                from artifact_evaluation.common import ensure_time_results
-
-                out = ensure_time_results(ctx.results_dir, dry_run=ctx.dry_run)
-                if ctx.dry_run:
-                    print(f"[dry-run] prepared time-complexity results at {out}")
-                else:
-                    print(f"[done] {out}")
-
     return 0
 
 

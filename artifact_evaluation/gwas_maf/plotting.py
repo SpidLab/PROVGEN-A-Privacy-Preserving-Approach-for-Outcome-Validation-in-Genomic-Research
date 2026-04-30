@@ -28,10 +28,7 @@ def run(
     results = resolve_results_dir(results_dir)
     plots = resolve_plots_dir(plots_dir, dry_run=dry_run)
     gwas_df, gwas_maf_df = load_gwas_results(results)
-    return [
-        plot_gwas_maf(gwas_df, gwas_maf_df, plots, large=False, dry_run=dry_run),
-        plot_gwas_maf(gwas_df, gwas_maf_df, plots, large=True, dry_run=dry_run),
-    ]
+    return [plot_gwas_maf(gwas_df, gwas_maf_df, plots, dry_run=dry_run)]
 
 
 def main() -> None:

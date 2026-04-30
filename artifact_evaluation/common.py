@@ -37,6 +37,20 @@ DEFAULT_PLOTS_DIR = "plots"
 
 DATASET_NAME_MAPPING = {"lactose": "Lactose Intolerance", "hair": "Hair Color", "eye": "Eye Color"}
 METHOD_NAME_MAPPING = {"ldp": "Baseline - LDP [25]", "proposed": "Ours"}
+UTILITY_METHOD_NAME_MAPPING = {
+    "proposed": "Ours",
+    "ldp": "LDP [25]",
+    "privbayes": "PrivBayes [54]",
+    "dpsyn": "DPSyn [27]",
+}
+UTILITY_METHOD_ORDER = ["proposed", "ldp", "privbayes", "dpsyn"]
+UTILITY_METRIC_NAME_MAPPING = {
+    "point_error": "Point Error",
+    "calc_sample_distance": "Sample Distance",
+    "mean_error": "Mean Error",
+    "variance_error": "Variance Error",
+}
+UTILITY_METRIC_ORDER = ["point_error", "calc_sample_distance", "mean_error", "variance_error"]
 MIA_METHOD_MAPPING = {
     "hamming_distance": "Hamming Distance Test",
     "decision_tree": "Decision Tree",
@@ -44,39 +58,6 @@ MIA_METHOD_MAPPING = {
     "xgboost": "XGBoost",
     "svm": "Support Vector Machine",
     "nn": "Neural Network",
-}
-TIME_DATA = {
-    "SNPs": [10, 10, 10, 10, 10, 50, 50, 50, 50, 50, 100, 100, 100, 100, 100, 500, 500, 500, 1000, 1000, 1000, 5000, 5000, 10000, 10000, 28000, 28000],
-    "Time": [575.6069, 0.0047, 0.0009, 3.3142, 7.5779, np.nan, 0.0118, 0.001, 43.8204, 42.3977, np.nan, 0.0306, 0.0014, 448.6869, 243.6263, np.nan, 0.2294, 0.0025, np.nan, 0.6987, 0.0042, 14.256, 0.0197, 53.9606, 0.0347, 446.6277, 0.1045],
-    "Method": [
-        "Original XOR",
-        "Proposed",
-        "LDP",
-        "DPSyn",
-        "PrivBayes",
-        "Original XOR",
-        "Proposed",
-        "LDP",
-        "DPSyn",
-        "PrivBayes",
-        "Original XOR",
-        "Proposed",
-        "LDP",
-        "DPSyn",
-        "PrivBayes",
-        "Original XOR",
-        "Proposed",
-        "LDP",
-        "Original XOR",
-        "Proposed",
-        "LDP",
-        "Proposed",
-        "LDP",
-        "Proposed",
-        "LDP",
-        "Proposed",
-        "LDP",
-    ],
 }
 
 
@@ -146,6 +127,17 @@ def safe_savefig(path: Path, dry_run: bool = False, **kwargs) -> Path:
         return alt
 
 
+def _read_required_csv(path: Path, label: str) -> pd.DataFrame:
+    try:
+        return pd.read_csv(path)
+    except pd.errors.EmptyDataError as exc:
+        raise ValueError(
+            f"{label} at {path} is empty. This usually means the corresponding evaluation ran "
+            "before all required generated datasets were available. Regenerate the missing "
+            "datasets, rerun the evaluation, and then rerun plotting."
+        ) from exc
+
+
 def load_gwas_results(results_dir: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
     gwas_path = results_dir / "gwas_df_full.csv"
     gwas_maf_path = results_dir / "gwas_df_full_maf.csv"
@@ -153,11 +145,11 @@ def load_gwas_results(results_dir: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
     if missing:
         raise FileNotFoundError(f"Missing required GWAS result CSVs in {results_dir}: {', '.join(missing)}")
 
-    gwas_df = pd.read_csv(gwas_path)
+    gwas_df = _read_required_csv(gwas_path, "GWAS standard result CSV")
     gwas_df["Retention Ratio"] = gwas_df["Retention Ratio"].abs()
     gwas_df.loc[gwas_df["Error Rate"] == 0.0, "Retention Ratio"] = 0.0
 
-    gwas_maf_df = pd.read_csv(gwas_maf_path)
+    gwas_maf_df = _read_required_csv(gwas_maf_path, "GWAS MAF result CSV")
     gwas_maf_df["Retention Ratio"] = gwas_maf_df["Retention Ratio"].abs()
     gwas_maf_df.loc[gwas_maf_df["Error Rate"] == 0.0, "Retention Ratio"] = 0.0
     return gwas_df, gwas_maf_df
@@ -176,10 +168,10 @@ def load_mia_results(results_dir: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
     if not standard_path.exists():
         raise FileNotFoundError(f"Missing required MIA result CSV in {results_dir}: {standard_path.name}")
 
-    standard_df = map_mia(pd.read_csv(standard_path))
+    standard_df = map_mia(_read_required_csv(standard_path, "MIA standard result CSV"))
     large_path = results_dir / "mia_experiments_results_large_scale.csv"
     if large_path.exists():
-        large_df = map_mia(pd.read_csv(large_path))
+        large_df = map_mia(_read_required_csv(large_path, "MIA large-scale result CSV"))
         print(f"[info] using large-scale MIA from {large_path}")
     else:
         print("[warn] missing mia_experiments_results_large_scale.csv; reusing standard MIA CSV for large-scale plot")
@@ -240,7 +232,6 @@ def plot_gwas_maf(
     gwas_df: pd.DataFrame,
     gwas_maf_df: pd.DataFrame,
     output_dir: Path,
-    large: bool,
     dry_run: bool = False,
 ) -> Path:
     sns.set_theme(style="whitegrid")
@@ -251,7 +242,7 @@ def plot_gwas_maf(
     datasets = ["lactose", "hair", "eye"]
     errors = ["flipping", "noise"]
 
-    fig, axes = plt.subplots(2, 6, figsize=(15, 5) if large else (13, 4.5), sharey=True)
+    fig, axes = plt.subplots(2, 6, figsize=(13, 4.5), sharey=True)
     for r, gwas in enumerate(gwas_types):
         for c, (dataset, error) in enumerate([(d, e) for d in datasets for e in errors]):
             ax = axes[r, c]
@@ -314,12 +305,7 @@ def plot_gwas_maf(
     ]
     fig.legend(handles, [h.get_label() for h in handles], loc="lower center", ncol=6, frameon=False, bbox_to_anchor=(0.5, -0.05), fontsize=12)
     plt.tight_layout(rect=[0.05, 0.09, 1, 1])
-    out = safe_savefig(
-        output_dir / ("gwas_results_maf_large.pdf" if large else "gwas_results_maf.pdf"),
-        dry_run=dry_run,
-        bbox_inches="tight",
-        dpi=300,
-    )
+    out = safe_savefig(output_dir / "gwas_results_maf.pdf", dry_run=dry_run, bbox_inches="tight", dpi=300)
     plt.close(fig)
     return out
 
@@ -381,63 +367,204 @@ def plot_mia(mia_df: pd.DataFrame, output_dir: Path, large_scale: bool, dry_run:
     return written
 
 
-def ensure_time_results(results_dir: Path, dry_run: bool = False) -> Path:
-    out = results_dir / "time.csv"
-    if out.exists():
-        return out
-
-    df = pd.DataFrame(TIME_DATA).dropna()
-    df["Method"] = df["Method"].map(
-        {
-            "LDP": "LDP [25]",
-            "Original XOR": "Vanilla XOR [24]",
-            "Proposed": "Ours",
-            "DPSyn": "DPSyn [27]",
-            "PrivBayes": "PrivBayes [54]",
-        }
+def summarize_utility_results(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.loc[:, [c for c in df.columns if c and not str(c).startswith("Unnamed")]].copy()
+    summary = (
+        df.groupby(["Dataset", "Utility Metric", "Approach", "Epsilon"], as_index=False)["Utility"]
+        .agg(["mean", "std", "count"])
+        .reset_index()
+        .rename(columns={"mean": "Mean", "std": "Std", "count": "Count"})
     )
-    if dry_run:
-        print(f"[dry-run] would write {out}")
-        return out
-
-    results_dir.mkdir(parents=True, exist_ok=True)
-    df.to_csv(out, index=False)
-    return out
+    summary["Std"] = summary["Std"].fillna(0.0)
+    return summary
 
 
-def plot_time(results_dir: Path, output_dir: Path, dry_run: bool = False) -> Path:
-    time_csv = ensure_time_results(results_dir, dry_run=dry_run)
-    if dry_run and not time_csv.exists():
-        df = pd.DataFrame(TIME_DATA).dropna()
-        df["Method"] = df["Method"].map(
-            {
-                "LDP": "LDP [25]",
-                "Original XOR": "Vanilla XOR [24]",
-                "Proposed": "Ours",
-                "DPSyn": "DPSyn [27]",
-                "PrivBayes": "PrivBayes [54]",
-            }
+def _format_utility_cell(mean: float, std: float, count: int) -> str:
+    if count > 1:
+        return f"{mean:.4f} $\\pm$ {std:.4f}"
+    return f"{mean:.4f}"
+
+
+def _build_utility_latex(summary: pd.DataFrame, label: str) -> str:
+    lines = [
+        "% Auto-generated by artifact_evaluation utility plotting.",
+        "% Requires \\usepackage{booktabs}.",
+        "",
+    ]
+    eps_values = sorted(summary["Epsilon"].unique())
+    datasets = list(dict.fromkeys(summary["Dataset"]))
+
+    for dataset in datasets:
+        dataset_name = DATASET_NAME_MAPPING.get(dataset, dataset)
+        sub = summary[summary["Dataset"] == dataset].copy()
+        header = "Utility Metric & Approach & " + " & ".join([rf"$\epsilon={eps:g}$" for eps in eps_values]) + r" \\"
+        lines.extend(
+            [
+                r"\begin{table}[t]",
+                r"\centering",
+                rf"\caption{{{label} utility results for {dataset_name}. Lower is better.}}",
+                rf"\label{{tab:{label.lower().replace(' ', '-')}-{dataset}}}",
+                r"\begin{tabular}{ll" + ("c" * len(eps_values)) + r"}",
+                r"\toprule",
+                header,
+                r"\midrule",
+            ]
         )
-    else:
-        df = pd.read_csv(time_csv)
 
-    fig, ax = plt.subplots(figsize=(8, 4.5))
-    sns.lineplot(data=df, x="SNPs", y="Time", hue="Method", marker="o", linewidth=2, estimator="mean", errorbar=None, ax=ax)
-    ax.set_xscale("log")
-    ax.set_yscale("log")
-    ax.set_xlim(8, 30000)
-    ax.set_ylim(1e-4, 1e4)
-    ax.set_xlabel("# of SNPs (log scale)")
-    ax.set_ylabel("Time Complexity (sec, log scale)")
-    out = safe_savefig(output_dir / "time.pdf", dry_run=dry_run, bbox_inches="tight", dpi=400)
+        for metric in UTILITY_METRIC_ORDER:
+            metric_rows = sub[sub["Utility Metric"] == metric]
+            if metric_rows.empty:
+                continue
+            for method in UTILITY_METHOD_ORDER:
+                row = metric_rows[metric_rows["Approach"] == method]
+                if row.empty:
+                    continue
+                cells = [UTILITY_METRIC_NAME_MAPPING.get(metric, metric), UTILITY_METHOD_NAME_MAPPING.get(method, method)]
+                for eps in eps_values:
+                    eps_row = row[row["Epsilon"] == eps]
+                    if eps_row.empty:
+                        cells.append("--")
+                        continue
+                    item = eps_row.iloc[0]
+                    cells.append(_format_utility_cell(float(item["Mean"]), float(item["Std"]), int(item["Count"])))
+                lines.append(" & ".join(cells) + r" \\")
+
+        lines.extend([r"\bottomrule", r"\end{tabular}", r"\end{table}", ""])
+
+    return "\n".join(lines)
+
+
+def _utility_table_dataframe(summary: pd.DataFrame, dataset: str) -> pd.DataFrame:
+    eps_values = sorted(summary["Epsilon"].unique())
+    sub = summary[summary["Dataset"] == dataset].copy()
+    rows: list[list[str]] = []
+
+    for metric in UTILITY_METRIC_ORDER:
+        metric_rows = sub[sub["Utility Metric"] == metric]
+        if metric_rows.empty:
+            continue
+        for method in UTILITY_METHOD_ORDER:
+            row = metric_rows[metric_rows["Approach"] == method]
+            if row.empty:
+                continue
+            cells = [UTILITY_METRIC_NAME_MAPPING.get(metric, metric), UTILITY_METHOD_NAME_MAPPING.get(method, method)]
+            for eps in eps_values:
+                eps_row = row[row["Epsilon"] == eps]
+                if eps_row.empty:
+                    cells.append("--")
+                    continue
+                item = eps_row.iloc[0]
+                cells.append(_format_utility_cell(float(item["Mean"]), float(item["Std"]), int(item["Count"])))
+            rows.append(cells)
+
+    columns = ["Utility Metric", "Approach", *[rf"$\epsilon={eps:g}$" for eps in eps_values]]
+    return pd.DataFrame(rows, columns=columns)
+
+
+def _draw_utility_table(ax, table_df: pd.DataFrame, title: str) -> None:
+    ax.axis("off")
+    ax.set_title(title, fontsize=13, pad=10, loc="left")
+    col_widths = [0.24, 0.18] + [0.12] * (len(table_df.columns) - 2)
+    tab = ax.table(
+        cellText=table_df.values,
+        colLabels=table_df.columns,
+        cellLoc="center",
+        colLoc="center",
+        colWidths=col_widths,
+        loc="center",
+    )
+    tab.auto_set_font_size(False)
+    tab.set_fontsize(8.5)
+    tab.scale(1, 1.35)
+
+    header_color = "#16324F"
+    stripe_light = "#F7F4EA"
+    stripe_dark = "#ECE6D8"
+    ours_color = "#FFF4D6"
+
+    ncols = len(table_df.columns)
+    nrows = len(table_df)
+
+    for col in range(ncols):
+        cell = tab[(0, col)]
+        cell.set_facecolor(header_color)
+        cell.get_text().set_color("white")
+        cell.get_text().set_weight("bold")
+        cell.set_edgecolor("white")
+
+    for row_idx in range(1, nrows + 1):
+        metric_name = table_df.iloc[row_idx - 1, 0]
+        metric_pos = UTILITY_METRIC_ORDER.index(next(k for k, v in UTILITY_METRIC_NAME_MAPPING.items() if v == metric_name))
+        base_color = stripe_light if metric_pos % 2 == 0 else stripe_dark
+        is_ours = table_df.iloc[row_idx - 1, 1] == "Ours"
+
+        for col in range(ncols):
+            cell = tab[(row_idx, col)]
+            cell.set_edgecolor("white")
+            cell.set_facecolor(ours_color if is_ours and col >= 1 else base_color)
+            if col in {0, 1}:
+                cell.get_text().set_weight("bold")
+
+
+def render_utility_table_figure(
+    summary: pd.DataFrame,
+    output_dir: Path,
+    *,
+    stem: str,
+    label: str,
+    dry_run: bool = False,
+) -> Path:
+    datasets = list(dict.fromkeys(summary["Dataset"]))
+    fig_height = 3.8 * max(1, len(datasets))
+    fig, axes = plt.subplots(len(datasets), 1, figsize=(11.5, fig_height))
+    if len(datasets) == 1:
+        axes = [axes]
+
+    for ax, dataset in zip(axes, datasets):
+        dataset_name = DATASET_NAME_MAPPING.get(dataset, dataset)
+        table_df = _utility_table_dataframe(summary, dataset)
+        _draw_utility_table(ax, table_df, f"{label} Utility: {dataset_name}")
+
+    fig.suptitle(f"{label} Utility Summary", fontsize=16, y=0.995)
+    plt.tight_layout(rect=[0.01, 0.01, 0.99, 0.98])
+    out = safe_savefig(output_dir / f"{stem}_table.pdf", dry_run=dry_run, bbox_inches="tight", dpi=300)
     plt.close(fig)
     return out
 
 
-def print_utility_plot_hint(label: str, results_dir: Path, filename: str) -> None:
+def render_utility_tables(
+    results_dir: Path,
+    output_dir: Path,
+    *,
+    filename: str,
+    stem: str,
+    label: str,
+    dry_run: bool = False,
+) -> list[Path]:
     csv_path = results_dir / filename
-    print(f"[info] No dedicated utility figure is included for {label}.")
-    print(f"[info] Review the terminal summary from the experiment step and the CSV at {csv_path.resolve()}")
+    if not csv_path.exists():
+        raise FileNotFoundError(f"Missing required utility result CSV in {results_dir}: {csv_path.name}")
+
+    df = _read_required_csv(csv_path, f"{label} utility result CSV")
+    summary = summarize_utility_results(df)
+    summary_out = output_dir / f"{stem}_summary.csv"
+    tex_out = output_dir / f"{stem}_table.tex"
+    fig_out = output_dir / f"{stem}_table.pdf"
+
+    if dry_run:
+        print(f"[dry-run] would write {summary_out}")
+        print(f"[dry-run] would write {tex_out}")
+        print(f"[dry-run] would write {fig_out}")
+        return [summary_out, tex_out, fig_out]
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    summary.to_csv(summary_out, index=False)
+    tex_out.write_text(_build_utility_latex(summary, label), encoding="utf-8")
+    written_fig = render_utility_table_figure(summary, output_dir, stem=stem, label=label, dry_run=dry_run)
+    print(f"[done] {summary_out}")
+    print(f"[done] {tex_out}")
+    print(f"[done] {written_fig}")
+    return [summary_out, tex_out, written_fig]
 
 
 __all__ = [
@@ -456,17 +583,16 @@ __all__ = [
     "evaluate_mia",
     "evaluate_utility",
     "evaluate_utility_100",
-    "ensure_time_results",
     "load_gwas_results",
     "load_mia_results",
     "parse_datasets",
     "plot_gwas_maf",
     "plot_gwas_results",
     "plot_mia",
-    "plot_time",
-    "print_utility_plot_hint",
+    "render_utility_tables",
     "resolve_plots_dir",
     "resolve_results_dir",
     "safe_savefig",
+    "summarize_utility_results",
     "validate_evaluation",
 ]

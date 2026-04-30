@@ -16,7 +16,6 @@ from artifact_evaluation.gwas_maf import experiment as gwas_maf_experiment
 from artifact_evaluation.gwas_standard import experiment as gwas_standard_experiment
 from artifact_evaluation.mia_large import experiment as mia_large_experiment
 from artifact_evaluation.mia_standard import experiment as mia_standard_experiment
-from artifact_evaluation.time_complexity import experiment as time_experiment
 from artifact_evaluation.utility_100 import experiment as utility_100_experiment
 from artifact_evaluation.utility_standard import experiment as utility_standard_experiment
 
@@ -37,7 +36,7 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument(
         "--experiment",
-        choices=["all", "gwas_standard", "gwas_maf", "mia_standard", "mia_large", "utility_standard", "utility_100", "time"],
+        choices=["all", "gwas_standard", "gwas_maf", "mia_standard", "mia_large", "utility_standard", "utility_100"],
         default="all",
     )
     args = parser.parse_args()
@@ -63,7 +62,7 @@ def main() -> int:
             ("GWAS MAF evaluation", gwas_maf_experiment.run, common),
             ("MIA standard evaluation", mia_standard_experiment.run, common),
             ("Utility standard evaluation", utility_standard_experiment.run, common),
-            ("Time complexity results", time_experiment.run, {"dry_run": args.dry_run}),
+            ("Utility 100-SNP evaluation", utility_100_experiment.run, common),
         ]
         if args.include_large_mia:
             steps.insert(3, ("MIA large-scale evaluation", mia_large_experiment.run, common))
@@ -81,7 +80,6 @@ def main() -> int:
         "mia_large": ("MIA large-scale evaluation", mia_large_experiment.run, common),
         "utility_standard": ("Utility standard evaluation", utility_standard_experiment.run, common),
         "utility_100": ("Utility 100-SNP evaluation", utility_100_experiment.run, common),
-        "time": ("Time complexity results", time_experiment.run, {"dry_run": args.dry_run}),
     }
     label, fn, kwargs = mapping[args.experiment]
     return run_step(label, fn, **kwargs)

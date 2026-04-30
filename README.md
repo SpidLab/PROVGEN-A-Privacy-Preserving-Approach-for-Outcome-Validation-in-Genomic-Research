@@ -49,7 +49,7 @@ python run_experiments.py --mode validate
 python run_generation.py --datasets lactose --copies 1 --generation-target proposed --dry-run
 python run_evaluation.py --datasets lactose --copies 1 --include-large-mia --experiment all --workers 2 --dry-run
 python run_evaluation.py --datasets lactose --copies 1 --only-100-snp --experiment utility_100 --workers 2 --dry-run
-python run_plotting.py --plot-target time --plots-dir /tmp/provgen_plot_smoke --dry-run
+python run_plotting.py --plot-target gwas_standard --plots-dir /tmp/provgen_plot_check --dry-run
 ```
 
 See `artifact_evaluation/README.md` and `artifact_evaluation/doc/ARTIFACT-APPENDIX.md` for the full artifact instructions.

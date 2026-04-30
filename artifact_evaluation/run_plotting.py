@@ -15,7 +15,6 @@ from artifact_evaluation.gwas_maf import plotting as gwas_maf_plotting
 from artifact_evaluation.gwas_standard import plotting as gwas_standard_plotting
 from artifact_evaluation.mia_large import plotting as mia_large_plotting
 from artifact_evaluation.mia_standard import plotting as mia_standard_plotting
-from artifact_evaluation.time_complexity import plotting as time_plotting
 from artifact_evaluation.utility_100 import plotting as utility_100_plotting
 from artifact_evaluation.utility_standard import plotting as utility_standard_plotting
 from artifact_evaluation.common import DEFAULT_PLOTS_DIR, DEFAULT_RESULTS_DIR, resolve_plots_dir
@@ -48,7 +47,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--plot-target",
-        choices=["all", "gwas_standard", "gwas_maf", "mia_standard", "mia_large", "utility_standard", "utility_100", "time"],
+        choices=["all", "gwas_standard", "gwas_maf", "mia_standard", "mia_large", "utility_standard", "utility_100"],
         default="all",
         help="which experiment-style plot group to generate",
     )
@@ -65,9 +64,6 @@ def main() -> None:
             ("GWAS MAF plots", gwas_maf_plotting.run, common),
             ("MIA standard plots", mia_standard_plotting.run, common),
             ("MIA large-scale plots", mia_large_plotting.run, common),
-            ("Utility standard plot hints", utility_standard_plotting.run, common),
-            ("Utility 100-SNP plot hints", utility_100_plotting.run, common),
-            ("Time complexity plot", time_plotting.run, common),
         ]
         for label, fn, kwargs in steps:
             generated.extend(run_step(label, fn, **kwargs))
@@ -77,9 +73,8 @@ def main() -> None:
             "gwas_maf": ("GWAS MAF plots", gwas_maf_plotting.run),
             "mia_standard": ("MIA standard plots", mia_standard_plotting.run),
             "mia_large": ("MIA large-scale plots", mia_large_plotting.run),
-            "utility_standard": ("Utility standard plot hints", utility_standard_plotting.run),
-            "utility_100": ("Utility 100-SNP plot hints", utility_100_plotting.run),
-            "time": ("Time complexity plot", time_plotting.run),
+            "utility_standard": ("Utility standard summaries", utility_standard_plotting.run),
+            "utility_100": ("Utility 100-SNP summaries", utility_100_plotting.run),
         }
         label, fn = mapping[args.plot_target]
         generated.extend(run_step(label, fn, **common))

@@ -96,8 +96,7 @@ def xor_mechanism(matrix: np.ndarray, epsilon: float, reference_matrix: np.ndarr
 def generate_ldp_dataset(matrix: np.ndarray, epsilon_per_snp: float) -> np.ndarray:
     """Generate the local-DP baseline used in the paper."""
     nrows, ncols = matrix.shape
-    keep_probability = np.exp(epsilon_per_snp / ncols) / (np.exp(epsilon_per_snp / ncols) + 2)
-    randomize_probability = 1 - keep_probability
+    randomize_probability = np.exp(epsilon_per_snp / ncols) / (np.exp(epsilon_per_snp / ncols) + 2)
     perturbed = np.copy(matrix)
     flip_mask = np.random.binomial(1, randomize_probability, size=matrix.shape)
     random_values = np.random.choice([0, 1, 2], size=matrix.shape)
@@ -111,3 +110,28 @@ def generate_proposed_dataset(data: np.ndarray, reference: np.ndarray, epsilon: 
     target_mafs = get_mafs(encoded)
     xor_binary = xor_mechanism(encoded, epsilon, encode(reference))
     return decode(transport(xor_binary, target_mafs))
+
+
+def generate_proposed_dataset_with_dp_mafs(
+    data: np.ndarray,
+    reference: np.ndarray,
+    epsilon_e: float,
+    epsilon_m: float,
+) -> np.ndarray:
+    """Run PROVGEN with protected MAF targets.
+
+    ``epsilon_e`` controls the XOR mechanism and ``epsilon_m`` controls the
+    Laplace release of the MAF vector. Each individual's genotype can change a
+    SNP MAF by at most ``1 / n``.
+    """
+    encoded = encode(data)
+    exact_mafs = get_mafs(encoded)
+    maf_sensitivity = 1.0 / encoded.shape[0]
+    protected_mafs = exact_mafs + np.random.laplace(
+        loc=0.0,
+        scale=maf_sensitivity / epsilon_m,
+        size=exact_mafs.shape,
+    )
+    protected_mafs = np.clip(protected_mafs, 0.0, 1.0)
+    xor_binary = xor_mechanism(encoded, epsilon_e, encode(reference))
+    return decode(transport(xor_binary, protected_mafs))

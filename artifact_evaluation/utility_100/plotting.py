@@ -11,28 +11,29 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from artifact_evaluation.common import (  # noqa: E402
-    DEFAULT_PLOTS_DIR,
     DEFAULT_RESULTS_DIR,
-    print_utility_plot_hint,
     resolve_results_dir,
 )
 
 
 def run(
     results_dir: str = DEFAULT_RESULTS_DIR,
-    plots_dir: str = DEFAULT_PLOTS_DIR,
+    plots_dir: str = "plots",
     dry_run: bool = False,
 ) -> list[Path]:
-    del plots_dir, dry_run
     results = resolve_results_dir(results_dir)
-    print_utility_plot_hint("utility_100", results, "utility_100_df_full.csv")
+    summary_csv = results / "utility_100_summary.csv"
+    summary_md = results / "utility_100_summary.md"
+    prefix = "[dry-run]" if dry_run else "[info]"
+    print(f"{prefix} utility 100-SNP has no plotting step; use {summary_csv}")
+    print(f"{prefix} utility 100-SNP has no plotting step; use {summary_md}")
     return []
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Report the utility 100-SNP CSV location.")
+    parser = argparse.ArgumentParser(description="Report utility 100-SNP summary files.")
     parser.add_argument("--results-dir", type=str, default=DEFAULT_RESULTS_DIR)
-    parser.add_argument("--plots-dir", type=str, default=DEFAULT_PLOTS_DIR)
+    parser.add_argument("--plots-dir", type=str, default="plots")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     run(results_dir=args.results_dir, plots_dir=args.plots_dir, dry_run=args.dry_run)
